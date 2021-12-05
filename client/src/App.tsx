@@ -7,6 +7,7 @@ import { AppRootState } from './+store/store';
 
 import Layout from './components/core/Layout';
 import LoadingSpinner from './components/shared/LoadingSpinner';
+import FavoritesPage from './pages/FavoritesPage';
 
 const AuthPage = lazy(() => import('./pages/Auth/AuthPage'));
 const CategoriesPage = lazy(() => import('./pages/CategoriesPage'));
@@ -26,6 +27,7 @@ const App: FC<{}> = () => {
         <Suspense fallback={<LoadingSpinner />}>
         <Route path='/categories' exact component={CategoriesPage} />
         <Route path='/cart' exact component={CartPage} />
+        <Route path='/favorites' exact component={FavoritesPage} />
           <Route path='/auth'>
             <AuthPage isLogged={isLogged} />
           </Route>

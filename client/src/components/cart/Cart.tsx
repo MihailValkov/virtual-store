@@ -6,7 +6,7 @@ import AsideMenu from '../shared/AsideMenu/AsideMenu';
 
 import styles from './Cart.module.css';
 
-const Cart: FC<{}> = (props) => {
+const Cart: FC<{items: {}[]}> = ({items}) => {
   return (
     <section className={styles['cart-container']}>
       <AsideMenu />

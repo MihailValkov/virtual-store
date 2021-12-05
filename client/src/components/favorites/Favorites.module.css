@@ -1,0 +1,16 @@
+.favorites-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.favorites {
+  width: 100%;
+  flex: 10;
+}
+
+.favorites h1 {
+  font-size: 1.4rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}

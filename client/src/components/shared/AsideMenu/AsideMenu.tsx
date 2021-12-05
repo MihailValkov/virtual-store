@@ -72,7 +72,7 @@ const AsideMenu: FC<{}> = (props) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to='/favorite' activeClassName={styles.active}>
+          <NavLink to='/favorites' activeClassName={styles.active}>
             <FontAwesomeIcon icon={faHeart} className={`${styles.icon} ${styles['nav-icon']}`} />
             <span>My Favorites</span>
           </NavLink>
