@@ -1,0 +1,42 @@
+.order {
+  background: #f7f7f7;
+  margin-bottom: 20px;
+  box-shadow: 1px 2px 5px #ccc;
+  padding: 10px;
+}
+.order header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  color: rgb(56, 161, 202);
+}
+
+.order-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.order-info p {
+  margin-bottom: 5px;
+}
+.order-info.left {
+  text-align: left;
+}
+.order-info.right {
+  text-align: right;
+}
+.total-price {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.order a {
+  color: rgb(56, 161, 202);
+  border: 1px solid rgb(56, 161, 202);
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  font-weight: bold;
+}
