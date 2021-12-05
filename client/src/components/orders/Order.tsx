@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import styles from './Order.module.css';
 import { Link } from 'react-router-dom';
+
+import styles from './Order.module.css';
 
 const Order: FC<{}> = (props) => {
   return (
