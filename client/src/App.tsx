@@ -1,10 +1,13 @@
 import { FC } from 'react';
+import Layout from './components/core/Layout';
+import { Switch } from 'react-router';
 
-const App: FC<{}> = (props) =>  {
+const App: FC<{}> = () =>  {
     return (
-      <h1>
-        Virtual Store
-      </h1>
+      <Layout>
+      <Switch>
+      </Switch>
+    </Layout>
     );
 };
 

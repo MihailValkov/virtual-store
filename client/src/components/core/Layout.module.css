@@ -1,0 +1,9 @@
+.main {
+  margin: 3rem auto;
+  width: 92%;
+  min-height: calc(100vh - 14rem) ;
+}
+
+.main section h2 {
+  text-align: center;
+}
