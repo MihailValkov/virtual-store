@@ -1,5 +1,5 @@
 import { FC, FormEventHandler } from 'react';
-import LoadingSpinner from '../layout/LoadingSpinner';
+import LoadingSpinner from '../LoadingSpinner';
 import styles from './Form.module.css';
 
 const Form: FC<{

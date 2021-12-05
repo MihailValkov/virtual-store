@@ -11,10 +11,9 @@ import {
   faUserPlus,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import CartButtonContainer from './CartButtonContainer';
-import styles from './Navigation.module.css';
 import NavigationLink from '../shared/NavigationLink';
-import Button from './Button';
+import Button from '../shared/Button';
+import styles from './Navigation.module.css';
 
 const Navigation: FC = () => {
   const dispatch = useDispatch();

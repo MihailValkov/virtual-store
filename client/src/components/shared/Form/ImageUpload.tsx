@@ -1,5 +1,5 @@
-import React, { FC, useRef, useState, ChangeEvent } from 'react';
-import Button from '../layout/Button';
+import { FC, useRef, useState, ChangeEvent } from 'react';
+import Button from '../Button';
 import styles from './ImageUpload.module.css';
 
 const ImageUpload: FC<{
