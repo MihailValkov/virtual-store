@@ -9,7 +9,7 @@ import Layout from './components/core/Layout';
 import LoadingSpinner from './components/shared/LoadingSpinner';
 
 const Auth = lazy(() => import('./pages/Auth/Auth'));
-const Categories = lazy(() => import('./pages/Categories'));
+const Categories = lazy(() => import('./pages/CategoriesPage'));
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();

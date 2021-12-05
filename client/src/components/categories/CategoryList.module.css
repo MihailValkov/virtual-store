@@ -1,14 +1,3 @@
-.categories-container {
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-}
-.categories-container > h1 {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
-  font-size: 1.4rem;
-}
-
 .categories-list {
   display: flex;
   justify-content: space-between;
