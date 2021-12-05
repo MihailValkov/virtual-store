@@ -1,0 +1,34 @@
+.category {
+  margin: 20px;
+  box-shadow: 1px 2px 5px #ccc;
+  background: #f7f7f7;
+  flex: 22%;
+  text-align: center;
+  border-radius: 10px;
+  max-width: 315px;
+}
+
+.category h3 {
+  margin-bottom: 10px;
+  background-color: #79bae380;
+  color: white;
+  border-radius: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 10px;
+}
+
+.category img {
+  width: 250px;
+  height: 200px;
+  object-fit: contain;
+  padding: 10px;
+}
+
+.category:hover:hover {
+  cursor: pointer;
+  box-shadow: 1px 2px 5px rgb(105, 104, 104);
+}
+.category:hover h3 {
+  background-color: #7ee37980;
+}
