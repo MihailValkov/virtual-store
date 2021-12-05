@@ -10,6 +10,7 @@ import LoadingSpinner from './components/shared/LoadingSpinner';
 
 const AuthPage = lazy(() => import('./pages/Auth/AuthPage'));
 const CategoriesPage = lazy(() => import('./pages/CategoriesPage'));
+const CartPage = lazy(() => import('./pages/CartPage'));
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const App: FC<{}> = () => {
       <Switch>
         <Suspense fallback={<LoadingSpinner />}>
         <Route path='/categories' exact component={CategoriesPage} />
+        <Route path='/cart' exact component={CartPage} />
           <Route path='/auth'>
             <AuthPage isLogged={isLogged} />
           </Route>

@@ -9,8 +9,10 @@ import {
   faList,
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { AppRootState } from '../../+store/store';
-import Card from '../layout/Card';
+
+import { AppRootState } from '../../../+store/store';
+import Card from '../Card';
+
 import styles from './AsideMenu.module.css';
 
 const AsideMenu: FC<{}> = (props) => {
