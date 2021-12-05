@@ -1,0 +1,13 @@
+.form {
+    width: 100%;
+    margin:1rem auto;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: 50%;
+    left: 0;
+}

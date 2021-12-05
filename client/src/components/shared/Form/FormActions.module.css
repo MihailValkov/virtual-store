@@ -1,0 +1,33 @@
+.actions {
+  text-align: center;
+  margin-top: 0.5rem;
+  position: relative;
+  width: 100%;
+}
+
+.error-container {
+  top: -25px;
+  right: 0;
+  left: 0;
+  height: 20px;
+  position: absolute;
+}
+
+.error {
+  color: red;
+  animation: fadeOut 0s ease-in 2.5s forwards;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+.buttons button:first-of-type {
+  margin-right: 20px;
+}
+
+@keyframes fadeOut {
+  to {
+    visibility: hidden;
+  }
+}

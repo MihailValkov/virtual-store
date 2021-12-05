@@ -1,0 +1,28 @@
+.btn {
+  background: #2a87a5;
+  border: none;
+  padding: 0.8rem 2rem;
+  color: white;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-weight: bold;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn svg {
+  color: inherit;
+  margin-right: 10px;
+  font-size: 1.25rem;
+}

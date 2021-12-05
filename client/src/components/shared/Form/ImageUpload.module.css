@@ -1,0 +1,7 @@
+.upload-file {
+  display: flex;
+  justify-content: center;
+}
+.upload-file input {
+  display: none;
+}
