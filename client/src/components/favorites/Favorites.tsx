@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import AsideMenu from '../shared/AsideMenu/AsideMenu';
 import Card from '../shared/Card';
+import MyProductsList from '../shared/MyProducts/MyProductsList';
 
 import styles from './Favorites.module.css';
 
@@ -11,7 +12,7 @@ const Favorites: FC<{ items: {}[] }> = ({items}) => {
       <AsideMenu />
       <Card classes={styles.favorites}>
         <h1>My Favorites Items</h1>
-        ITEMS....
+        <MyProductsList />
       </Card>
     </section>
   );

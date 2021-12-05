@@ -1,8 +1,9 @@
 import { FC } from 'react';
 
-import Button from '../shared/Button';
-import Card from '../shared/Card';
 import AsideMenu from '../shared/AsideMenu/AsideMenu';
+import Card from '../shared/Card';
+import MyProductsList from '../shared/MyProducts/MyProductsList';
+import Button from '../shared/Button';
 
 import styles from './Cart.module.css';
 
@@ -12,7 +13,7 @@ const Cart: FC<{items: {}[]}> = ({items}) => {
       <AsideMenu />
       <Card classes={styles.cart}>
         <h1>My Cart</h1>
-        PRODUCTS
+        <MyProductsList cart />
       </Card>
       <Card classes={styles['actions']}>
         <h2>Information</h2>
