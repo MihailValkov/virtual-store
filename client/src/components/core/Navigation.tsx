@@ -10,10 +10,12 @@ import {
   faSignInAlt,
   faUserPlus,
   faSignOutAlt,
+  faStore,
 } from '@fortawesome/free-solid-svg-icons';
 import NavigationLink from '../shared/NavigationLink';
 import Button from '../shared/Button';
 import styles from './Navigation.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navigation: FC = () => {
   const dispatch = useDispatch();
@@ -28,7 +30,8 @@ const Navigation: FC = () => {
   return (
     <header className={styles.header}>
       <NavLink to='/' exact className={styles.logo}>
-        Home
+      <FontAwesomeIcon icon={faStore}/>
+      <span className={styles.text}>Virtual Store</span>
       </NavLink>
       <nav className={styles.actions}>
         {user && <NavigationLink icon={faUser} path='/auth/profile' text='Profile' />}
