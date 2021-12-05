@@ -7,11 +7,13 @@ import { AppRootState } from './+store/store';
 
 import Layout from './components/core/Layout';
 import LoadingSpinner from './components/shared/LoadingSpinner';
-import FavoritesPage from './pages/FavoritesPage';
 
 const AuthPage = lazy(() => import('./pages/Auth/AuthPage'));
 const CategoriesPage = lazy(() => import('./pages/CategoriesPage'));
 const CartPage = lazy(() => import('./pages/CartPage'));
+const FavoritesPage = lazy(() => import('./pages/FavoritesPage'));
+const OrdersPage = lazy(() => import('./pages/OrdersPage'));
+
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
@@ -28,6 +30,7 @@ const App: FC<{}> = () => {
         <Route path='/categories' exact component={CategoriesPage} />
         <Route path='/cart' exact component={CartPage} />
         <Route path='/favorites' exact component={FavoritesPage} />
+        <Route path='/orders' exact component={OrdersPage} />
           <Route path='/auth'>
             <AuthPage isLogged={isLogged} />
           </Route>

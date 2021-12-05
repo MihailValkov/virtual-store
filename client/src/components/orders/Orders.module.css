@@ -1,0 +1,16 @@
+.orders-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.orders {
+  width: 100%;
+  flex: 10;
+}
+
+.orders h1 {
+  font-size: 1.4rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
