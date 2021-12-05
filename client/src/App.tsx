@@ -8,8 +8,8 @@ import { AppRootState } from './+store/store';
 import Layout from './components/core/Layout';
 import LoadingSpinner from './components/shared/LoadingSpinner';
 
-const Auth = lazy(() => import('./pages/Auth/Auth'));
-const Categories = lazy(() => import('./pages/CategoriesPage'));
+const AuthPage = lazy(() => import('./pages/Auth/AuthPage'));
+const CategoriesPage = lazy(() => import('./pages/CategoriesPage'));
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
@@ -23,9 +23,9 @@ const App: FC<{}> = () => {
     <Layout>
       <Switch>
         <Suspense fallback={<LoadingSpinner />}>
-        <Route path='/categories' exact component={Categories} />
+        <Route path='/categories' exact component={CategoriesPage} />
           <Route path='/auth'>
-            <Auth isLogged={isLogged} />
+            <AuthPage isLogged={isLogged} />
           </Route>
         </Suspense>
       </Switch>
