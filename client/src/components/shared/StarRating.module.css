@@ -1,0 +1,32 @@
+.rating {
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: top;
+  height: 32px;
+  line-height: 32px;
+  color: #ccc;
+  font-size: 26px;
+  letter-spacing: 2px;
+}
+
+.rating-inner {
+  white-space: nowrap;
+  position: absolute;
+  line-height: inherit;
+  height: inherit;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.icon {
+  position: relative;
+  display: inline-block;
+}
+.icon-overlay {
+  color: #f9bf3b;
+  position: relative;
+  display: inline-block;
+}
