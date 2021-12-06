@@ -1,20 +1,21 @@
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeProductQuantity, deleteProductFromCart } from '../../../+store/cart/cart-slice';
-import { ICartProduct } from '../../../interfaces/cart-product';
 
 import useInput from '../../../hooks/use-input';
+import { isNumberValidation } from '../../../util/validations';
+import { ICartProduct } from '../../../interfaces/cart-product';
+import { changeProductQuantity, deleteProductFromCart } from '../../../+store/cart/cart-slice';
+
 import Button from '../Button';
 import Color from '../Color';
 import StarRating from '../StarRating';
 
 import styles from './MyProduct.module.css';
-import { positiveValidation } from '../../../util/validations';
 
 const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product: ICartProduct }> =
   ({ cart, order, classes, product }) => {
     const dispatch = useDispatch();
-    const { changeHandler, value } = useInput(positiveValidation);
+    const { changeHandler, value } = useInput(isNumberValidation);
 
     const onDeleteProduct = () => {
       dispatch(deleteProductFromCart({ id: product._id }));
@@ -61,6 +62,7 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
                   className={styles['product-quantity']}
                   type='number'
                   min='0'
+                  step='1'
                   value={product.quantity}
                   disabled={order ? true : false}
                   onChange={changeHandler}

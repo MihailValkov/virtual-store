@@ -7,7 +7,7 @@ const useInput = (validateValue: IValidationFn) => {
 
   useEffect(() => {
     let timer = setTimeout(() => {
-      if (state.value !== '' || state.touched) {
+      if (state.touched) {
         const { isValid, message } = validateValue(state.value);
         dispatch({
           type: 'error',

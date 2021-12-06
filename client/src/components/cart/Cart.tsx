@@ -43,6 +43,7 @@ const items_dummy = [
 const Cart: FC<{ items: {}[] }> = ({ items }) => {
   const products = useSelector((state: AppRootState) => state.cart.products);
   const totalPrice = useSelector((state: AppRootState) => state.cart.totalPrice);
+  const totalProducts = useSelector((state: AppRootState) => state.cart.totalProducts);
   const dispatch = useDispatch();
 
   const taxes = products.length * 5;
@@ -65,7 +66,7 @@ const Cart: FC<{ items: {}[] }> = ({ items }) => {
         <h2>Information</h2>
         <p>
           <span>Total items:</span>
-          <span>{products.length}</span>
+          <span>{totalProducts}</span>
         </p>
         <p>
           <span>Price:</span>
