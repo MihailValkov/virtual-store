@@ -4,7 +4,7 @@ import { Route, useRouteMatch } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 
-const AuthPage: FC<{ isLogged: boolean }> = ({ isLogged }) => {
+const Auth: FC<{ isLogged: boolean }> = ({ isLogged }) => {
   const { path } = useRouteMatch();
 
   return <>
@@ -13,4 +13,4 @@ const AuthPage: FC<{ isLogged: boolean }> = ({ isLogged }) => {
   </>;
 };
 
-export default AuthPage;
+export default Auth;
