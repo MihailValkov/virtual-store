@@ -1,25 +1,30 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteProductFromCart } from '../../../+store/cart/cart-slice';
+import { changeProductQuantity, deleteProductFromCart } from '../../../+store/cart/cart-slice';
 import { ICartProduct } from '../../../interfaces/cart-product';
 
+import useInput from '../../../hooks/use-input';
 import Button from '../Button';
 import Color from '../Color';
 import StarRating from '../StarRating';
 
 import styles from './MyProduct.module.css';
+import { positiveValidation } from '../../../util/validations';
 
 const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product: ICartProduct }> =
   ({ cart, order, classes, product }) => {
     const dispatch = useDispatch();
-
-    if (!product) {
-      return null;
-    }
+    const { changeHandler, value } = useInput(positiveValidation);
 
     const onDeleteProduct = () => {
       dispatch(deleteProductFromCart({ id: product._id }));
     };
+
+    useEffect(() => {
+      if (value) {
+        dispatch(changeProductQuantity({ id: product._id, quantity: Number(value) }));
+      }
+    }, [value, dispatch, product._id]);
 
     return (
       <li className={`${styles.product} ${classes || ''}`}>
@@ -55,10 +60,10 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
                 <input
                   className={styles['product-quantity']}
                   type='number'
-                  step='1'
-                  min='1'
+                  min='0'
                   value={product.quantity}
                   disabled={order ? true : false}
+                  onChange={changeHandler}
                 />
               </>
             )}
@@ -66,11 +71,7 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
           </div>
           <div className={styles['product-taxes']}>
             <p>Taxes: {product.taxes.toFixed(2)} BNG </p>
-            <p>
-              Total:{' '}
-              {product.finalPrice === 0 ? '0.00' : (product.finalPrice).toFixed(2)}{' '}
-              BNG{' '}
-            </p>
+            <p>Total: {product.finalPrice === 0 ? '0.00' : product.finalPrice.toFixed(2)} BNG </p>
           </div>
           {!order && (
             <div className={styles['product-action']}>

@@ -11,6 +11,11 @@ export const passwordValidation = validation.bind(
   'Password should be at least 4 characters long!',
   /[A-Za-z0-9_]{4,}/
 );
+export const positiveValidation = validation.bind(
+  null,
+  'Input field should be a positive number!',
+  /[0-9]+/
+);
 
 
 export type IValidationFn = typeof emailValidation | typeof passwordValidation;

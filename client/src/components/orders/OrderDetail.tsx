@@ -9,6 +9,8 @@ import styles from './OrderDetail.module.css';
 
 const OrderDetail: FC<{}> = (props) => {
   const { id } = useParams<{ id: string }>();
+  console.log(id);
+  
 
   return (
     <section className={styles['order-detail']}>
