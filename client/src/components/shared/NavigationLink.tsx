@@ -1,7 +1,8 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { withHighlighted } from '../../hocs/isHighlighted';
 import styles from './NavigationLink.module.css';
 
 const NavigationLink: FC<{
@@ -10,19 +11,9 @@ const NavigationLink: FC<{
   text: string;
   badge?: boolean;
   count?: number;
-}> = ({ path, icon, text, badge, count }) => {
-  const [isHighlighted, setIsHighlighted] = useState(false);
+  isHighlighted: boolean;
+}> = ({ path, icon, text, badge, count, isHighlighted }) => {
   let classes = `${styles['icon-container']} ${isHighlighted && styles.bump}`;
-
-  useEffect(() => {
-    if (count === 0) {
-      return;
-    }
-    setIsHighlighted(true);
-    let timer = setTimeout(() => setIsHighlighted(false), 300);
-
-    return () => clearTimeout(timer);
-  }, [count]);
 
   return (
     <NavLink className={styles.link} to={path} activeClassName={styles.active}>
@@ -35,4 +26,4 @@ const NavigationLink: FC<{
   );
 };
 
-export default NavigationLink;
+export default withHighlighted(NavigationLink);

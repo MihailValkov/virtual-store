@@ -26,8 +26,7 @@ const cartSlice = createSlice({
         state.totalPrice += existingProduct.price;
       } else {
         const finalPrice = 1 * action.payload.product.price + action.payload.product.taxes;
-        const newProduct = { ...action.payload.product, finalPrice };
-        state.products.push(newProduct);
+        state.products.push({ ...action.payload.product, finalPrice });
         state.totalPrice += finalPrice;
       }
       return state;
@@ -35,8 +34,9 @@ const cartSlice = createSlice({
     deleteProductFromCart: (state, action) => {
       const index = state.products.findIndex((product) => product._id === action.payload.id);
       const product = state.products[index];
-      state.totalProducts--;
+      state.totalProducts -= product.quantity;
       state.totalPrice -= product.price * product.quantity + product.taxes;
+      state.totalPrice = state.totalPrice < 0 ? 0 : state.totalPrice;
       state.products.splice(index, 1);
       return state;
     },
