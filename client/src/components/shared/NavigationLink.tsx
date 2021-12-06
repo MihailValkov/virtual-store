@@ -11,7 +11,7 @@ const NavigationLink: FC<{
   text: string;
   badge?: boolean;
   count?: number;
-  isHighlighted: boolean;
+  isHighlighted?: boolean;
 }> = ({ path, icon, text, badge, count, isHighlighted }) => {
   let classes = `${styles['icon-container']} ${isHighlighted && styles.bump}`;
 

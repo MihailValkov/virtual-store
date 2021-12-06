@@ -22,6 +22,9 @@ const Navigation: FC = () => {
   const history = useHistory();
   const user = useSelector((state: AppRootState) => state.auth.user);
   const totalCartProducts = useSelector((state: AppRootState) => state.cart.totalProducts);
+  const totalFavoriteProducts = useSelector(
+    (state: AppRootState) => state.favorites.products
+  ).length;
 
   const logoutHandler = () => {
     dispatch(logoutAction());
@@ -31,16 +34,32 @@ const Navigation: FC = () => {
   return (
     <header className={styles.header}>
       <NavLink to='/' exact className={styles.logo}>
-      <FontAwesomeIcon icon={faStore}/>
-      <span className={styles.text}>Virtual Store</span>
+        <FontAwesomeIcon icon={faStore} />
+        <span className={styles.text}>Virtual Store</span>
       </NavLink>
       <nav className={styles.actions}>
         {user && <NavigationLink icon={faUser} path='/auth/profile' text='Profile' />}
-        <NavigationLink icon={faHeart} path='/favorite' text='Your Favorites' badge />
-        <NavigationLink icon={faCartArrowDown} path='/cart' text='Your Cart' badge count={totalCartProducts}/>
+        <NavigationLink
+          icon={faHeart}
+          path='/favorites'
+          text='Your Favorites'
+          badge
+          count={totalFavoriteProducts}
+        />
+        <NavigationLink
+          icon={faCartArrowDown}
+          path='/cart'
+          text='Your Cart'
+          badge
+          count={totalCartProducts}
+        />
         {!user && <NavigationLink icon={faSignInAlt} path='/auth/login' text='Login' />}
         {!user && <NavigationLink icon={faUserPlus} path='/auth/register' text='Register' />}
-        {user && <Button onClick={logoutHandler} icon={faSignOutAlt}>Logout</Button>}
+        {user && (
+          <Button onClick={logoutHandler} icon={faSignOutAlt}>
+            Logout
+          </Button>
+        )}
       </nav>
     </header>
   );

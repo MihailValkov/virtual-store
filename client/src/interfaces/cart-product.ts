@@ -9,4 +9,5 @@ export interface ICartProduct {
   inStock: boolean;
   color: string;
   quantity: number;
+  isFavorite: boolean;
 }

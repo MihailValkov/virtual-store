@@ -24,6 +24,7 @@ const items_dummy = [
     rating: 50,
     inStock: true,
     color: 'blue',
+    isFavorite: false,
   },
   {
     _id: 'Prdct_002',
@@ -37,6 +38,7 @@ const items_dummy = [
     rating: 90,
     inStock: false,
     color: 'black',
+    isFavorite: false,
   },
 ];
 
@@ -70,11 +72,11 @@ const Cart: FC<{ items: {}[] }> = ({ items }) => {
         </p>
         <p>
           <span>Price:</span>
-          <span>{(totalPrice-taxes).toFixed(2)} BGN</span>
+          <span>{(totalPrice - taxes).toFixed(2)} BGN</span>
         </p>
         <p>
           <span>Taxes:</span>
-          <span>{(taxes).toFixed(2)} BGN</span>
+          <span>{taxes.toFixed(2)} BGN</span>
         </p>
         <p className={styles['line']}></p>
         <div className={styles['total-price']}>

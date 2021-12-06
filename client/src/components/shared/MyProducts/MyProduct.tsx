@@ -1,24 +1,48 @@
 import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useInput from '../../../hooks/use-input';
 import { isNumberValidation } from '../../../util/validations';
 import { ICartProduct } from '../../../interfaces/cart-product';
-import { changeProductQuantity, deleteProductFromCart } from '../../../+store/cart/cart-slice';
+import {
+  addProductToCart,
+  changeProductQuantity,
+  deleteProductFromCart,
+} from '../../../+store/cart/cart-slice';
 
 import Button from '../Button';
 import Color from '../Color';
 import StarRating from '../StarRating';
 
 import styles from './MyProduct.module.css';
+import { AppRootState } from '../../../+store/store';
+import {
+  addProductToFavorites,
+  deleteProductFromFavorites,
+} from '../../../+store/favorites/favorites-slice';
 
 const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product: ICartProduct }> =
   ({ cart, order, classes, product }) => {
     const dispatch = useDispatch();
+    const isFavorite = useSelector((state: AppRootState) => state.favorites.products).find(
+      (p) => p._id === product._id
+    );
+
     const { changeHandler, value } = useInput(isNumberValidation);
 
-    const onDeleteProduct = () => {
+    const onAddProductToCart = () => {
+      dispatch(addProductToCart({ product }));
+    };
+
+    const onDeleteProductFromCart = () => {
       dispatch(deleteProductFromCart({ id: product._id }));
+    };
+
+    const onAddProductToFavorites = () => {
+      dispatch(addProductToFavorites({ product }));
+    };
+    const onDeleteProductFromFavorites = () => {
+      dispatch(deleteProductFromFavorites({ id: product._id }));
     };
 
     useEffect(() => {
@@ -77,12 +101,26 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
           </div>
           {!order && (
             <div className={styles['product-action']}>
-              <Button classes={styles['product-action-favorite']}>
-                {cart ? 'Add to Favorites' : 'Add to Cart'}
+              <Button
+                classes={styles['product-action-favorite']}
+                onClick={
+                  cart
+                    ? isFavorite
+                      ? onDeleteProductFromFavorites
+                      : onAddProductToFavorites
+                    : onAddProductToCart
+                }
+              >
+                {cart ? (isFavorite ? 'Delete from Favorites' : 'Add to Favorites') : 'Add to Cart'}
               </Button>
-              <Button onClick={onDeleteProduct} classes={styles['product-action-delete']}>
-                Delete
-              </Button>
+              {!cart && (
+                <Button
+                  onClick={cart ? onDeleteProductFromCart : onDeleteProductFromFavorites}
+                  classes={styles['product-action-delete']}
+                >
+                  {cart ? 'Delete from cart' : 'Delete from favorites'}
+                </Button>
+              )}
             </div>
           )}
         </div>
