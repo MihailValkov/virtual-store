@@ -21,6 +21,7 @@ const Navigation: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state: AppRootState) => state.auth.user);
+  const totalCartProducts = useSelector((state: AppRootState) => state.cart.totalProducts);
 
   const logoutHandler = () => {
     dispatch(logoutAction());
@@ -36,7 +37,7 @@ const Navigation: FC = () => {
       <nav className={styles.actions}>
         {user && <NavigationLink icon={faUser} path='/auth/profile' text='Profile' />}
         <NavigationLink icon={faHeart} path='/favorite' text='Your Favorites' badge />
-        <NavigationLink icon={faCartArrowDown} path='/cart' text='Your Cart' badge />
+        <NavigationLink icon={faCartArrowDown} path='/cart' text='Your Cart' badge count={totalCartProducts}/>
         {!user && <NavigationLink icon={faSignInAlt} path='/auth/login' text='Login' />}
         {!user && <NavigationLink icon={faUserPlus} path='/auth/register' text='Register' />}
         {user && <Button onClick={logoutHandler} icon={faSignOutAlt}>Logout</Button>}
