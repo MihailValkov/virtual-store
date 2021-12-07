@@ -64,11 +64,12 @@
 
 .btn {
   background-color: transparent;
+  padding: 10px;
 }
 .btn svg {
   font-size: 2rem;
-  z-index: 15;
   color: #f9bf3b;
+  margin-right: 0;
 }
 
 .btn svg:hover {

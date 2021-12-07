@@ -40,14 +40,89 @@ const categories = [
     imageUrl: 'http://localhost:5500/categories/camera.png',
   },
 ];
+const products = [
+  {
+    _id: 'p1123',
+    images: [
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_a0ae106d44c5ef737055bf8ea9146941.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_624f129e976b8be5b997ec63be975bbc.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_c4117c439b862b7517cc87d2c57ac78c.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_da22c15b78ab4b9743a085ccc9dfd577.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_110fe86401f58b10a8a223b14f017a8a.jpg',
+    ],
+    category: 'phone',
+    colors: ['red', 'blue', 'green', 'black', 'purple', 'yellow'],
+    name: 'Huawei Nova 9',
+    price: 659.85,
+    year: 2019,
+    availablePieces: 51,
+    brand: 'Huawei',
+    model: 'Nova 9',
+    description: 'Huawei Nova 9, Dual SIM, 128GB, 8GB RAM, 4G, Black',
+    rating: 85,
+  },
+  {
+    _id: 'p1223',
+    images: [
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_a0ae106d44c5ef737055bf8ea9146941.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_624f129e976b8be5b997ec63be975bbc.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_c4117c439b862b7517cc87d2c57ac78c.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_da22c15b78ab4b9743a085ccc9dfd577.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_110fe86401f58b10a8a223b14f017a8a.jpg',
+    ],
+    category: 'phone',
+    colors: ['red', 'blue', 'green', 'black', 'purple', 'yellow'],
+    name: 'Huawei Nova 9',
+    price: 659.85,
+    year: 2019,
+    availablePieces: 51,
+    brand: 'Huawei',
+    model: 'Nova 9',
+    description: 'Huawei Nova 9, Dual SIM, 128GB, 8GB RAM, 4G, Black',
+    rating: 85,
+  },
+  {
+    _id: 'p1323',
+    images: [
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_a0ae106d44c5ef737055bf8ea9146941.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_624f129e976b8be5b997ec63be975bbc.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_c4117c439b862b7517cc87d2c57ac78c.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_da22c15b78ab4b9743a085ccc9dfd577.jpg',
+      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_110fe86401f58b10a8a223b14f017a8a.jpg',
+    ],
+    category: 'phone',
+    colors: ['red', 'blue', 'green', 'black', 'purple', 'yellow'],
+    name: 'Huawei Nova 9',
+    price: 659.85,
+    year: 2019,
+    availablePieces: 51,
+    brand: 'Huawei',
+    model: 'Nova 9',
+    description: 'Huawei Nova 9, Dual SIM, 128GB, 8GB RAM, 4G, Black',
+    rating: 85,
+  },
+];
 
 module.exports = {
   get: {
     async categories(req, res) {
-      const { category } = req.query;
-      console.log(req.query);
       try {
         return res.status(200).json(categories);
+      } catch (error) {
+        return res.status(404).json({ message: 'Not Found 404' });
+      }
+    },
+    async products(req, res) {
+      try {
+        return res.status(200).json(products);
+      } catch (error) {
+        return res.status(404).json({ message: 'Not Found 404' });
+      }
+    },
+    async product(req, res) {
+      const { productId } = req.params;
+      try {
+        return res.status(200).json(products.find((p) => p._id === productId));
       } catch (error) {
         return res.status(404).json({ message: 'Not Found 404' });
       }
