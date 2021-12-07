@@ -10,6 +10,7 @@ const CategoriesPage: FC<{}> = () => {
   useEffect(() => {
     http.get('categories').then((data) => setCategories(data));
   }, []);
+  
   return <CategoryList categories={categories} />;
 };
 

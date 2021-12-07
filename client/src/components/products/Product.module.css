@@ -1,0 +1,76 @@
+.product {
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  width: 315px;
+}
+
+.product a > section {
+  position: relative;
+}
+
+.product > a {
+  cursor: pointer;
+  color: inherit;
+}
+
+.overlay {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 13%;
+  background-color: #ccc;
+}
+
+.content {
+  position: inherit;
+}
+
+.product a > section:hover .actions {
+  opacity: 1;
+  transform: translate(0%, -70%);
+}
+
+.product img {
+  padding: 10px 0;
+  margin: 10px;
+  background: #767575;
+  width: 200px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.price {
+  margin: 0.25rem;
+  font-weight: bold;
+  color: #ad5502;
+  font-size: 1.25rem;
+}
+
+.actions {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translate(-0%, -150px);
+  transition: all 0.4s ease-out;
+}
+
+.btn {
+  background-color: transparent;
+}
+.btn svg {
+  font-size: 2rem;
+  z-index: 15;
+  color: #f9bf3b;
+}
+
+.btn svg:hover {
+  color: #ef2809;
+}

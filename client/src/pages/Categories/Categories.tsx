@@ -10,7 +10,8 @@ const Categories: FC<{}> = () => {
   return (
     <>
       <Route path={`${path}`} exact component={CategoriesPage} />
-      <Route path={`${path}/:category`} component={CategoryPage} />
+      <Route path={`${path}/:category`} exact component={CategoryPage} />
+      <Route path={`${path}/:category/details/:productId`} component={CategoryPage} />
     </>
   );
 };
