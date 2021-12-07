@@ -99,7 +99,7 @@
   justify-content: flex-end;
 }
 .product-action button {
-  padding: 0.3rem;
+  padding: 0.3rem 0.5rem;
 }
 .product-action-favorite {
   margin-right: 10px;

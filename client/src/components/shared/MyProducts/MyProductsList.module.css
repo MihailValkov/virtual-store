@@ -2,6 +2,17 @@
   flex: 8;
 }
 
+.no-products {
+  text-align: center;
+  width: 100%;
+  height: auto;
+}
+.no-products img {
+  height: 300px;
+  width: 100%;
+  object-fit: contain;
+}
+
 .product {
   display: flex;
   justify-content: space-between;

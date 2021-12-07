@@ -1,15 +1,15 @@
 import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { AppRootState } from '../../+store/store';
+import { addProductToCart } from '../../+store/cart/cart-slice';
+
 import AsideMenu from '../shared/AsideMenu/AsideMenu';
 import Card from '../shared/Card';
 import MyProductsList from '../shared/MyProducts/MyProductsList';
 import Button from '../shared/Button';
 
-import { AppRootState } from '../../+store/store';
-
 import styles from './Cart.module.css';
-import { addProductToCart } from '../../+store/cart/cart-slice';
 
 const items_dummy = [
   {
@@ -48,7 +48,7 @@ const Cart: FC<{ items: {}[] }> = ({ items }) => {
   const totalProducts = useSelector((state: AppRootState) => state.cart.totalProducts);
   const dispatch = useDispatch();
 
-  const taxes = products.length * 5;
+  const taxes = products.length * products[0]?.taxes;
 
   const addProduct = () => {
     dispatch(addProductToCart({ product: items_dummy[0] }));
