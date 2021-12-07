@@ -10,14 +10,13 @@ import styles from './OrderDetail.module.css';
 const OrderDetail: FC<{}> = (props) => {
   const { id } = useParams<{ id: string }>();
   console.log(id);
-  
 
   return (
     <section className={styles['order-detail']}>
       <AsideMenu />
       <Card classes={styles['order-container']}>
         <h1>Order Details</h1>
-        <h3>Order Number: 123ff234sdf2342asd12</h3>
+        <h3>Order Number: {id}</h3>
         <div className={styles['order-content']}>
           <div>
             <p>
@@ -45,11 +44,11 @@ const OrderDetail: FC<{}> = (props) => {
           </div>
         </div>
         <h2>Products</h2>
-        <MyProductsList order classes={styles.product} />
+        <MyProductsList order classes={styles.product} products={[]} />
         <div className={styles['price']}>
-          <div className={styles['total-price']}> 
-          <p>Total: </p>
-          <strong>551.99 BGN</strong>
+          <div className={styles['total-price']}>
+            <p>Total: </p>
+            <strong>551.99 BGN</strong>
           </div>
         </div>
       </Card>

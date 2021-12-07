@@ -3,22 +3,29 @@ import { Link } from 'react-router-dom';
 
 import styles from './Order.module.css';
 
-const Order: FC<{}> = (props) => {
+const Order: FC<{
+  _id: string;
+  date: string;
+  address: string;
+  status: string;
+  amount: number;
+  totalPrice: number;
+}> = ({ _id, date, address, status, amount, totalPrice }) => {
   return (
     <li className={styles.order}>
       <header>
-        <h3>Order Number: 123ff234sdf2342asd12</h3>
-        <Link to='/orders/detail/some-id'>Order Details</Link>
+        <h3>Order Number: {_id}</h3>
+        <Link to={`/orders/detail/${_id}`}>Order Details</Link>
       </header>
       <div className={styles['order-content']}>
         <div className={`${styles['order-info']} ${styles.left}`}>
-          <p>Register Date: 6 may 2021, 11:52</p>
-          <p>Address: Bulgaria, Svilengrad</p>
-          <p>Status: Pending</p>
+          <p>Register Date: {date}</p>
+          <p>Address: {address}</p>
+          <p>Status: {status}</p>
         </div>
         <div className={`${styles['order-info']} ${styles.right}`}>
-          <p> 5 x items</p>
-          <p className={styles['total-price']}>159.99 BGN</p>
+          <p>{amount} x items</p>
+          <p className={styles['total-price']}>{totalPrice.toFixed(2)} BGN</p>
         </div>
       </div>
     </li>
