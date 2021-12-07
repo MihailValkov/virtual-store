@@ -9,11 +9,10 @@ import Layout from './components/core/Layout';
 import LoadingSpinner from './components/shared/LoadingSpinner';
 
 const Auth = lazy(() => import('./pages/Auth/Auth'));
-const CategoriesPage = lazy(() => import('./pages/CategoriesPage'));
+const Categories = lazy(() => import('./pages/Categories/Categories'));
 const CartPage = lazy(() => import('./pages/CartPage'));
 const FavoritesPage = lazy(() => import('./pages/FavoritesPage'));
 const Orders = lazy(() => import('./pages/Orders/Orders'));
-
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
@@ -27,13 +26,13 @@ const App: FC<{}> = () => {
     <Layout>
       <Switch>
         <Suspense fallback={<LoadingSpinner />}>
-        <Route path='/categories' exact component={CategoriesPage} />
-        <Route path='/cart' exact component={CartPage} />
-        <Route path='/favorites' exact component={FavoritesPage} />
+          <Route path='/cart' exact component={CartPage} />
+          <Route path='/favorites' exact component={FavoritesPage} />
+          <Route path='/categories' component={Categories} />
           <Route path='/orders'>
             <Orders />
           </Route>
-          <Route path='/auth' exact>
+          <Route path='/auth'>
             <Auth isLogged={isLogged} />
           </Route>
         </Suspense>

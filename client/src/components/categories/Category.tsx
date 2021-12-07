@@ -6,7 +6,7 @@ const Category: FC<{ category: string; imageUrl: string }> = ({ category, imageU
   return (
     <li className={styles['category']}>
       <h3>{category}</h3>
-      <Link to={`/categories?category=${category.toLocaleLowerCase()}`}>
+      <Link to={`/categories/${category.toLocaleLowerCase()}`}>
         <img src={imageUrl} alt={category} />
       </Link>
     </li>
