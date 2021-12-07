@@ -1,5 +1,7 @@
 import { FC } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { AppRootState } from '../../+store/store';
 
 import AsideMenu from '../shared/AsideMenu/AsideMenu';
 import Card from '../shared/Card';
@@ -9,7 +11,9 @@ import styles from './OrderDetail.module.css';
 
 const OrderDetail: FC<{}> = (props) => {
   const { id } = useParams<{ id: string }>();
-  console.log(id);
+  const ordersList = useSelector((state:AppRootState) => state.orders.ordersList);
+  const user = useSelector((state:AppRootState) => state.auth.user);
+  const currentOrder = ordersList.find(o => o._id === id);
 
   return (
     <section className={styles['order-detail']}>
@@ -20,26 +24,26 @@ const OrderDetail: FC<{}> = (props) => {
         <div className={styles['order-content']}>
           <div>
             <p>
-              <span>Register Date:</span> <strong>6 may 2021, 11:52</strong>
+              <span>Register Date:</span> <strong>{currentOrder?.date}</strong>
             </p>
             <p>
-              <span>Status:</span> <strong> Approved</strong>
-            </p>
-          </div>
-          <div>
-            <p>
-              <span>Address:</span> <strong> Bulgaria, Svilengrad</strong>
-            </p>
-            <p>
-              <span>Name:</span> <strong> Mihail Valkov</strong>
+              <span>Status:</span> <strong> {currentOrder?.status}</strong>
             </p>
           </div>
           <div>
             <p>
-              <span>Items:</span> <strong> 5</strong>
+              <span>Address:</span> <strong>{currentOrder?.address}</strong>
             </p>
             <p>
-              <span>Total Price:</span> <strong>159.99 BGN</strong>
+              <span>Name:</span> <strong>{user?.username}</strong>
+            </p>
+          </div>
+          <div>
+            <p>
+              <span>Amount:</span> <strong>{currentOrder?.amount}</strong>
+            </p>
+            <p>
+              <span>Total Price:</span> <strong>{currentOrder?.price} BGN</strong>
             </p>
           </div>
         </div>
@@ -48,7 +52,7 @@ const OrderDetail: FC<{}> = (props) => {
         <div className={styles['price']}>
           <div className={styles['total-price']}>
             <p>Total: </p>
-            <strong>551.99 BGN</strong>
+            <strong>{(currentOrder!.price * currentOrder!.amount).toFixed(2)} BGN</strong>
           </div>
         </div>
       </Card>

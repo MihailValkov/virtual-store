@@ -8,7 +8,7 @@ const Button: FC<{
   classes?: string;
   disabled?: boolean;
   onClick?: () => void;
-  icon?: IconDefinition;
+  icon?: IconDefinition | null;
 }> = ({ type, classes, children, disabled, onClick, icon }) => {
   return (
     <button

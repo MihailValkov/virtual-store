@@ -20,6 +20,7 @@ import {
   addProductToFavorites,
   deleteProductFromFavorites,
 } from '../../../+store/favorites/favorites-slice';
+import { faBorderNone, faCartArrowDown, faHeart, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
 
 const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product: ICartProduct }> =
   ({ cart, order, classes, product }) => {
@@ -102,7 +103,7 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
           {!order && (
             <div className={styles['product-action']}>
               <Button
-                classes={styles['product-action-favorite']}
+                classes={`${styles['product-action-favorite']} ${isFavorite && styles['highlighted']}`}
                 onClick={
                   cart
                     ? isFavorite
@@ -110,17 +111,17 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
                       : onAddProductToFavorites
                     : onAddProductToCart
                 }
+                icon={cart ? faHeart : null}
               >
-                {cart ? (isFavorite ? 'Delete from Favorites' : 'Add to Favorites') : 'Add to Cart'}
+                {cart ? 'Favorite' : 'Add to Cart'}
               </Button>
-              {!cart && (
-                <Button
-                  onClick={cart ? onDeleteProductFromCart : onDeleteProductFromFavorites}
-                  classes={styles['product-action-delete']}
-                >
-                  {cart ? 'Delete from cart' : 'Delete from favorites'}
-                </Button>
-              )}
+
+              <Button
+                onClick={cart ? onDeleteProductFromCart : onDeleteProductFromFavorites}
+                classes={styles['product-action-delete']}
+              >
+                Delete
+              </Button>
             </div>
           )}
         </div>

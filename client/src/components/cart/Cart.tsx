@@ -67,20 +67,20 @@ const Cart: FC<{ items: {}[] }> = ({ items }) => {
       <Card classes={styles['actions']}>
         <h2>Information</h2>
         <p>
-          <span>Total items:</span>
+          <span>Total products:</span>
           <span>{totalProducts}</span>
         </p>
         <p>
           <span>Price:</span>
-          <span>{(totalPrice - taxes).toFixed(2)} BGN</span>
+          <span>{totalPrice === 0 ? '0.00' : (totalPrice - taxes).toFixed(2)} BGN</span>
         </p>
         <p>
           <span>Taxes:</span>
-          <span>{taxes.toFixed(2)} BGN</span>
+          <span>{taxes ? taxes.toFixed(2) : '0.00'} BGN</span>
         </p>
         <p className={styles['line']}></p>
         <div className={styles['total-price']}>
-          Total price: <span>{totalPrice.toFixed(2)} BGN</span>
+          Total price: <span>{totalPrice.toFixed(2) || '0.00'} BGN</span>
         </div>
         <Button>Continue</Button>
         <Button onClick={addProduct}>Add product</Button>
