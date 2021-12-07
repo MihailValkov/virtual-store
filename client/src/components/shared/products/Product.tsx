@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import { faCartArrowDown, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { ICategoryProduct } from '../../interfaces/category-product';
-import Card from '../shared/Card';
-import StarRating from '../shared/StarRating';
-import Button from '../shared/Button';
+import { ICategoryProduct } from '../../../interfaces/category-product';
+import Card from '../Card';
+import StarRating from '../StarRating';
+import Button from '../Button';
 
 import styles from './Product.module.css';
 
