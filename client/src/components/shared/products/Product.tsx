@@ -8,9 +8,19 @@ import StarRating from '../StarRating';
 import Button from '../Button';
 
 import styles from './Product.module.css';
+import { AppRootState } from '../../../+store/store';
+import { useSelector } from 'react-redux';
 
-const Product: FC<{ product: ICategoryProduct }> = ({ product }) => {
+const Product: FC<{
+  product: ICategoryProduct;
+  onAddProductToCart: () => void;
+  onAddProductToFavorites: () => void;
+  onDeleteProductFromFavorites: () => void;
+}> = ({ product, onAddProductToCart, onAddProductToFavorites, onDeleteProductFromFavorites }) => {
   const { url } = useRouteMatch();
+  const isFavorite = useSelector((state: AppRootState) => state.favorites.products).find(
+    (p) => p._id === product._id
+  );
   return (
     <li className={styles['product']}>
       <Link to={`${url}/details/${product._id}`}>
@@ -24,8 +34,12 @@ const Product: FC<{ product: ICategoryProduct }> = ({ product }) => {
             <StarRating width={product.rating} />
           </div>
           <div className={styles.actions}>
-            <Button classes={styles.btn} icon={faCartArrowDown} />
-            <Button classes={styles.btn} icon={faHeart} />
+            <Button classes={styles.btn} icon={faCartArrowDown} onClick={onAddProductToCart} />
+            <Button
+              classes={`${styles.btn} ${isFavorite && styles.toggle}`}
+              icon={faHeart}
+              onClick={isFavorite ? onDeleteProductFromFavorites : onAddProductToFavorites}
+            />
           </div>
         </Card>
       </Link>

@@ -70,8 +70,10 @@
   font-size: 2rem;
   color: #f9bf3b;
   margin-right: 0;
+  z-index: 10;
 }
 
-.btn svg:hover {
+.btn svg:hover,
+.btn.toggle svg {
   color: #ef2809;
 }
