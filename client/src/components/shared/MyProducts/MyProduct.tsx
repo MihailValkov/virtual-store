@@ -20,7 +20,7 @@ import {
   addProductToFavorites,
   deleteProductFromFavorites,
 } from '../../../+store/favorites/favorites-slice';
-import { faBorderNone, faCartArrowDown, faHeart, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product: ICartProduct }> =
   ({ cart, order, classes, product }) => {
@@ -97,13 +97,15 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
             <p className={styles['product-price']}>{product.price}</p>
           </div>
           <div className={styles['product-taxes']}>
-            <p>Taxes: {product.taxes.toFixed(2)} BNG </p>
-            <p>Total: {product.finalPrice === 0 ? '0.00' : product.finalPrice.toFixed(2)} BNG </p>
+            <p>Taxes: {product?.taxes.toFixed(2)} BNG </p>
+            <p>Total: {product?.finalPrice === 0 ? '0.00' : product.finalPrice.toFixed(2)} BNG </p>
           </div>
           {!order && (
             <div className={styles['product-action']}>
               <Button
-                classes={`${styles['product-action-favorite']} ${isFavorite && styles['highlighted']}`}
+                classes={`${styles['product-action-favorite']} ${
+                  isFavorite && styles['highlighted']
+                }`}
                 onClick={
                   cart
                     ? isFavorite
