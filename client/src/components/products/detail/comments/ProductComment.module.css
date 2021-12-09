@@ -1,0 +1,28 @@
+.comment {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+.user-info img {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+.user-comment {
+  flex: 10;
+}
+.user-comment > *,
+.user-info > * {
+  margin-top: 5px;
+}

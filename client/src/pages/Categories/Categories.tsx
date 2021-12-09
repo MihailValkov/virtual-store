@@ -3,6 +3,7 @@ import { Route, useRouteMatch } from 'react-router-dom';
 
 import CategoriesPage from './CategoriesPage';
 import CategoryPage from './CategoryPage';
+import CategoryDetailPage from './CategoryDetailPage';
 
 const Categories: FC<{}> = () => {
   const { path } = useRouteMatch();
@@ -11,7 +12,7 @@ const Categories: FC<{}> = () => {
     <>
       <Route path={`${path}`} exact component={CategoriesPage} />
       <Route path={`${path}/:category`} exact component={CategoryPage} />
-      <Route path={`${path}/:category/details/:productId`} component={CategoryPage} />
+      <Route path={`${path}/:category/detail/:productId`} component={CategoryDetailPage} />
     </>
   );
 };

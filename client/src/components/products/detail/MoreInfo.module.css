@@ -1,0 +1,27 @@
+.table{
+  border-collapse: collapse;
+  width: 350px;
+}
+.table tr {
+  border-radius: 10px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.table tr td:first-child {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.table tr:nth-child(1n) {
+  background-color: #cbcfd1;
+  margin-bottom: 5px;
+}
+
+.table tr:nth-child(2n) {
+  background-color: #8e9295;
+  color: #f7f7f7;
+  box-shadow: inset 0 0 0 1px #e3e6e6;
+}
+
+

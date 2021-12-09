@@ -5,15 +5,14 @@
   width: 315px;
 }
 
-.product a > section {
+.product > section {
   position: relative;
 }
 
-.product > a {
+.product a {
   cursor: pointer;
   color: inherit;
 }
-
 .overlay {
   content: '';
   position: absolute;
@@ -26,9 +25,10 @@
 
 .content {
   position: inherit;
+  pointer-events: none;
 }
 
-.product a > section:hover .actions {
+.product > section:hover .actions {
   opacity: 1;
   transform: translate(0%, -70%);
 }
@@ -73,7 +73,6 @@
   z-index: 10;
 }
 
-.btn svg:hover,
 .btn.toggle svg {
   color: #ef2809;
 }

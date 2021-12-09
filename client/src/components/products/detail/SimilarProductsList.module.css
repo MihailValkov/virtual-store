@@ -1,0 +1,50 @@
+.products {
+  background: white;
+  padding: 10px;
+}
+.products > h2 {
+  text-align: left;
+}
+.products ul {
+  flex-wrap: nowrap;
+}
+.products ul li section {
+  width: 270px;
+}
+.products ul li {
+  margin-right: 10px;
+}
+
+.products-inner {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  position: relative;
+}
+.products-inner .arrow {
+  background-color: #f7f7f7;
+  height: 80px;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  position: absolute;
+  color: #1f140e;
+  border-radius: 10px;
+  opacity: 0.6;
+}
+.products-inner .arrow:hover {
+  opacity: 1;
+}
+
+.arrow-icon {
+  font-size: 2em;
+  color: black;
+}
+.arrow-left {
+  left: 0px;
+}
+.arrow-right {
+  right: 0px;
+}

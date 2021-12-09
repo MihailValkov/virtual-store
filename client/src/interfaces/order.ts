@@ -3,6 +3,6 @@ export interface IOrder {
   date: string;
   address: string;
   status: string;
-  amount: number;
+  quantity: number;
   price: number;
 }

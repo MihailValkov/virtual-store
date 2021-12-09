@@ -69,7 +69,9 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
               {product.inStock ? (
                 <span className={styles['product-status']}>Available</span>
               ) : (
-                <span className={styles['product-status']}>Not Available</span>
+                <span className={`${styles['product-status']} ${styles['unavailable']}`}>
+                  Not Available
+                </span>
               )}
             </div>
           )}
@@ -97,8 +99,8 @@ const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product
             <p className={styles['product-price']}>{product.price}</p>
           </div>
           <div className={styles['product-taxes']}>
-            <p>Taxes: {product?.taxes.toFixed(2)} BNG </p>
-            <p>Total: {product?.finalPrice === 0 ? '0.00' : product.finalPrice.toFixed(2)} BNG </p>
+            <p>Taxes: {product.taxes ? product.taxes.toFixed(2) : '0.00'} BNG </p>
+            <p>Total: {product.finalPrice ? product.finalPrice.toFixed(2) : '0.00'} BNG </p>
           </div>
           {!order && (
             <div className={styles['product-action']}>

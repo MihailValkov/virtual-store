@@ -8,6 +8,7 @@ export interface ICategoryProduct {
   model: string;
   images: string[];
   colors: string[];
+  taxes: number;
   availablePieces: number;
   description: string;
   rating: number;

@@ -1,0 +1,37 @@
+.preview-container > img {
+  width: 500px;
+  height: auto;
+  object-fit: cover;
+  padding: 10px 0px;
+  background: #767575;
+  border-radius: 10px;
+}
+
+.preview {
+  width: 500px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview > img {
+  width: 90px;
+  height: auto;
+  object-fit: cover;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+.preview > img.active,
+.preview > img:hover {
+  border: 1px solid #8b9092;
+  padding: 2px;
+  border-radius: 10px;
+  background-color: #8b9092;
+}
+.preview .icon {
+  font-size: 2em;
+}

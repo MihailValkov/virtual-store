@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICartProduct } from '../../interfaces/cart-product';
+import { ICategoryProduct } from '../../interfaces/category-product';
 
 export interface ICartState {
   products: ICartProduct[];
@@ -7,28 +8,44 @@ export interface ICartState {
   totalProducts: number;
 }
 
-export const initialAuthState: ICartState = {
+export const initialCartState: ICartState = {
   products: [],
   totalPrice: 0,
   totalProducts: 0,
 };
 
 const cartSlice = createSlice({
-  initialState: initialAuthState,
+  initialState: initialCartState,
   name: 'cart',
   reducers: {
-    addProductToCart: (state, action) => {
+    addProductToCart: (state, action: PayloadAction<{ product: ICategoryProduct }>) => {
       const existingProduct = state.products.find((p) => p._id === action.payload.product._id);
       state.totalProducts++;
       if (existingProduct) {
         existingProduct.quantity++;
-        existingProduct.finalPrice =
-          existingProduct.quantity * existingProduct.price + existingProduct.taxes;
-        state.totalPrice += existingProduct.price;
+        existingProduct.finalPrice = Number(
+          (existingProduct.quantity * existingProduct.price + existingProduct.taxes).toFixed(2)
+        );
+        state.totalPrice = Number((state.totalPrice + existingProduct.price).toFixed(2));
       } else {
-        const finalPrice = 1 * action.payload.product.price + action.payload.product.taxes;
-        state.products.push({ ...action.payload.product, finalPrice });
-        state.totalPrice += finalPrice;
+        const finalPrice = Number(
+          (1 * action.payload.product.price + action.payload.product.taxes).toFixed(2)
+        );
+        const { _id, price, taxes, name, rating, availablePieces } = action.payload.product;
+        const product = {
+          _id,
+          price,
+          taxes,
+          name,
+          rating,
+          finalPrice,
+          quantity: 1,
+          inStock: availablePieces > 0,
+          color: action.payload.product.colors[0],
+          imageUrl: action.payload.product.images[0],
+        };
+        state.products.push(product);
+        state.totalPrice = Number((state.totalPrice + finalPrice).toFixed(2));
       }
       return state;
     },
@@ -36,8 +53,8 @@ const cartSlice = createSlice({
       const index = state.products.findIndex((product) => product._id === action.payload.id);
       const product = state.products[index];
       state.totalProducts -= product.quantity;
-      state.totalPrice -= product.price * product.quantity + product.taxes;
-      state.totalPrice = state.totalPrice < 0 ? 0 : state.totalPrice;
+      state.totalPrice =
+        state.totalPrice - Number((product.price * product.quantity + product.taxes).toFixed(2));
       state.products.splice(index, 1);
       return state;
     },
@@ -46,18 +63,23 @@ const cartSlice = createSlice({
       const product = state.products[index];
       if (action.payload.quantity === 0) {
         state.totalProducts -= product.quantity;
-        state.totalPrice -= product.price * product.quantity + product.taxes;
+        state.totalPrice =
+          state.totalPrice - Number((product.price * product.quantity + product.taxes).toFixed(2));
         state.products.splice(index, 1);
       } else {
         if (action.payload.quantity > product.quantity) {
-          state.totalPrice += product.price * (action.payload.quantity - product.quantity);
+          state.totalPrice =
+            Number(state.totalPrice.toFixed(2)) +
+            Number((product.price * (action.payload.quantity - product.quantity)).toFixed(2));
           state.totalProducts += action.payload.quantity - product.quantity;
         } else {
-          state.totalPrice -= product.price * (product.quantity - action.payload.quantity);
+          state.totalPrice =
+            Number(state.totalPrice.toFixed(2)) -
+            Number((product.price * (product.quantity - action.payload.quantity)).toFixed(2));
           state.totalProducts -= product.quantity - action.payload.quantity;
         }
         product.quantity = action.payload.quantity;
-        product.finalPrice = product.quantity * product.price + product.taxes;
+        product.finalPrice = Number((product.quantity * product.price + product.taxes).toFixed(2));
       }
       return state;
     },
