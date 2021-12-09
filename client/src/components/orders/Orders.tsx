@@ -30,7 +30,7 @@ const Orders: FC<{}> = (props) => {
               date={order.date}
               address={order.address}
               status={order.status}
-              amount={order.amount}
+              quantity={order.quantity}
               price={order.price}
             />
           ))}

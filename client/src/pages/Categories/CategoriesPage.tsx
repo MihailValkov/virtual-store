@@ -1,16 +1,10 @@
-import { FC, useEffect, useState } from 'react';
-
+import { FC } from 'react';
+import useCategories from '../../hooks/useCategories';
 import CategoryList from '../../components/categories/CategoryList';
-import { ICategory } from '../../interfaces/category';
-import { http } from '../../util/http-request';
 
 const CategoriesPage: FC<{}> = () => {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  const categories = useCategories();
 
-  useEffect(() => {
-    http.get('categories').then((data) => setCategories(data));
-  }, []);
-  
   return <CategoryList categories={categories} />;
 };
 

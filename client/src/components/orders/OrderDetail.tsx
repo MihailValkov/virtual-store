@@ -40,7 +40,7 @@ const OrderDetail: FC<{}> = (props) => {
           </div>
           <div>
             <p>
-              <span>Amount:</span> <strong>{currentOrder?.amount}</strong>
+              <span>Amount:</span> <strong>{currentOrder?.quantity}</strong>
             </p>
             <p>
               <span>Total Price:</span> <strong>{currentOrder?.price} BGN</strong>
@@ -52,7 +52,7 @@ const OrderDetail: FC<{}> = (props) => {
         <div className={styles['price']}>
           <div className={styles['total-price']}>
             <p>Total: </p>
-            <strong>{(currentOrder!.price * currentOrder!.amount).toFixed(2)} BGN</strong>
+            <strong>{(currentOrder!.price * currentOrder!.quantity).toFixed(2)} BGN</strong>
           </div>
         </div>
       </Card>

@@ -8,9 +8,9 @@ const Order: FC<{
   date: string;
   address: string;
   status: string;
-  amount: number;
+  quantity: number;
   price: number;
-}> = ({ _id, date, address, status, amount, price }) => {
+}> = ({ _id, date, address, status, quantity, price }) => {
   return (
     <li className={styles.order}>
       <header>
@@ -24,8 +24,8 @@ const Order: FC<{
           <p>Status: {status}</p>
         </div>
         <div className={`${styles['order-info']} ${styles.right}`}>
-          <p>{amount} x products</p>
-          <p className={styles['total-price']}>{(price * amount).toFixed(2)} BGN</p>
+          <p>{quantity} x products</p>
+          <p className={styles['total-price']}>{(price * quantity).toFixed(2)} BGN</p>
         </div>
       </div>
     </li>

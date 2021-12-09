@@ -22,115 +22,119 @@ import {
 } from '../../../+store/favorites/favorites-slice';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
-const MyProduct: FC<{ cart?: boolean; order?: boolean; classes?: string; product: ICartProduct }> =
-  ({ cart, order, classes, product }) => {
-    const dispatch = useDispatch();
-    const isFavorite = useSelector((state: AppRootState) => state.favorites.products).find(
-      (p) => p._id === product._id
-    );
+const MyProduct: FC<{
+  cart?: boolean;
+  order?: boolean;
+  classes?: string;
+  product: ICartProduct;
+}> = ({ cart, order, classes, product }) => {
+  const dispatch = useDispatch();
+  const isFavorite = useSelector((state: AppRootState) => state.favorites.products).find(
+    (p) => p._id === product._id
+  );
 
-    const { changeHandler, value } = useInput(isNumberValidation);
+  const { changeHandler, value } = useInput(isNumberValidation);
 
-    const onAddProductToCart = () => {
-      dispatch(addProductToCart({ product }));
-    };
-
-    const onDeleteProductFromCart = () => {
-      dispatch(deleteProductFromCart({ id: product._id }));
-    };
-
-    const onAddProductToFavorites = () => {
-      dispatch(addProductToFavorites({ product }));
-    };
-    const onDeleteProductFromFavorites = () => {
-      dispatch(deleteProductFromFavorites({ id: product._id }));
-    };
-
-    useEffect(() => {
-      if (value) {
-        dispatch(changeProductQuantity({ id: product._id, quantity: Number(value) }));
-      }
-    }, [value, dispatch, product._id]);
-
-    return (
-      <li className={`${styles.product} ${classes || ''}`}>
-        <div className={styles['product-img-container']}>
-          <img src={product.imageUrl} alt={product.title} />
-        </div>
-        <div className={styles['product-info']}>
-          <h3>{product.title}</h3>
-          <div className={styles['product-rating']}>
-            <span>Rating: </span>
-            <StarRating width={product.rating} />
-          </div>
-          {!order && (
-            <div className={styles['product-available']}>
-              <span>In Stock:</span>
-              {product.inStock ? (
-                <span className={styles['product-status']}>Available</span>
-              ) : (
-                <span className={`${styles['product-status']} ${styles['unavailable']}`}>
-                  Not Available
-                </span>
-              )}
-            </div>
-          )}
-          <div className={styles['product-color']}>
-            <span>Color:</span>
-            <Color color={product.color} type='radio' checked />
-          </div>
-        </div>
-        <div className={styles['product-actions']}>
-          <div className={styles['product-price-container']}>
-            {(cart || order) && (
-              <>
-                <span>x</span>
-                <input
-                  className={styles['product-quantity']}
-                  type='number'
-                  min='0'
-                  step='1'
-                  value={product.quantity}
-                  disabled={order ? true : false}
-                  onChange={changeHandler}
-                />
-              </>
-            )}
-            <p className={styles['product-price']}>{product.price}</p>
-          </div>
-          <div className={styles['product-taxes']}>
-            <p>Taxes: {product.taxes ? product.taxes.toFixed(2) : '0.00'} BNG </p>
-            <p>Total: {product.finalPrice ? product.finalPrice.toFixed(2) : '0.00'} BNG </p>
-          </div>
-          {!order && (
-            <div className={styles['product-action']}>
-              <Button
-                classes={`${styles['product-action-favorite']} ${
-                  isFavorite && styles['highlighted']
-                }`}
-                onClick={
-                  cart
-                    ? isFavorite
-                      ? onDeleteProductFromFavorites
-                      : onAddProductToFavorites
-                    : onAddProductToCart
-                }
-                icon={cart ? faHeart : null}
-              >
-                {cart ? 'Favorite' : 'Add to Cart'}
-              </Button>
-
-              <Button
-                onClick={cart ? onDeleteProductFromCart : onDeleteProductFromFavorites}
-                classes={styles['product-action-delete']}
-              >
-                Delete
-              </Button>
-            </div>
-          )}
-        </div>
-      </li>
-    );
+  const onAddProductToCart = () => {
+    dispatch(addProductToCart({ product }));
   };
+
+  const onDeleteProductFromCart = () => {
+    dispatch(deleteProductFromCart({ id: product._id }));
+  };
+
+  const onAddProductToFavorites = () => {
+    dispatch(addProductToFavorites({ product }));
+  };
+  const onDeleteProductFromFavorites = () => {
+    dispatch(deleteProductFromFavorites({ id: product._id }));
+  };
+
+  useEffect(() => {
+    if (value) {
+      dispatch(changeProductQuantity({ id: product._id, quantity: Number(value) }));
+    }
+  }, [value, dispatch, product._id]);
+
+  return (
+    <li className={`${styles.product} ${classes || ''}`}>
+      <div className={styles['product-img-container']}>
+        <img src={product.images[0]} alt={product.name} />
+      </div>
+      <div className={styles['product-info']}>
+        <h3>{product.name}</h3>
+        <div className={styles['product-rating']}>
+          <span>Rating: </span>
+          <StarRating width={product.rating} />
+        </div>
+        {!order && (
+          <div className={styles['product-available']}>
+            <span>In Stock:</span>
+            {product.inStock ? (
+              <span className={styles['product-status']}>Available</span>
+            ) : (
+              <span className={`${styles['product-status']} ${styles['unavailable']}`}>
+                Not Available
+              </span>
+            )}
+          </div>
+        )}
+        <div className={styles['product-color']}>
+          <span>Color:</span>
+          <Color color={product.colors[0]} type='radio' checked />
+        </div>
+      </div>
+      <div className={styles['product-actions']}>
+        <div className={styles['product-price-container']}>
+          {(cart || order) && (
+            <>
+              <span>x</span>
+              <input
+                className={styles['product-quantity']}
+                type='number'
+                min='0'
+                step='1'
+                value={product.quantity}
+                disabled={order ? true : false}
+                onChange={changeHandler}
+              />
+            </>
+          )}
+          <p className={styles['product-price']}>{product.price}</p>
+        </div>
+        <div className={styles['product-taxes']}>
+          <p>Taxes: {product.taxes ? product.taxes.toFixed(2) : '0.00'} BNG </p>
+          <p>Total: {product.finalPrice ? product.finalPrice.toFixed(2) : '0.00'} BNG </p>
+        </div>
+        {!order && (
+          <div className={styles['product-action']}>
+            <Button
+              classes={`${styles['product-action-favorite']} ${
+                isFavorite && styles['highlighted']
+              }`}
+              onClick={
+                cart
+                  ? isFavorite
+                    ? onDeleteProductFromFavorites
+                    : onAddProductToFavorites
+                  : onAddProductToCart
+              }
+              icon={cart ? faHeart : null}
+            >
+              {cart ? 'Favorite' : 'Add to Cart'}
+            </Button>
+
+            <Button
+              onClick={cart ? onDeleteProductFromCart : onDeleteProductFromFavorites}
+              classes={styles['product-action-delete']}
+            >
+              Delete
+            </Button>
+          </div>
+        )}
+      </div>
+    </li>
+  );
+};
 
 export default MyProduct;

@@ -10,6 +10,7 @@ export interface ICategoryProduct {
   colors: string[];
   taxes: number;
   availablePieces: number;
+  inStock: boolean;
   description: string;
   rating: number;
 }

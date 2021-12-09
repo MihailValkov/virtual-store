@@ -31,20 +31,7 @@ const cartSlice = createSlice({
         const finalPrice = Number(
           (1 * action.payload.product.price + action.payload.product.taxes).toFixed(2)
         );
-        const { _id, price, taxes, name, rating, availablePieces } = action.payload.product;
-        const product = {
-          _id,
-          price,
-          taxes,
-          name,
-          rating,
-          finalPrice,
-          quantity: 1,
-          inStock: availablePieces > 0,
-          color: action.payload.product.colors[0],
-          imageUrl: action.payload.product.images[0],
-        };
-        state.products.push(product);
+        state.products.push({ ...action.payload.product, finalPrice, quantity: 1 });
         state.totalPrice = Number((state.totalPrice + finalPrice).toFixed(2));
       }
       return state;

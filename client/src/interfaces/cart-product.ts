@@ -1,12 +1,18 @@
 export interface ICartProduct {
   _id: string;
-  price: number;
-  finalPrice: number;
-  taxes: number;
-  imageUrl: string;
   name: string;
-  rating: number;
+  category: string;
+  year: number;
+  price: number;
+  brand: string;
+  model: string;
+  images: string[];
+  colors: string[];
+  taxes: number;
+  availablePieces: number;
   inStock: boolean;
-  color: string;
+  description: string;
+  rating: number;
+  finalPrice: number;
   quantity: number;
 }
