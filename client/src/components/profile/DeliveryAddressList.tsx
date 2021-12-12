@@ -1,7 +1,9 @@
 import { FC, useState, useEffect, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addNewAddressAction, changeCurrentAddressAction } from '../../+store/auth/auth-actions';
+import { AppRootState } from '../../+store/store';
 import { IAddress } from '../../interfaces/user';
+import LoadingSpinner from '../shared/LoadingSpinner';
 import DeliveryAddress from './DeliveryAddress';
 import styles from './DeliveryAddressList.module.css';
 
@@ -9,12 +11,15 @@ const DeliveryAddressLists: FC<{
   addressList: IAddress[];
 }> = ({ addressList }) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state: AppRootState) => state.auth.isLoading);
+
   const onChangeAddressHandler = (id: string) => {
     dispatch(changeCurrentAddressAction(id));
   };
 
   return (
-    <ul>
+    <ul className={styles['address-list']}>
+      {isLoading && <LoadingSpinner/>}
       {addressList.map((a) => (
         <DeliveryAddress
           key={a._id}

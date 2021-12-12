@@ -1,4 +1,4 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useCallback, useState } from 'react';
 import Form from '../shared/Form/Form';
 import FormActions from '../shared/Form/FormActions';
 import FormGroup from '../shared/Form/FormGroup';
@@ -14,6 +14,16 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './EditProfile.module.css';
+import useInput from '../../hooks/use-input';
+import {
+  cityValidation,
+  countryValidation,
+  streetNumberValidation,
+  streetValidation,
+  usernameValidation,
+  phoneValidation,
+  passwordValidation,
+} from '../../util/validations';
 
 const EditProfile: FC<{
   onClose: () => void;
@@ -24,6 +34,90 @@ const EditProfile: FC<{
   street: string;
   streetNumber: number;
 }> = ({ onClose, username, phone, country, city, street, streetNumber }) => {
+  const {
+    value: usernameValue,
+    isValid: usernameIsValid,
+    errorMessage: usernameErrorMessage,
+    hasError: usernameHasError,
+    blurHandler: usernameBlurHandler,
+    changeHandler: usernameChangeHandler,
+    resetHandler: usernameReset,
+  } = useInput(usernameValidation, username);
+  const {
+    value: phoneValue,
+    isValid: phoneIsValid,
+    errorMessage: phoneErrorMessage,
+    hasError: phoneHasError,
+    blurHandler: phoneBlurHandler,
+    changeHandler: phoneChangeHandler,
+    resetHandler: phoneReset,
+  } = useInput(phoneValidation, phone);
+  const {
+    value: countryValue,
+    isValid: countryIsValid,
+    errorMessage: countryErrorMessage,
+    hasError: countryHasError,
+    blurHandler: countryBlurHandler,
+    changeHandler: countryChangeHandler,
+    resetHandler: countryReset,
+  } = useInput(countryValidation, country);
+  const {
+    value: cityValue,
+    isValid: cityIsValid,
+    errorMessage: cityErrorMessage,
+    hasError: cityHasError,
+    blurHandler: cityBlurHandler,
+    changeHandler: cityChangeHandler,
+    resetHandler: cityReset,
+  } = useInput(cityValidation, city);
+  const {
+    value: streetValue,
+    isValid: streetIsValid,
+    errorMessage: streetErrorMessage,
+    hasError: streetHasError,
+    blurHandler: streetBlurHandler,
+    changeHandler: streetChangeHandler,
+    resetHandler: streetReset,
+  } = useInput(streetValidation, street);
+  const {
+    value: streetNumberValue,
+    isValid: streetNumberIsValid,
+    errorMessage: streetNumberErrorMessage,
+    hasError: streetNumberHasError,
+    blurHandler: streetNumberBlurHandler,
+    changeHandler: streetNumberChangeHandler,
+    resetHandler: streetNumberReset,
+  } = useInput(streetNumberValidation, streetNumber.toString());
+  const {
+    value: oldPasswordValue,
+    isValid: oldPasswordIsValid,
+    errorMessage: oldPasswordErrorMessage,
+    hasError: oldPasswordHasError,
+    blurHandler: oldPasswordBlurHandler,
+    changeHandler: oldPasswordChangeHandler,
+    resetHandler: oldPasswordReset,
+  } = useInput(passwordValidation);
+  const {
+    value: newPasswordValue,
+    isValid: newPasswordIsValid,
+    errorMessage: newPasswordErrorMessage,
+    hasError: newPasswordHasError,
+    blurHandler: newPasswordBlurHandler,
+    changeHandler: newPasswordChangeHandler,
+    resetHandler: newPasswordReset,
+  } = useInput(
+    useCallback(
+      (value: string) =>
+        new RegExp(`^${oldPasswordValue}$`).test(value) && value.trim().length > 0
+          ? { message: '', isValid: true }
+          : {
+              message: 'Both passwords should match!',
+              isValid: false,
+            },
+      [oldPasswordValue]
+    )
+  );
+
   const [isChangePasswordChecked, setIsChangePasswordChecked] = useState(false);
   const onChangePasswordHandler = ({ currentTarget: { value } }: FormEvent<HTMLSelectElement>) => {
     if (value === 'yes') {
@@ -32,10 +126,27 @@ const EditProfile: FC<{
       setIsChangePasswordChecked(false);
     }
   };
+  
+  const formIsValid =
+    usernameIsValid &&
+    phoneIsValid &&
+    countryIsValid &&
+    cityIsValid &&
+    streetIsValid &&
+    streetNumberIsValid &&
+    (!isChangePasswordChecked || (oldPasswordIsValid && newPasswordIsValid));
 
-  const onSubmitHandler = (event: FormEvent) => {
+  const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Edit user information');
+    // dispatch(
+    //   addNewAddressAction({
+    //     country: countryValue,
+    //     city: cityValue,
+    //     street: streetValue,
+    //     streetNumber: Number(streetNumberValue),
+    //   })
+    // );
+    console.log(formIsValid);
   };
 
   return (
@@ -45,90 +156,146 @@ const EditProfile: FC<{
         <FormRow>
           <FormGroup
             name='username'
-            errorMessage=''
-            hasError={false}
+            errorMessage={usernameErrorMessage}
+            hasError={usernameHasError}
+            isValid={usernameIsValid}
             icon={faUser}
-            isValid={true}
             label='Username'
           >
-            <input id='username' defaultValue={username} />
+            <input
+              id='username'
+              name='country'
+              type='text'
+              value={usernameValue}
+              onChange={usernameChangeHandler}
+              onBlur={usernameBlurHandler}
+            />
           </FormGroup>
           <FormGroup
             name='phone'
-            errorMessage=''
-            hasError={false}
+            errorMessage={phoneErrorMessage}
+            hasError={phoneHasError}
+            isValid={phoneIsValid}
             icon={faPhone}
-            isValid={true}
-            label='Phone Number'
+            label='Phone Number:'
           >
-            <input id='phone' type='text' defaultValue={phone} />
+            <input
+              id='phone'
+              name='phone'
+              type='text'
+              value={phoneValue}
+              onChange={phoneChangeHandler}
+              onBlur={phoneBlurHandler}
+            />
           </FormGroup>
         </FormRow>
         <FormRow>
           <FormGroup
             name='country'
-            errorMessage=''
-            hasError={false}
+            errorMessage={countryErrorMessage}
+            hasError={countryHasError}
+            isValid={countryIsValid}
             icon={faMapMarkedAlt}
-            isValid={true}
             label='Country:'
           >
-            <input id='country' type='text' defaultValue={country} />
+            <input
+              id='country'
+              name='country'
+              type='text'
+              value={countryValue}
+              onChange={countryChangeHandler}
+              onBlur={countryBlurHandler}
+            />
           </FormGroup>
           <FormGroup
             name='city'
-            errorMessage=''
-            hasError={false}
+            errorMessage={cityErrorMessage}
+            hasError={cityHasError}
+            isValid={cityIsValid}
             icon={faCity}
-            isValid={true}
-            label='City'
+            label='City:'
           >
-            <input id='city' type='text' defaultValue={city} />
+            <input
+              id='city'
+              name='city'
+              type='text'
+              value={cityValue}
+              onChange={cityChangeHandler}
+              onBlur={cityBlurHandler}
+            />
           </FormGroup>
         </FormRow>
         <FormRow>
           <FormGroup
             name='street'
-            errorMessage=''
-            hasError={false}
+            errorMessage={streetErrorMessage}
+            hasError={streetHasError}
+            isValid={streetIsValid}
             icon={faStreetView}
-            isValid={true}
             label='Street:'
           >
-            <input id='street' type='text' defaultValue={street} />
+            <input
+              id='street'
+              name='street'
+              type='text'
+              value={streetValue}
+              onChange={streetChangeHandler}
+              onBlur={streetBlurHandler}
+            />
           </FormGroup>
           <FormGroup
             name='streetNumber'
-            errorMessage=''
-            hasError={false}
+            errorMessage={streetNumberErrorMessage}
+            hasError={streetNumberHasError}
+            isValid={streetNumberIsValid}
             icon={faHome}
-            isValid={true}
             label='№:'
           >
-            <input id='streetNumber' type='text' defaultValue={streetNumber} />
+            <input
+              id='streetNumber'
+              name='streetNumber'
+              type='text'
+              value={streetNumberValue}
+              onChange={streetNumberChangeHandler}
+              onBlur={streetNumberBlurHandler}
+            />
           </FormGroup>
         </FormRow>
         {isChangePasswordChecked && (
           <FormRow animation>
             <FormGroup
               name='oldPassword'
-              errorMessage=''
-              hasError={false}
+              errorMessage={oldPasswordErrorMessage}
+              hasError={oldPasswordHasError}
+              isValid={oldPasswordIsValid}
               icon={faLock}
-              isValid={true}
               label='Old Password'
             >
-              <input id='oldPassword' type='password' />
+              <input
+                id='oldPassword'
+                name='oldPassword'
+                type='password'
+                value={oldPasswordValue}
+                onChange={oldPasswordChangeHandler}
+                onBlur={oldPasswordBlurHandler}
+              />
             </FormGroup>
             <FormGroup
               name='newPassword'
-              errorMessage=''
-              hasError={false}
+              errorMessage={newPasswordErrorMessage}
+              hasError={newPasswordHasError}
+              isValid={newPasswordIsValid}
               icon={faLock}
-              isValid={true}
               label='New Password'
             >
-              <input id='newPassword' type='password' />
+              <input
+                id='newPassword'
+                name='newPassword'
+                type='password'
+                value={newPasswordValue}
+                onChange={newPasswordChangeHandler}
+                onBlur={newPasswordBlurHandler}
+              />
             </FormGroup>
           </FormRow>
         )}
@@ -140,10 +307,10 @@ const EditProfile: FC<{
           </select>
         </FormRow>
         <FormActions responseError={''}>
-          <Button classes={styles.btn} disabled={false} type='submit'>
+          <Button classes={styles.btn} disabled={!formIsValid ? true : false} type='submit'>
             Save
           </Button>
-          <Button classes={styles.btn} disabled={false} type='button' onClick={onClose}>
+          <Button classes={styles.btn} type='button' onClick={onClose}>
             Cancel
           </Button>
         </FormActions>

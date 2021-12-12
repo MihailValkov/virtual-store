@@ -38,5 +38,16 @@ export const streetNumberValidation = validation.bind(
   /^[0-9]+$/
 );
 
+export const usernameValidation = validation.bind(
+  null,
+  'Username should be at least 4 characters long!',
+  /^[A-Za-z0-9_\-\.]{4,}$/
+);
+
+export const phoneValidation = validation.bind(
+  null,
+  'Phone number should be 8 characters long!',
+  /^\+359[0-9]{9}$/
+);
 
 export type IValidationFn = typeof emailValidation | typeof passwordValidation;
