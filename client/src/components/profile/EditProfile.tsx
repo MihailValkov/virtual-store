@@ -126,7 +126,7 @@ const EditProfile: FC<{
       setIsChangePasswordChecked(false);
     }
   };
-  
+
   const formIsValid =
     usernameIsValid &&
     phoneIsValid &&
@@ -147,6 +147,14 @@ const EditProfile: FC<{
     //   })
     // );
     console.log(formIsValid);
+    usernameReset();
+    phoneReset();
+    cityReset();
+    countryReset();
+    streetReset();
+    streetNumberReset();
+    oldPasswordReset();
+    newPasswordReset();
   };
 
   return (
