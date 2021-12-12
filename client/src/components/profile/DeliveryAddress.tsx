@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Button from '../shared/Button';
 import Modal from '../shared/Modal';
+import Confirm from '../shared/Confirm';
 import AddNewAddress from './AddNewAddress';
 import styles from './DeliveryAddress.module.css';
 
@@ -14,20 +15,28 @@ const DeliveryAddress: FC<{
   checked: boolean;
   onChangeAddress: () => void;
 }> = ({ id, country, city, street, streetNumber, checked, onChangeAddress }) => {
-  const [showModal, setShowModal] = useState(false);
-  const onShowModalHandler = () => setShowModal((prev) => !prev);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const onShowEditModalHandler = () => setShowEditModal((prev) => !prev);
+  const onShowDeleteModalHandler = () => setShowDeleteModal((prev) => !prev);
+
   return (
     <>
-      {showModal && (
-        <Modal onClose={onShowModalHandler}>
+      {showEditModal && (
+        <Modal onClose={onShowEditModalHandler}>
           <AddNewAddress
-            onClose={onShowModalHandler}
+            onClose={onShowEditModalHandler}
             id={id}
             country={country}
             city={city}
             street={street}
             streetNumber={streetNumber}
           />
+        </Modal>
+      )}
+      {showDeleteModal && (
+        <Modal onClose={onShowDeleteModalHandler}>
+          <Confirm onClose={onShowDeleteModalHandler} />
         </Modal>
       )}
       <li className={`${styles['address']} ${checked && styles['active']}`}>
@@ -48,9 +57,13 @@ const DeliveryAddress: FC<{
           <Button
             icon={faEdit}
             classes={`${styles['edit-btn']} ${styles.btn}`}
-            onClick={onShowModalHandler}
+            onClick={onShowEditModalHandler}
           ></Button>
-          <Button icon={faTrash} classes={`${styles['delete-btn']} ${styles.btn}`}></Button>
+          <Button
+            icon={faTrash}
+            classes={`${styles['delete-btn']} ${styles.btn}`}
+            onClick={onShowDeleteModalHandler}
+          ></Button>
         </p>
       </li>
     </>

@@ -1,0 +1,25 @@
+.confirm-container {
+  padding: 0px 20px;
+}
+.confirm-container h2 {
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.actions button:first-of-type {
+  margin-right: 20px;
+}
+
+.btn {
+  padding: 8px 20px;
+}
+
+.btn:hover {
+  box-shadow: 1px 2px 8px black;
+}
