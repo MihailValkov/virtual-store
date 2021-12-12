@@ -23,6 +23,7 @@ import styles from './Create.module.css';
 import noImage from '../../../assets/no-image.png';
 import Colors from '../../shared/Colors';
 import PreviewImages from '../../shared/PreviewImages';
+import { ICategory } from '../../../interfaces/category';
 
 // 'https://lh3.googleusercontent.com/proxy/0nkn0ZQISXD51opO74gFtKFvE4r-IDqrup4f4CGlDNE0Joel44sD1wIaq4HvYwbKuzXb4lGTkmtu-cHNaH1oSrMvpw0UFDqiFa28Zu0x9dlG9h9Wn6CaNg1GsxuF8bULZC6d-UG3JoUnZGdQn_FfgXB9LRapUShhX0vMTrKOc3BoudtbCRbnCwFqHaJSleU538Td2XR-INxOmLKmE-mUOSc6y6qqTYF2KMtPWIFh_63zbxjQ6uLIcG6WJjPsMPBhfoPfJpwklzmyL42izwzC4ZPwYEE08FcVllWOMZgdK36OBVzqfo1VigMn5COFMUuvyYnxIq-ZuNhp-e1KHZc7Hip_s3kubonsisQzLF9BpJQ89WHVLHB8Q1XfP3tusAnZF_qYQ1kQ6AUGdcrtnrfSPJyaRAHD3PaPk3eFuy0MPkRJwhNYgYfKUccT531M9k0C_9UMp5x3pXpHr4xrFJI9JYb1NZ-z9KXSjRd6GFCdnEdMvLt2wTbGgd1KLR-S0kb086Tz1VkmeAyJSJkR-EDIkf9WMhogjzmrPf-_yphNJ8RrwWz9iizoJMZUDkzhiAsIA0DsGFc';
 // const images = [
@@ -34,7 +35,7 @@ import PreviewImages from '../../shared/PreviewImages';
 // ];
 const colors = ['red', 'blue', 'green', 'black', 'purple', 'yellow'];
 
-const Create: FC<{}> = (props) => {
+const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
   const [images, setImages] = useState<string[]>([noImage, noImage, noImage, noImage]);
   const [currentImage, setCurrentImage] = useState(images[0]);
 
@@ -83,8 +84,11 @@ const Create: FC<{}> = (props) => {
           <div className={styles['category-select']}>
             <select>
               <option>Select Category</option>
-              <option value='Mobile'>Mobile</option>
-              <option value='Laptop'>Laptop</option>
+              {categories.map((c) => (
+                <option key={c._id} value={c.category}>
+                  {c.category}
+                </option>
+              ))}
             </select>
             <span className={styles['select-icon']}>
               <FontAwesomeIcon icon={faSortDown} />
@@ -210,7 +214,7 @@ const Create: FC<{}> = (props) => {
           </FormGroup>
           <FormActions responseError={'errorMessage'}>
             <Button classes='' disabled={false}>
-              Register
+              Add new Item
             </Button>
           </FormActions>
         </Form>

@@ -119,9 +119,9 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
           </div>
         </div>
         <div className={styles.right}>
-          <p className={`${styles['total-price']}`}> 150 BGN </p>
+          <p className={`${styles['total-price']}`}> {product.price} BGN </p>
           {
-            product.availablePieces > 0 ? <p className={`${styles['available']}`}> Available </p>
+            product.inStock ? <p className={`${styles['available']}`}> Available </p>
             : <p className={`${styles['available']} ${styles['unavailable']}`}> Not Available </p>
           }
           

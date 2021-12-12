@@ -16,7 +16,8 @@ const Orders = lazy(() => import('./pages/Orders/Orders'));
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
-  const isLogged = useSelector((state: AppRootState) => !!state.auth.user);
+  const user = useSelector((state: AppRootState) => state.auth.user);
+  const isLogged = !!user;
 
   useEffect(() => {
     dispatch(authenticateAction());

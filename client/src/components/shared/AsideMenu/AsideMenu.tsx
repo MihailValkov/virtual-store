@@ -15,15 +15,14 @@ import Card from '../Card';
 
 import styles from './AsideMenu.module.css';
 
-const AsideMenu: FC<{}> = (props) => {
-  const isLogged = useSelector((state: AppRootState) => !!state.auth.user);
+const AsideMenu: FC<{}> = () => {
+  const user = useSelector((state: AppRootState) => state.auth.user);
+  const isLogged = !!user;
+
   const guestContent = (
     <>
       <div className={styles['user-info']}>
-        <img
-          src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX8iiAjB9x1X1KlcfkYJRRKxDZJ7x2eyoTnQ&usqp=CAU'
-          alt='profile-img'
-        />
+        <img src='https://res.cloudinary.com/dofijitd8/image/upload/v1628952324/shared-trips/images/s4iu2zctmmxmek3yi34r.jpg' alt='profile-img' />
         <h3 className={styles['anonymous-title']}>You are anonymous user currently.</h3>
         <p>Login or register so you can access extra functionality.</p>
       </div>
@@ -50,10 +49,10 @@ const AsideMenu: FC<{}> = (props) => {
     <>
       <div className={styles['user-info']}>
         <img
-          src='https://res.cloudinary.com/dofijitd8/image/upload/v1628952324/shared-trips/images/s4iu2zctmmxmek3yi34r.jpg'
+          src={user?.imageUrl}
           alt='profile-img'
         />
-        <p>Mihail Valkov</p>
+        <p>{user?.username}</p>
       </div>
       <ul className={styles.navigation}>
         <li>

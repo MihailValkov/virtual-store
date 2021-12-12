@@ -104,7 +104,7 @@ const MyProduct: FC<{
         </div>
         <div className={styles['product-taxes']}>
           <p>Taxes: {product.taxes ? product.taxes.toFixed(2) : '0.00'} BNG </p>
-          <p>Total: {product.finalPrice ? product.finalPrice.toFixed(2) : '0.00'} BNG </p>
+          <p>Total: {product.finalPrice ? product.finalPrice.toFixed(2) : !cart ? (product.price + product.taxes).toFixed(2) :'0.00'} BNG </p>
         </div>
         {!order && (
           <div className={styles['product-action']}>

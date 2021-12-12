@@ -2,7 +2,7 @@ import React, { useReducer, useCallback, useEffect } from 'react';
 import { IValidationFn } from '../util/validations';
 import { initialState, reducer } from './input-reducer';
 
-const useInput = (validateValue: IValidationFn) => {
+const useInput = (validateValue: IValidationFn, defaultValue?: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -19,6 +19,12 @@ const useInput = (validateValue: IValidationFn) => {
     }, 300);
     return () => clearTimeout(timer);
   }, [validateValue, state.touched, state.value]);
+
+  useEffect(() => {
+    if (defaultValue) {
+      dispatch({ type: 'set_value', value: defaultValue });
+    }
+  }, [defaultValue]);
 
   const changeHandler = useCallback(
     ({ currentTarget: { value } }: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {

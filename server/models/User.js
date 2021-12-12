@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 const { rounds } = require('../config/config');
 
-const schema = new Schema(
+const userSchema = new Schema(
   {
     email: {
       type: String,
@@ -19,20 +19,32 @@ const schema = new Schema(
       required: true,
       minLength: [4, 'Password should be at least 4 characters long!'],
     },
+    imageUrl: {
+      type: String,
+      default:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX8iiAjB9x1X1KlcfkYJRRKxDZJ7x2eyoTnQ&usqp=CAU',
+    },
     role: {
       type: String,
       enum: ['Member', 'Admin'],
       default: 'Member',
     },
+    phone: {
+      type: String,
+      default: '+359 888 888 888',
+      required: [true, 'Phone number is required!'],
+    },
+    address: { type: Schema.Types.ObjectId, ref: 'Address' },
+    deliveryAddresses: [{ type: Schema.Types.ObjectId, ref: 'Address' }],
   },
   { timestamps: true }
 );
 
-schema.methods.comparePasswords = function (pass) {
+userSchema.methods.comparePasswords = function (pass) {
   return bcrypt.compare(pass, this.password);
 };
 
-schema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
     try {
       const hash = await bcrypt.hash(this.password, rounds);
@@ -44,4 +56,4 @@ schema.pre('save', async function (next) {
   next();
 });
 
-module.exports = model('User', schema);
+module.exports = model('User', userSchema);

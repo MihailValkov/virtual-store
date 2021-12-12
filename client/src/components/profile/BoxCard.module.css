@@ -1,0 +1,55 @@
+.box {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 3px;
+  color: black;
+  text-align: center;
+  box-shadow: 1px 2px 5px rgb(116 114 114);
+}
+.box span {
+  position: absolute;
+  height: 65px;
+  width: 65px;
+  padding-top: 20px;
+  padding-right: 15px;
+  top: -30px;
+  left: -28px;
+  line-height: 45px;
+  text-align: right;
+  border-radius: 50%;
+  color: white;
+}
+
+.box h3::after {
+  content: '';
+  height: 2px;
+  width: 50%;
+  background-color: #ccc;
+  display: block;
+  margin: 10px auto auto;
+}
+
+.box p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+  margin: 10px 0px;
+}
+
+.red span {
+  background-color: #b75233;
+}
+.blue span {
+  background-color: #337ab7;
+}
+.green span {
+  background-color: #33b775;
+}
+.gray span {
+  background-color: #9aa0a5;
+}
+.orange span {
+  background-color: #f9bf3b;
+}

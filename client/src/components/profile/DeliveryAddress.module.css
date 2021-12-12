@@ -1,0 +1,50 @@
+.address {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f7f7f7;
+  margin-bottom: 20px;
+  box-shadow: 1px 2px 5px #ccc;
+  border: 1px solid #f7f7f7;
+}
+
+.address-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.address-info label {
+  padding: 5px 10px;
+  width: 100%;
+}
+.address-info label:hover,
+.address-info input:hover {
+  cursor: pointer;
+}
+
+.address .actions {
+  display: flex;
+}
+
+.btn {
+  padding: 5px 10px;
+}
+.delete-btn,
+.edit-btn {
+  margin: 0px 0px 0px 10px;
+}
+.delete-btn:hover {
+  color: #f34f73ee;
+}
+.edit-btn:hover {
+  color: #74ff79;
+}
+
+.address .actions svg {
+  margin: 0;
+  font-size: 1rem;
+}
+.address.active {
+  border: 1px solid #2a87a5;
+}

@@ -14,8 +14,8 @@ const Cart: FC<{ items: {}[] }> = ({ items }) => {
   const products = useSelector((state: AppRootState) => state.cart.products);
   const totalPrice = useSelector((state: AppRootState) => state.cart.totalPrice);
   const totalProducts = useSelector((state: AppRootState) => state.cart.totalProducts);
-  console.log(totalPrice);
-  
+  const user = useSelector((state: AppRootState) => state.auth.user);
+
 
   const taxes = products.length * products[0]?.taxes;
 

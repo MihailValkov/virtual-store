@@ -1,4 +1,4 @@
-const validation = (message: string, regex: RegExp, value: string) =>
+export const validation = (message: string, regex: RegExp, value: string) =>
   regex.test(value.trim()) ? { message: '', isValid: true } : { message, isValid: false };
 
 export const emailValidation = validation.bind(
@@ -15,6 +15,27 @@ export const isNumberValidation = validation.bind(
   null,
   'Input field should be a number!',
   /[0-9]+/
+);
+export const countryValidation = validation.bind(
+  null,
+  'Country should be at least 4 characters long!',
+  /[a-zA-z]{4,}/
+);
+export const cityValidation = validation.bind(
+  null,
+  'City should be at least 4 characters long!',
+  /[a-zA-z]{4,}/
+);
+export const streetValidation = validation.bind(
+  null,
+  'Street should be at least 4 characters long!',
+  /[a-zA-z]{4,}/
+);
+
+export const streetNumberValidation = validation.bind(
+  null,
+  'Street Number should be a positive!',
+  /^[0-9]+$/
 );
 
 

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { ICategoryProduct } from '../../interfaces/category-product';
 
 import styles from './Order.module.css';
 
@@ -8,9 +9,9 @@ const Order: FC<{
   date: string;
   address: string;
   status: string;
-  quantity: number;
-  price: number;
-}> = ({ _id, date, address, status, quantity, price }) => {
+  totalQuantity: number;
+  totalPrice: number;
+}> = ({ _id, date, address, status, totalQuantity, totalPrice }) => {
   return (
     <li className={styles.order}>
       <header>
@@ -24,8 +25,8 @@ const Order: FC<{
           <p>Status: {status}</p>
         </div>
         <div className={`${styles['order-info']} ${styles.right}`}>
-          <p>{quantity} x products</p>
-          <p className={styles['total-price']}>{(price * quantity).toFixed(2)} BGN</p>
+          <p>{totalQuantity} x products</p>
+          <p className={styles['total-price']}>{totalPrice.toFixed(2)} BGN</p>
         </div>
       </div>
     </li>

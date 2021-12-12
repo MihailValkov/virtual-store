@@ -5,7 +5,7 @@ import Create from '../../components/products/create/Create';
 const CategoryCreatePage: FC<{}> = () => {
   const categories = useCategories();
 
-  return <Create />;
+  return <Create categories={categories}/>;
 };
 
 export default CategoryCreatePage;

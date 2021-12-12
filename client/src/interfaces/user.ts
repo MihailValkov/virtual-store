@@ -1,6 +1,23 @@
+export interface IBaseAddress {
+  country: string;
+  city: string;
+  street: string;
+  streetNumber: number;
+}
+export interface IAddress extends IBaseAddress {
+  _id: string;
+  default: boolean;
+}
+
 export interface IUser {
-    email: string;
-    password: string;
-    repeatPassword: string;
-    username?: string;
+  _id: string;
+  email: string;
+  username: string;
+  role: string;
+  phone: string;
+  address: IAddress;
+  deliveryAddresses: IAddress[];
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
 }

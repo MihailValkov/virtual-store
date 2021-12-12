@@ -142,7 +142,7 @@ const RegisterPage: FC<RouteComponentProps> = ({ history }) => {
           />
         </FormGroup>
         <FormActions responseError={errorMessage}>
-          <Button classes='' disabled={!formIsValid ? true : false} type='submit'>
+          <Button disabled={!formIsValid ? true : false} type='submit'>
             Register
           </Button>
         </FormActions>

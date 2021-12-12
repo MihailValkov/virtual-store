@@ -1,0 +1,83 @@
+.profile {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.profile-container {
+  width: 100%;
+  flex: 10;
+}
+
+.profile-container > h1,
+.profile-container > h3 {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+.profile-container > h1 {
+  font-size: 1.4rem;
+}
+
+.btn,
+.btn button {
+  padding: 5px 10px;
+}
+
+.profile-information {
+  padding: 10px;
+  background: #f7f7f7;
+  margin-bottom: 20px;
+  box-shadow: 1px 2px 5px #ccc;
+  display: flex;
+}
+.profile-information > div {
+  padding: 10px;
+}
+.profile-picture {
+  flex: 3;
+}
+.profile-picture img {
+  height: 200px;
+  width: 220px;
+  object-fit: contain;
+}
+
+.profile-picture > div {
+  justify-content: flex-start;
+  padding-left: 0;
+}
+.profile-info {
+  margin-left: 20px;
+  flex: 6;
+}
+
+.profile-actions {
+  flex: 2;
+  flex-direction: column;
+  display: flex;
+  align-items: flex-end;
+}
+
+.profile-info > * {
+  margin-bottom: 10px;
+}
+
+.profile-info h3::after {
+  display: none;
+}
+.profile-info > div {
+  height: 30px;
+  width: 100%;
+}
+
+.profile-activity {
+  margin: 20px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-activity > div {
+  background-color: #f7f7f7;
+}
+

@@ -1,5 +1,6 @@
 type State = typeof initialState;
 type Action =
+  | { type: 'set_value'; value: string }
   | { type: 'change'; value: string }
   | { type: 'blur' }
   | { type: 'error'; error: boolean; errorMessage: string; isValid: boolean }
@@ -15,6 +16,8 @@ export const initialState = {
 
 export const reducer = (state: State, action: Action) => {
   switch (action.type) {
+    case 'set_value':
+      return { ...state, value: action.value, isValid: true };
     case 'change':
       return { ...state, value: action.value, touched: true };
     case 'blur':
