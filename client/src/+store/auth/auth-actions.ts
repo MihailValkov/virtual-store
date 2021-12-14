@@ -12,6 +12,10 @@ import {
   logout,
   addNewAddress,
   changeCurrentAddress,
+  update,
+  error,
+  editAddress,
+  deleteAddress,
 } from './auth-slice';
 
 export const loginAction =
@@ -51,8 +55,8 @@ export const authenticateAction = () => async (dispatch: AppDispatch) => {
   try {
     const data = await http.get('auth/profile');
     dispatch(authenticate(data));
-    dispatch(loading(false));
   } catch (err: any) {
+  } finally {
     dispatch(loading(false));
   }
 };
@@ -62,26 +66,75 @@ export const logoutAction = () => async (dispatch: AppDispatch) => {
   dispatch(logout());
 };
 
-export const addNewAddressAction = (newAddress: IBaseAddress) => async (dispatch: AppDispatch) => {
+export const addNewDeliveryAddressAction =
+  (newAddress: IBaseAddress, onClose: () => void) => async (dispatch: AppDispatch) => {
+    dispatch(loading(true));
+    dispatch(error({ message: '' }));
+    try {
+      const data = await http.post('auth/address', newAddress);
+      dispatch(addNewAddress({ newAddress: data }));
+      onClose();
+    } catch (err: any) {
+      dispatch(error({ message: err.message || err.error.message }));
+    } finally {
+      dispatch(loading(false));
+    }
+  };
+
+export const deleteDeliveryAddressAction =
+  (id: string, onClose: () => void) => async (dispatch: AppDispatch) => {
+    dispatch(loading(true));
+    dispatch(error({ message: '' }));
+    try {
+      const data = await http.del(`auth/address/${id}`);
+      dispatch(deleteAddress({ address: data }));
+      onClose();
+    } catch (err: any) {
+      dispatch(error({ message: err.message || err.error.message }));
+    } finally {
+      dispatch(loading(false));
+    }
+  };
+
+export const editDeliveryAddressAction =
+  (address: IAddress, onClose: () => void) => async (dispatch: AppDispatch) => {
+    dispatch(loading(true));
+    dispatch(error({ message: '' }));
+    try {
+      const data = await http.put(`auth/address/${address._id}`, address);
+      dispatch(editAddress({ address: data }));
+      onClose();
+    } catch (err: any) {
+      dispatch(error({ message: err.message || err.error.message }));
+    } finally {
+      dispatch(loading(false));
+    }
+  };
+
+export const changeCurrentAddressAction = (id: string) => async (dispatch: AppDispatch) => {
   dispatch(loading(true));
+  dispatch(error({ message: '' }));
   try {
-    const data = await http.post('auth/address', newAddress);
-    dispatch(addNewAddress(data));
+    const updatedAddress = await http.get(`auth/address/${id}`);
+    dispatch(changeCurrentAddress({ updatedAddress, id }));
   } catch (err: any) {
-    console.log(err.message);
+    dispatch(error({ message: err.message || err.error.message }));
   } finally {
     dispatch(loading(false));
   }
 };
 
-export const changeCurrentAddressAction = (id: string) => async (dispatch: AppDispatch) => {
-  dispatch(loading(true));
-  try {
-    const updatedAddress = await http.get(`auth/address/${id}`);
-    dispatch(changeCurrentAddress({ updatedAddress, id }));
-  } catch (err: any) {
-    console.log(err.message);
-  } finally {
-    dispatch(loading(false));
-  }
-};
+export const updateUserInformationAction =
+  (data: {}, onClose: () => void) => async (dispatch: AppDispatch) => {
+    dispatch(loading(true));
+    dispatch(error({ message: '' }));
+    try {
+      const updatedUser = await http.patch('auth/profile', data);
+      dispatch(update({ updatedUser }));
+      onClose();
+    } catch (err: any) {
+      dispatch(error({ message: err.message || err.error.message }));
+    } finally {
+      dispatch(loading(false));
+    }
+  };

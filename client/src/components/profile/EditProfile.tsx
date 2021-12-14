@@ -24,6 +24,9 @@ import {
   phoneValidation,
   passwordValidation,
 } from '../../util/validations';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserInformationAction } from '../../+store/auth/auth-actions';
+import { AppRootState } from '../../+store/store';
 
 const EditProfile: FC<{
   onClose: () => void;
@@ -34,6 +37,9 @@ const EditProfile: FC<{
   street: string;
   streetNumber: number;
 }> = ({ onClose, username, phone, country, city, street, streetNumber }) => {
+  const dispatch = useDispatch();
+  const errorMessage = useSelector((state: AppRootState) => state.auth.errorMessage);
+  const isLoading = useSelector((state: AppRootState) => state.auth.isLoading);
   const {
     value: usernameValue,
     isValid: usernameIsValid,
@@ -138,29 +144,28 @@ const EditProfile: FC<{
 
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // dispatch(
-    //   addNewAddressAction({
-    //     country: countryValue,
-    //     city: cityValue,
-    //     street: streetValue,
-    //     streetNumber: Number(streetNumberValue),
-    //   })
-    // );
-    console.log(formIsValid);
-    usernameReset();
-    phoneReset();
-    cityReset();
-    countryReset();
-    streetReset();
-    streetNumberReset();
-    oldPasswordReset();
-    newPasswordReset();
+    const userInfo = {
+      username: usernameValue,
+      phone: phoneValue,
+      country: countryValue,
+      city: cityValue,
+      street: streetValue,
+      streetNumber: streetNumberValue,
+    };
+    dispatch(
+      updateUserInformationAction(
+        isChangePasswordChecked
+          ? { ...userInfo, oldPassword: oldPasswordValue, newPassword: newPasswordValue }
+          : userInfo,
+        onClose
+      )
+    );
   };
 
   return (
     <div className={styles['profile-edit']}>
       <h2>Edit User Information</h2>
-      <Form isLoading={false} onSubmitHandler={onSubmitHandler}>
+      <Form isLoading={isLoading} onSubmitHandler={onSubmitHandler}>
         <FormRow>
           <FormGroup
             name='username'
@@ -314,7 +319,7 @@ const EditProfile: FC<{
             <option value='no'>No</option>
           </select>
         </FormRow>
-        <FormActions responseError={''}>
+        <FormActions responseError={errorMessage || ''}>
           <Button classes={styles.btn} disabled={!formIsValid ? true : false} type='submit'>
             Save
           </Button>

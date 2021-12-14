@@ -46,7 +46,7 @@ export const usernameValidation = validation.bind(
 
 export const phoneValidation = validation.bind(
   null,
-  'Phone number should be 8 characters long!',
+  'Phone number is not correct! (+359899888888)',
   /^\+359[0-9]{9}$/
 );
 

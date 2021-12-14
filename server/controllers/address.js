@@ -7,7 +7,7 @@ module.exports = {
       const { country, city, street, streetNumber } = req.body;
       try {
         const user = await userModel.findById(req.user._id);
-        const newAddress = await addressModel.create({ country, city, street, streetNumber });
+        const newAddress = await addressModel.create({ country, city, street, streetNumber },{ new: true });
         user.deliveryAddresses.push(newAddress);
         user.save();
       } catch (error) {

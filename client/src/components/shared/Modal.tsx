@@ -7,11 +7,7 @@ const Backdrop: FC<{ onClose: () => void }> = ({ onClose }) => {
 };
 
 const ModalOverlay: FC = ({ children }) => {
-  return (
-    <div className={styles.modal}>
-      <div className={styles.content}>{children}</div>
-    </div>
-  );
+  return <div className={styles.modal}>{children}</div>;
 };
 
 const portalElement = document.getElementById('overlays') as HTMLDivElement;

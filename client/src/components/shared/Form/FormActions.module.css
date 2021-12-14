@@ -15,7 +15,6 @@
 
 .error {
   color: red;
-  animation: fadeOut 0s ease-in 2.5s forwards;
 }
 
 .buttons {

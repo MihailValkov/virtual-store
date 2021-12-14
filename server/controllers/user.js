@@ -20,19 +20,35 @@ module.exports = {
         const data = removeUserPassword(bsonToJson(user));
         return res.status(200).json(data);
       } catch (error) {
-        return res.status(404).json({ message: 'Not Found 404' });
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
+        } else {
+          const message = createErrorMessage(error);
+          res.status(400).json({ message });
+        }
       }
     },
     async changeCurrentAddress(req, res, next) {
       const { id } = req.params;
       try {
         await addressModel.updateMany({ user: req.user._id }, { $set: { default: false } });
-        const updatedAddress = await addressModel.findByIdAndUpdate(id, {
-          $set: { default: true }
-        }, { new: true });
+        const updatedAddress = await addressModel.findByIdAndUpdate(
+          id,
+          {
+            $set: { default: true },
+          },
+          { new: true, runValidators: true }
+        );
         res.status(200).json(updatedAddress.toObject());
       } catch (error) {
-        console.log(error);
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
+        } else {
+          const message = createErrorMessage(error);
+          res.status(400).json({ message });
+        }
       }
     },
   },
@@ -59,8 +75,9 @@ module.exports = {
 
         res.cookie(cookie_name, token, { httpOnly: true }).status(200).json(data);
       } catch (error) {
-        if (error instanceof TypeError) {
-          console.log(error);
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
         } else {
           const message = createErrorMessage(error);
           res.status(400).json({ message });
@@ -89,6 +106,7 @@ module.exports = {
       } catch (error) {
         if (error instanceof TypeError || error.name == 'MongoError') {
           console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
         } else {
           const message = createErrorMessage(error);
           res.status(400).json({ message });
@@ -111,10 +129,105 @@ module.exports = {
           user: user._id,
         });
         user.deliveryAddresses.push(newAddress);
-        const updatedUser = await user.save();
-        res.status(200).json(updatedUser);
+        await user.save();
+        res.status(200).json(newAddress.toObject());
       } catch (error) {
-        console.log(error);
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
+        } else {
+          const message = createErrorMessage(error);
+          res.status(400).json({ message });
+        }
+      }
+    },
+  },
+  patch: {
+    async profile(req, res) {
+      const { city, country, newPassword, oldPassword, phone, street, streetNumber, username } =
+        req.body;
+      if (newPassword == '' || oldPassword == '' || oldPassword !== newPassword) {
+        return res.status(409).json({ message: "Passwords don't match!" });
+      }
+      try {
+        const user = await userModel.findById(req.user._id);
+        if (oldPassword !== undefined && newPassword !== undefined) {
+          const match = await user.comparePasswords(oldPassword);
+          if (!match) {
+            return res
+              .status(409)
+              .json({ message: 'Old Password is not correct! Please try again.' });
+          }
+          user.password = newPassword;
+        }
+
+        const address = await addressModel.findByIdAndUpdate(
+          user.address._id,
+          {
+            city,
+            country,
+            street,
+            streetNumber,
+          },
+          { new: true, runValidators: true }
+        );
+        user.address = address;
+        user.phone = phone;
+        user.username = username;
+
+        const updatedUser = await user.save();
+        return res.status(200).json(removeUserPassword(updatedUser.toObject()));
+      } catch (error) {
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
+        } else {
+          const message = createErrorMessage(error);
+          res.status(400).json({ message });
+        }
+      }
+    },
+  },
+  put: {
+    async updateDeliveryAddress(req, res, next) {
+      const { country, city, street, streetNumber } = req.body;
+      const { id } = req.params;
+
+      try {
+        const address = await addressModel.findByIdAndUpdate(
+          id,
+          { country, city, street, streetNumber },
+          { new: true, runValidators: true }
+        );
+        res.status(200).json(address.toObject());
+      } catch (error) {
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
+        } else {
+          const message = createErrorMessage(error);
+          res.status(400).json({ message });
+        }
+      }
+    },
+  },
+  delete: {
+    async deleteAddress(req, res, next) {
+      const { id } = req.params;
+      try {
+        const user = await userModel.findById(req.user._id);
+        const deletedAddress = await addressModel.findByIdAndDelete(id);
+        user.deliveryAddresses = user.deliveryAddresses.filter((x) => x._id != id);
+        await user.save();
+        res.status(200).json(deletedAddress.toObject());
+      } catch (error) {
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
+        } else {
+          const message = createErrorMessage(error);
+          res.status(400).json({ message });
+        }
       }
     },
   },

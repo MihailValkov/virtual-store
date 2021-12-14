@@ -20,8 +20,8 @@ const FormGroup: FC<{
           hasError ? styles.invalid : isValid ? styles.valid : ''
         }`}
       >
-        <span>
-          <FontAwesomeIcon icon={icon} className={styles.icon} />
+        <span> 
+          <FontAwesomeIcon icon={icon} className={styles.icon}/>
         </span>
         {children}
       </div>

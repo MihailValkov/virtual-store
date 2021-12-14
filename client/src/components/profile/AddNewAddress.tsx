@@ -6,15 +6,19 @@ import FormGroup from '../shared/Form/FormGroup';
 import Button from '../shared/Button';
 import { faCity, faHome, faMapMarkedAlt, faStreetView } from '@fortawesome/free-solid-svg-icons';
 import styles from './AddNewAddress.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../../hooks/use-input';
-import { addNewAddressAction } from '../../+store/auth/auth-actions';
+import {
+  addNewDeliveryAddressAction,
+  editDeliveryAddressAction,
+} from '../../+store/auth/auth-actions';
 import {
   countryValidation,
   cityValidation,
   streetValidation,
   streetNumberValidation,
 } from '../../util/validations';
+import { AppRootState } from '../../+store/store';
 
 const AddNewAddress: FC<{
   id?: string;
@@ -22,8 +26,9 @@ const AddNewAddress: FC<{
   city?: string;
   street?: string;
   streetNumber?: number;
+  defaults?: boolean;
   onClose: () => void;
-}> = ({ onClose, id, country, city, street, streetNumber }) => {
+}> = ({ onClose, id, country, city, street, streetNumber, defaults }) => {
   const {
     value: countryValue,
     isValid: countryIsValid,
@@ -32,7 +37,7 @@ const AddNewAddress: FC<{
     blurHandler: countryBlurHandler,
     changeHandler: countryChangeHandler,
     resetHandler: countryReset,
-  } = useInput(countryValidation,country);
+  } = useInput(countryValidation, country);
   const {
     value: cityValue,
     isValid: cityIsValid,
@@ -41,7 +46,7 @@ const AddNewAddress: FC<{
     blurHandler: cityBlurHandler,
     changeHandler: cityChangeHandler,
     resetHandler: cityReset,
-  } = useInput(cityValidation,city);
+  } = useInput(cityValidation, city);
   const {
     value: streetValue,
     isValid: streetIsValid,
@@ -50,7 +55,7 @@ const AddNewAddress: FC<{
     blurHandler: streetBlurHandler,
     changeHandler: streetChangeHandler,
     resetHandler: streetReset,
-  } = useInput(streetValidation,street);
+  } = useInput(streetValidation, street);
   const {
     value: streetNumberValue,
     isValid: streetNumberIsValid,
@@ -61,24 +66,45 @@ const AddNewAddress: FC<{
     resetHandler: streetNumberReset,
   } = useInput(streetNumberValidation, streetNumber?.toString());
   const dispatch = useDispatch();
+  const errorMessage = useSelector((state: AppRootState) => state.auth.errorMessage);
+  const isLoading = useSelector((state: AppRootState) => state.auth.isLoading);
   const formIsValid = countryIsValid && cityIsValid && streetIsValid && streetNumberIsValid;
 
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(
-      addNewAddressAction({
-        country: countryValue,
-        city: cityValue,
-        street: streetValue,
-        streetNumber: Number(streetNumberValue),
-      })
-    );
+    if (id) {
+      dispatch(
+        editDeliveryAddressAction(
+          {
+            _id: id,
+            country: countryValue,
+            city: cityValue,
+            street: streetValue,
+            streetNumber: Number(streetNumberValue),
+            default: defaults || false,
+          },
+          onClose
+        )
+      );
+    } else {
+      dispatch(
+        addNewDeliveryAddressAction(
+          {
+            country: countryValue,
+            city: cityValue,
+            street: streetValue,
+            streetNumber: Number(streetNumberValue),
+          },
+          onClose
+        )
+      );
+    }
   };
 
   return (
     <div className={styles['delivery-address']}>
       <h2>Add Address for Delivery</h2>
-      <Form isLoading={false} onSubmitHandler={onSubmitHandler}>
+      <Form isLoading={isLoading} onSubmitHandler={onSubmitHandler}>
         <FormRow>
           <FormGroup
             name='country'
@@ -153,7 +179,7 @@ const AddNewAddress: FC<{
           </FormGroup>
         </FormRow>
 
-        <FormActions responseError={''}>
+        <FormActions responseError={errorMessage || ''}>
           <Button classes={styles.btn} disabled={!formIsValid ? true : false} type='submit'>
             Save
           </Button>

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IAddress, IUser } from '../../interfaces/user';
 
 export interface IAuthState {
@@ -6,6 +6,7 @@ export interface IAuthState {
   loginError: string;
   registerError: string;
   isLoading: boolean;
+  errorMessage: string | null;
 }
 
 export const initialAuthState: IAuthState = {
@@ -13,6 +14,7 @@ export const initialAuthState: IAuthState = {
   loginError: '',
   registerError: '',
   isLoading: false,
+  errorMessage: null,
 };
 
 const authSlice = createSlice({
@@ -24,9 +26,39 @@ const authSlice = createSlice({
     loginError: (state, action) => ({ ...state, loginError: action.payload }),
     register: (state, action) => ({ ...state, user: action.payload }),
     registerError: (state, action) => ({ ...state, registerError: action.payload }),
-    update: (state, action) => ({ ...state, user: action.payload }),
+    update: (state, action) => ({
+      ...state,
+      user: {
+        ...state.user,
+        ...action.payload.updatedUser,
+        deliveryAddresses: state.user?.deliveryAddresses,
+      },
+    }),
     loading: (state, action) => ({ ...state, isLoading: action.payload }),
-    addNewAddress: (state, action) => ({ ...state, user: action.payload }),
+    addNewAddress: (state, action: PayloadAction<{ newAddress: IAddress }>) => {
+      if (state.user && state.user?.deliveryAddresses?.length >= 0) {
+        state.user.deliveryAddresses.push(action.payload.newAddress);
+      }
+      return state;
+    },
+    editAddress: (state, action: PayloadAction<{ address: IAddress }>) => {
+      if (state.user && state.user.deliveryAddresses.length > 0) {
+        const existingAddressIndex = state.user.deliveryAddresses.findIndex(
+          (a) => a._id === action.payload.address._id
+        );
+        state.user.deliveryAddresses[existingAddressIndex] = action.payload.address;
+      }
+      return state;
+    },
+    deleteAddress: (state, action: PayloadAction<{ address: IAddress }>) => {
+      if (state.user && state.user.deliveryAddresses.length > 0) {
+        const existingAddressIndex = state.user.deliveryAddresses.findIndex(
+          (a) => a._id === action.payload.address._id
+        );
+        state.user.deliveryAddresses.splice(existingAddressIndex, 1);
+      }
+      return state;
+    },
     changeCurrentAddress: (state, action) => {
       if (state.user && state.user.deliveryAddresses.length !== 0) {
         state.user.deliveryAddresses = state.user.deliveryAddresses.map((a) =>
@@ -36,6 +68,7 @@ const authSlice = createSlice({
       return state;
     },
     logout: () => initialAuthState,
+    error: (state, action) => ({ ...state, errorMessage: action.payload.message }),
   },
 });
 
@@ -48,6 +81,10 @@ export const {
   logout,
   authenticate,
   loading,
+  error,
+  update,
   addNewAddress,
+  editAddress,
+  deleteAddress,
   changeCurrentAddress,
 } = authSlice.actions;

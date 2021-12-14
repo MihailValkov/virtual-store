@@ -13,30 +13,47 @@ const DeliveryAddress: FC<{
   street: string;
   streetNumber: number;
   checked: boolean;
+  showEditModal: boolean;
+  showDeleteModal: boolean;
+  onShowEditModal: () => void;
+  onShowDeleteModal: () => void;
   onChangeAddress: () => void;
-}> = ({ id, country, city, street, streetNumber, checked, onChangeAddress }) => {
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const onShowEditModalHandler = () => setShowEditModal((prev) => !prev);
-  const onShowDeleteModalHandler = () => setShowDeleteModal((prev) => !prev);
-
+  onDeleteAddress: (onClose: () => void) => void;
+}> = ({
+  id,
+  country,
+  city,
+  street,
+  streetNumber,
+  checked,
+  showEditModal,
+  onShowEditModal,
+  showDeleteModal,
+  onShowDeleteModal,
+  onChangeAddress,
+  onDeleteAddress,
+}) => {
   return (
     <>
       {showEditModal && (
-        <Modal onClose={onShowEditModalHandler}>
+        <Modal onClose={onShowEditModal}>
           <AddNewAddress
-            onClose={onShowEditModalHandler}
+            onClose={onShowEditModal}
             id={id}
             country={country}
             city={city}
             street={street}
             streetNumber={streetNumber}
+            defaults={checked}
           />
         </Modal>
       )}
       {showDeleteModal && (
-        <Modal onClose={onShowDeleteModalHandler}>
-          <Confirm onClose={onShowDeleteModalHandler} />
+        <Modal onClose={onShowDeleteModal}>
+          <Confirm
+            onClose={onShowDeleteModal}
+            onConfirm={onDeleteAddress.bind(null, onShowDeleteModal)}
+          />
         </Modal>
       )}
       <li className={`${styles['address']} ${checked && styles['active']}`}>
@@ -57,12 +74,12 @@ const DeliveryAddress: FC<{
           <Button
             icon={faEdit}
             classes={`${styles['edit-btn']} ${styles.btn}`}
-            onClick={onShowEditModalHandler}
+            onClick={onShowEditModal}
           ></Button>
           <Button
             icon={faTrash}
             classes={`${styles['delete-btn']} ${styles.btn}`}
-            onClick={onShowDeleteModalHandler}
+            onClick={onShowDeleteModal}
           ></Button>
         </p>
       </li>
