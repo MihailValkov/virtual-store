@@ -24,14 +24,34 @@ import DeliveryAddressList from './DeliveryAddressList';
 
 import styles from './Profile.module.css';
 import { IUser } from '../../interfaces/user';
+import { http } from '../../util/http-request';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const [currentImage, setCurrentImage] = useState(user.imageUrl);
   const [isEditProfileMode, setIsEditProfileMode] = useState(false);
   const [isAddNewAddressMode, setIsAddNewAddressMode] = useState(false);
 
-  const onImageUploadHandler = (arr: string[]) => {
-    setCurrentImage(arr[0]);
+  const onImageUploadHandler = (previewUrl: string | ArrayBuffer | null, files: FileList) => {
+    console.log(previewUrl);
+    console.log(files[0]);
+    const formData = new FormData();
+    // formData.append('image', files[0]);
+
+    // http.post('upload/users', formData).then((data) => {
+    //   console.log(data);
+    //   setCurrentImage(data.imageUrl);
+    // });
+
+    formData.append('images', JSON.stringify(files));
+    // let newArr = [];
+    for (let i = 0; i < files.length; i++) {
+      formData.append('images', files[i]);
+    }
+
+    http.post('upload/products', formData).then((data) => {
+      console.log(data);
+      // setCurrentImage(data.imageUrl);
+    });
   };
 
   const onEditProfileHandler = () => setIsEditProfileMode((prev) => !prev);
@@ -40,7 +60,6 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
     <>
       {isEditProfileMode && (
         <Modal onClose={onEditProfileHandler}>
-          {' '}
           <EditProfile
             onClose={onEditProfileHandler}
             username={user.username}
@@ -49,17 +68,16 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
             city={user.address.city}
             street={user.address.street}
             streetNumber={user.address.streetNumber}
-          />{' '}
+          />
         </Modal>
       )}
       {isAddNewAddressMode && (
         <Modal onClose={onAddNewAddressHandler}>
-          {' '}
           <AddNewAddress onClose={onAddNewAddressHandler} />{' '}
         </Modal>
       )}
       <section className={styles['profile']}>
-        <AsideMenu/>
+        <AsideMenu />
         <Card classes={styles['profile-container']}>
           <h1>User Profile</h1>
           <div className={styles['profile-information']}>
@@ -75,9 +93,21 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
               <BoxCard icon={faUser} title={user.username} classes='blue' />
               <BoxCard icon={faEnvelope} title={user.email} classes='blue' />
               <BoxCard icon={faPhoneAlt} title={user.phone} classes='blue' />
-              <BoxCard icon={faCity} title={`${user.address.country}, ${user.address.city}`} classes='blue' />
-              <BoxCard icon={faStreetView} title={`${user.address.street}, ${user.address.streetNumber}`} classes='blue' />
-              <BoxCard icon={faClock} title={new Date(user.createdAt).toLocaleString()} classes='blue' />
+              <BoxCard
+                icon={faCity}
+                title={`${user.address.country}, ${user.address.city}`}
+                classes='blue'
+              />
+              <BoxCard
+                icon={faStreetView}
+                title={`${user.address.street}, ${user.address.streetNumber}`}
+                classes='blue'
+              />
+              <BoxCard
+                icon={faClock}
+                title={new Date(user.createdAt).toLocaleString()}
+                classes='blue'
+              />
             </div>
             <div className={styles['profile-actions']}>
               <Button

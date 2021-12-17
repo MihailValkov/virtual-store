@@ -1,11 +1,23 @@
 const baseURL = process.env.REACT_APP_API_URL;
-const httpRequest = (method: string, url: string, body: {} | null = null) => {
-  return fetch(`${baseURL}/${url}`, {
-    method,
-    headers: { 'Content-type': 'application/json' },
-    credentials: 'include',
-    body: body ? JSON.stringify(body) : null,
-  })
+interface IOptions {
+  method: string;
+  body?: any;
+  headers?: string[][] | Record<string, string> | Headers | undefined;
+  credentials?: 'omit' | 'same-origin' | 'include';
+}
+
+const httpRequest = (method: string, url: string, body?: any) => {
+  let options: IOptions = { method, credentials: 'include' };
+
+  if (url.includes('upload')) {
+    options.body = body;
+  } else {
+    options.headers = {};
+    options.headers['Content-type'] = 'application/json';
+    options.body = body ? JSON.stringify(body) : null;
+  }
+
+  return fetch(`${baseURL}/${url}`, options)
     .then((res) => Promise.all([res.json(), res.ok]))
     .then(([res, isOk]) =>
       !isOk

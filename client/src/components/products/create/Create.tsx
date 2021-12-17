@@ -76,11 +76,11 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
             onChangeImage={changeImageHandler}
             currentImage={currentImage}
           />
-          <ImageUpload
+          {/* <ImageUpload
             onUploadFiles={uploadFilesHandler}
             text='Upload Images'
             classes={styles['upload-button']}
-          />
+          /> */}
           <div className={styles['category-select']}>
             <select>
               <option>Select Category</option>

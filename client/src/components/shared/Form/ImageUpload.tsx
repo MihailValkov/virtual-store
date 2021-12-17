@@ -3,7 +3,7 @@ import Button from '../Button';
 import styles from './ImageUpload.module.css';
 
 const ImageUpload: FC<{
-  onUploadFiles: (urls: string[]) => void;
+  onUploadFiles: (previewUrl: string | ArrayBuffer | null, files:FileList) => void;
   text: string;
   classes?: string;
 }> = ({ onUploadFiles, text, classes }) => {
@@ -17,9 +17,16 @@ const ImageUpload: FC<{
     if (!files || files.length === 0 || files.length > 5) {
       return;
     }
-    const fileList = new Array(files.length).fill(0).map((x, i) => URL.createObjectURL(files[i]));
-    setImages(fileList);
-    onUploadFiles(fileList);
+    console.log(files[0]);
+    
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+        reader.onloadend = () => {
+          onUploadFiles(reader.result, files);
+        };
+    // const fileList = new Array(files.length).fill(0).map((x, i) => URL.createObjectURL(files[i]));
+    // setImages(fileList);
+    // onUploadFiles(fileList);
   };
 
   return (
