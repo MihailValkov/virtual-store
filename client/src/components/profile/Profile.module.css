@@ -35,6 +35,7 @@
 }
 .profile-picture {
   flex: 3;
+  position: relative;
 }
 .profile-picture img {
   height: 200px;
@@ -81,3 +82,7 @@
   background-color: #f7f7f7;
 }
 
+.loading {
+  top: calc(100px - 32px);
+  left: calc(110px - 32px);
+}

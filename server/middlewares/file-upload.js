@@ -25,7 +25,7 @@ const fileUpload = multer({
 });
 
 const uploadSingleImage = fileUpload.single('image');
-const uploadMultipleImages = fileUpload.array('images');
+const uploadMultipleImages = fileUpload.array('images', 5);
 
 function single() {
   return (req, res, next) => {

@@ -12,10 +12,11 @@ import {
   logout,
   addNewAddress,
   changeCurrentAddress,
-  update,
+  updateUserInformation,
   error,
   editAddress,
   deleteAddress,
+  updateUserAvatar,
 } from './auth-slice';
 
 export const loginAction =
@@ -130,7 +131,7 @@ export const updateUserInformationAction =
     dispatch(error({ message: '' }));
     try {
       const updatedUser = await http.patch('auth/profile', data);
-      dispatch(update({ updatedUser }));
+      dispatch(updateUserInformation({ updatedUser }));
       onClose();
     } catch (err: any) {
       dispatch(error({ message: err.message || err.error.message }));
@@ -138,3 +139,16 @@ export const updateUserInformationAction =
       dispatch(loading(false));
     }
   };
+
+export const updateUserAvatarAction = (formData: FormData) => async (dispatch: AppDispatch) => {
+  dispatch(loading(true));
+  dispatch(error({ message: '' }));
+  try {
+    const response = await http.post('upload/users', formData);
+    dispatch(updateUserAvatar({ image: response }));
+  } catch (err: any) {
+    dispatch(error({ message: err.message || err.error.message }));
+  } finally {
+    dispatch(loading(false));
+  }
+};

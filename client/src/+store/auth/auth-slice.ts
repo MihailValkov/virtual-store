@@ -26,7 +26,7 @@ const authSlice = createSlice({
     loginError: (state, action) => ({ ...state, loginError: action.payload }),
     register: (state, action) => ({ ...state, user: action.payload }),
     registerError: (state, action) => ({ ...state, registerError: action.payload }),
-    update: (state, action) => ({
+    updateUserInformation: (state, action) => ({
       ...state,
       user: {
         ...state.user,
@@ -34,6 +34,15 @@ const authSlice = createSlice({
         deliveryAddresses: state.user?.deliveryAddresses,
       },
     }),
+    updateUserAvatar: (
+      state,
+      action: PayloadAction<{ image: { _id: string; url: string } }>
+    ) => {
+      if (state.user) {
+        state.user.image = action.payload.image;
+      }
+      return state;
+    },
     loading: (state, action) => ({ ...state, isLoading: action.payload }),
     addNewAddress: (state, action: PayloadAction<{ newAddress: IAddress }>) => {
       if (state.user && state.user?.deliveryAddresses?.length >= 0) {
@@ -82,7 +91,8 @@ export const {
   authenticate,
   loading,
   error,
-  update,
+  updateUserInformation,
+  updateUserAvatar,
   addNewAddress,
   editAddress,
   deleteAddress,

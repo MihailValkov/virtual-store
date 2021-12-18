@@ -1,11 +1,11 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useState, useCallback, useMemo } from 'react';
 import Card from '../../shared/Card';
 import Form from '../../shared/Form/Form';
 import FormGroup from '../../shared/Form/FormGroup';
 import FormActions from '../../shared/Form/FormActions';
 import Button from '../../shared/Button';
 import ImageUpload from '../../shared/Form/ImageUpload';
-import { emailValidation } from '../../../util/validations';
+import { productValidations } from '../../../util/validations';
 import useInput from '../../../hooks/use-input';
 import {
   faCalendar,
@@ -24,45 +24,143 @@ import noImage from '../../../assets/no-image.png';
 import Colors from '../../shared/Colors';
 import PreviewImages from '../../shared/PreviewImages';
 import { ICategory } from '../../../interfaces/category';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewProductAction, uploadProductImagesAction } from '../../../+store/products/products-actions';
+import { AppRootState } from '../../../+store/store';
 
-// 'https://lh3.googleusercontent.com/proxy/0nkn0ZQISXD51opO74gFtKFvE4r-IDqrup4f4CGlDNE0Joel44sD1wIaq4HvYwbKuzXb4lGTkmtu-cHNaH1oSrMvpw0UFDqiFa28Zu0x9dlG9h9Wn6CaNg1GsxuF8bULZC6d-UG3JoUnZGdQn_FfgXB9LRapUShhX0vMTrKOc3BoudtbCRbnCwFqHaJSleU538Td2XR-INxOmLKmE-mUOSc6y6qqTYF2KMtPWIFh_63zbxjQ6uLIcG6WJjPsMPBhfoPfJpwklzmyL42izwzC4ZPwYEE08FcVllWOMZgdK36OBVzqfo1VigMn5COFMUuvyYnxIq-ZuNhp-e1KHZc7Hip_s3kubonsisQzLF9BpJQ89WHVLHB8Q1XfP3tusAnZF_qYQ1kQ6AUGdcrtnrfSPJyaRAHD3PaPk3eFuy0MPkRJwhNYgYfKUccT531M9k0C_9UMp5x3pXpHr4xrFJI9JYb1NZ-z9KXSjRd6GFCdnEdMvLt2wTbGgd1KLR-S0kb086Tz1VkmeAyJSJkR-EDIkf9WMhogjzmrPf-_yphNJ8RrwWz9iizoJMZUDkzhiAsIA0DsGFc';
-// const images = [
-//   'https://s13emagst.akamaized.net/products/32170/32169398/images/res_a0ae106d44c5ef737055bf8ea9146941.jpg',
-//   'https://s13emagst.akamaized.net/products/32170/32169398/images/res_624f129e976b8be5b997ec63be975bbc.jpg',
-//   'https://s13emagst.akamaized.net/products/32170/32169398/images/res_c4117c439b862b7517cc87d2c57ac78c.jpg',
-//   'https://s13emagst.akamaized.net/products/32170/32169398/images/res_da22c15b78ab4b9743a085ccc9dfd577.jpg',
-//   'https://s13emagst.akamaized.net/products/32170/32169398/images/res_110fe86401f58b10a8a223b14f017a8a.jpg',
-// ];
 const colors = ['red', 'blue', 'green', 'black', 'purple', 'yellow'];
 
 const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
-  const [images, setImages] = useState<string[]>([noImage, noImage, noImage, noImage]);
+  const dispatch = useDispatch();
+  const uploadImages = useSelector((state: AppRootState) => state.products.currentImages.images);
+  const isLoading = useSelector((state: AppRootState) => state.products.currentImages.isLoading);
+  const error = useSelector((state: AppRootState) => state.products.currentImages.error);
+  const images = useMemo(
+    () => (uploadImages || []).concat(new Array(5).fill(noImage)).slice(0, 5),
+    [uploadImages]
+  );
   const [currentImage, setCurrentImage] = useState(images[0]);
-
-  const changeImageHandler = (src: string) => {
-    setCurrentImage(src);
-  };
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('Select Category');
 
   const {
-    value: emailValue,
-    isValid: emailIsValid,
-    errorMessage: emailErrorMessage,
-    hasError: emailHasError,
-    blurHandler: emailBlurHandler,
-    changeHandler: emailChangeHandler,
-    resetHandler: emailReset,
-  } = useInput(emailValidation);
+    value: nameValue,
+    isValid: nameIsValid,
+    errorMessage: nameErrorMessage,
+    hasError: nameHasError,
+    blurHandler: nameBlurHandler,
+    changeHandler: nameChangeHandler,
+    resetHandler: nameReset,
+  } = useInput(productValidations.name);
+  const {
+    value: priceValue,
+    isValid: priceIsValid,
+    errorMessage: priceErrorMessage,
+    hasError: priceHasError,
+    blurHandler: priceBlurHandler,
+    changeHandler: priceChangeHandler,
+    resetHandler: priceReset,
+  } = useInput(productValidations.price);
+  const {
+    value: yearValue,
+    isValid: yearIsValid,
+    errorMessage: yearErrorMessage,
+    hasError: yearHasError,
+    blurHandler: yearBlurHandler,
+    changeHandler: yearChangeHandler,
+    resetHandler: yearReset,
+  } = useInput(productValidations.year);
+  const {
+    value: availablePiecesValue,
+    isValid: availablePiecesIsValid,
+    errorMessage: availablePiecesErrorMessage,
+    hasError: availablePiecesHasError,
+    blurHandler: availablePiecesBlurHandler,
+    changeHandler: availablePiecesChangeHandler,
+    resetHandler: availablePiecesReset,
+  } = useInput(productValidations.availablePieces);
+  const {
+    value: brandValue,
+    isValid: brandIsValid,
+    errorMessage: brandErrorMessage,
+    hasError: brandHasError,
+    blurHandler: brandBlurHandler,
+    changeHandler: brandChangeHandler,
+    resetHandler: brandReset,
+  } = useInput(productValidations.brand);
+  const {
+    value: modelValue,
+    isValid: modelIsValid,
+    errorMessage: modelErrorMessage,
+    hasError: modelHasError,
+    blurHandler: modelBlurHandler,
+    changeHandler: modelChangeHandler,
+    resetHandler: modelReset,
+  } = useInput(productValidations.model);
+  const {
+    value: descriptionValue,
+    isValid: descriptionIsValid,
+    errorMessage: descriptionErrorMessage,
+    hasError: descriptionHasError,
+    blurHandler: descriptionBlurHandler,
+    changeHandler: descriptionChangeHandler,
+    resetHandler: descriptionReset,
+  } = useInput(productValidations.description);
 
-  const onSubmitHandler = (e: FormEvent) => {
-    e.preventDefault();
+  const formIsValid =
+    nameIsValid &&
+    priceIsValid &&
+    brandIsValid &&
+    modelIsValid &&
+    yearIsValid &&
+    availablePiecesIsValid &&
+    descriptionIsValid &&
+    selectedColors.length > 0 &&
+    uploadImages.length > 0 &&
+    selectedCategory !== 'Select Category';
+
+  const changeImageHandler = useCallback((src: string) => {
+    setCurrentImage(src);
+  }, []);
+
+  const uploadFilesHandler = useCallback(
+    (files: FileList) => {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append('images', files[i]);
+      }
+      dispatch(uploadProductImagesAction(formData, setCurrentImage));
+    },
+    [dispatch]
+  );
+
+  const selectColorHandler = useCallback((colors: {}) => {
+    const selectedColors = Object.entries(colors).reduce(
+      (a: string[], [k, v]) => (v !== false ? a.concat(k) : a),
+      []
+    );
+    setSelectedColors(selectedColors);
+  }, []);
+
+  const onSelectCategoryHandler = (event: FormEvent<HTMLSelectElement>) => {
+    setSelectedCategory(event.currentTarget.value);
   };
 
-  const uploadFilesHandler = (files: string[]) => {
-    setImages((prev) => [...prev, ...files].reverse().slice(0, 4));
-    setCurrentImage(files[0]);
-  };
-  const selectColorHandler = (color: {}) => {
-    console.log(color);
+  const onSubmitHandler = (event: FormEvent) => {
+    event.preventDefault();
+    const product = {
+      name: nameValue,
+      price: Number(priceValue),
+      year: Number(yearValue),
+      availablePieces: Number(availablePiecesValue),
+      brand: brandValue,
+      model: modelValue,
+      description: descriptionValue,
+      colors: selectedColors,
+      category: selectedCategory,
+      images: uploadImages,
+    };
+    dispatch(addNewProductAction(product))
   };
 
   return (
@@ -72,17 +170,19 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
         <div className={styles.left}>
           <PreviewImages
             classes={styles.photos}
+            isLoading={isLoading}
             images={images}
             onChangeImage={changeImageHandler}
             currentImage={currentImage}
           />
-          {/* <ImageUpload
+          <ImageUpload
             onUploadFiles={uploadFilesHandler}
+            errorMessage={error}
             text='Upload Images'
             classes={styles['upload-button']}
-          /> */}
+          />
           <div className={styles['category-select']}>
-            <select>
+            <select onChange={onSelectCategoryHandler}>
               <option>Select Category</option>
               {categories.map((c) => (
                 <option key={c._id} value={c.category}>
@@ -104,32 +204,33 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
               label='Name'
               name='name'
               icon={faSignature}
-              errorMessage={emailErrorMessage}
-              hasError={emailHasError}
-              isValid={emailIsValid}
+              errorMessage={nameErrorMessage}
+              hasError={nameHasError}
+              isValid={nameIsValid}
             >
               <input
                 type='text'
                 name='name'
-                value={emailValue}
-                onChange={emailChangeHandler}
-                onBlur={emailBlurHandler}
+                value={nameValue}
+                onChange={nameChangeHandler}
+                onBlur={nameBlurHandler}
               />
             </FormGroup>
             <FormGroup
               label='Price'
               name='price'
               icon={faHandHolding}
-              errorMessage={emailErrorMessage}
-              hasError={emailHasError}
-              isValid={emailIsValid}
+              errorMessage={priceErrorMessage}
+              hasError={priceHasError}
+              isValid={priceIsValid}
             >
               <input
                 type='number'
                 name='price'
-                value={emailValue}
-                onChange={emailChangeHandler}
-                onBlur={emailBlurHandler}
+                min='0'
+                value={priceValue}
+                onChange={priceChangeHandler}
+                onBlur={priceBlurHandler}
               />
             </FormGroup>
           </div>
@@ -138,32 +239,32 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
               label='Year'
               name='year'
               icon={faCalendar}
-              errorMessage={emailErrorMessage}
-              hasError={emailHasError}
-              isValid={emailIsValid}
+              errorMessage={yearErrorMessage}
+              hasError={yearHasError}
+              isValid={yearIsValid}
             >
               <input
                 type='text'
                 name='year'
-                value={emailValue}
-                onChange={emailChangeHandler}
-                onBlur={emailBlurHandler}
+                value={yearValue}
+                onChange={yearChangeHandler}
+                onBlur={yearBlurHandler}
               />
             </FormGroup>
             <FormGroup
               label='Available Pieces'
               name='availablePieces'
               icon={faCubes}
-              errorMessage={emailErrorMessage}
-              hasError={emailHasError}
-              isValid={emailIsValid}
+              errorMessage={availablePiecesErrorMessage}
+              hasError={availablePiecesHasError}
+              isValid={availablePiecesIsValid}
             >
               <input
                 type='number'
                 name='availablePieces'
-                value={emailValue}
-                onChange={emailChangeHandler}
-                onBlur={emailBlurHandler}
+                value={availablePiecesValue}
+                onChange={availablePiecesChangeHandler}
+                onBlur={availablePiecesBlurHandler}
               />
             </FormGroup>
           </div>
@@ -172,32 +273,32 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
               label='Brand'
               name='brand'
               icon={faCopyright}
-              errorMessage={emailErrorMessage}
-              hasError={emailHasError}
-              isValid={emailIsValid}
+              errorMessage={brandErrorMessage}
+              hasError={brandHasError}
+              isValid={brandIsValid}
             >
               <input
                 type='text'
                 name='brand'
-                value={emailValue}
-                onChange={emailChangeHandler}
-                onBlur={emailBlurHandler}
+                value={brandValue}
+                onChange={brandChangeHandler}
+                onBlur={brandBlurHandler}
               />
             </FormGroup>
             <FormGroup
               label='Model'
               name='model'
               icon={faStamp}
-              errorMessage={emailErrorMessage}
-              hasError={emailHasError}
-              isValid={emailIsValid}
+              errorMessage={modelErrorMessage}
+              hasError={modelHasError}
+              isValid={modelIsValid}
             >
               <input
                 type='text'
                 name='model'
-                value={emailValue}
-                onChange={emailChangeHandler}
-                onBlur={emailBlurHandler}
+                value={modelValue}
+                onChange={modelChangeHandler}
+                onBlur={modelBlurHandler}
               />
             </FormGroup>
           </div>
@@ -206,14 +307,18 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
             label='Description'
             name='description'
             icon={faComment}
-            errorMessage={emailErrorMessage}
-            hasError={emailHasError}
-            isValid={emailIsValid}
+            errorMessage={descriptionErrorMessage}
+            hasError={descriptionHasError}
+            isValid={descriptionIsValid}
           >
-            <textarea onChange={emailChangeHandler} onBlur={emailBlurHandler} />
+            <textarea
+              value={descriptionValue}
+              onChange={descriptionChangeHandler}
+              onBlur={descriptionBlurHandler}
+            />
           </FormGroup>
           <FormActions responseError={'errorMessage'}>
-            <Button classes='' disabled={false}>
+            <Button type='submit' disabled={!formIsValid}>
               Add new Item
             </Button>
           </FormActions>

@@ -1,28 +1,31 @@
-import { FC } from 'react';
+import { FC,memo } from 'react';
+import LoadingSpinner from './LoadingSpinner';
 import styles from './PreviewImages.module.css';
 
 const PreviewImages: FC<{
-  classes?:string,
+  isLoading?: boolean;
+  classes?: string;
   images: string[];
   currentImage: string;
   onChangeImage: (src: string) => void;
-}> = ({ images, currentImage, onChangeImage, classes }) => {
+}> = memo(({ isLoading, images, currentImage, onChangeImage, classes }) => {
   return (
     <div className={`${styles['preview-container']} ${classes}`}>
       <img src={currentImage} alt='img desc' />
+      {isLoading && <LoadingSpinner className={styles.loading} />}
       <div className={styles.preview}>
-        {images.map((src:string, i:number) => (
+        {images.slice(1).map((src: string, i: number) => (
           <img
             className={src === currentImage ? styles.active : ''}
             key={i}
             src={src}
             alt='img desc'
-            onMouseOver={onChangeImage.bind(null, src)}
+            onClick={onChangeImage.bind(null, src)}
           />
         ))}
       </div>
     </div>
   );
-};
+});
 
 export default PreviewImages;

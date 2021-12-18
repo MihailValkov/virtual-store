@@ -13,6 +13,7 @@ import {
 import { AppRootState } from '../../../+store/store';
 import Card from '../Card';
 
+import noAvatarImage from '../../../assets/no-avatar.png';
 import styles from './AsideMenu.module.css';
 
 const AsideMenu: FC<{}> = () => {
@@ -22,7 +23,7 @@ const AsideMenu: FC<{}> = () => {
   const guestContent = (
     <>
       <div className={styles['user-info']}>
-        <img src='https://res.cloudinary.com/dofijitd8/image/upload/v1628952324/shared-trips/images/s4iu2zctmmxmek3yi34r.jpg' alt='profile-img' />
+        <img src={noAvatarImage} alt='profile-img' />
         <h3 className={styles['anonymous-title']}>You are anonymous user currently.</h3>
         <p>Login or register so you can access extra functionality.</p>
       </div>
@@ -48,10 +49,7 @@ const AsideMenu: FC<{}> = () => {
   const userContent = (
     <>
       <div className={styles['user-info']}>
-        <img
-          src={user?.imageUrl}
-          alt='profile-img'
-        />
+        <img src={user?.image.url || noAvatarImage} alt='profile-img' />
         <p>{user?.username}</p>
       </div>
       <ul className={styles.navigation}>

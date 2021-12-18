@@ -11,47 +11,35 @@ import {
   faStreetView,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { IUser } from '../../interfaces/user';
+import { updateUserAvatarAction } from '../../+store/auth/auth-actions';
+import { useDispatch, useSelector } from 'react-redux';
+
 import AsideMenu from '../shared/AsideMenu/AsideMenu';
 import Card from '../shared/Card';
 import BoxCard from './BoxCard';
-
 import ImageUpload from '../shared/Form/ImageUpload';
 import EditProfile from './EditProfile';
 import Button from '../shared/Button';
 import Modal from '../shared/Modal';
 import AddNewAddress from './AddNewAddress';
 import DeliveryAddressList from './DeliveryAddressList';
-
+import noAvatarImage from '../../assets/no-avatar.png';
 import styles from './Profile.module.css';
-import { IUser } from '../../interfaces/user';
-import { http } from '../../util/http-request';
+import { AppRootState } from '../../+store/store';
+import LoadingSpinner from '../shared/LoadingSpinner';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
-  const [currentImage, setCurrentImage] = useState(user.imageUrl);
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state: AppRootState) => state.auth.isLoading);
   const [isEditProfileMode, setIsEditProfileMode] = useState(false);
   const [isAddNewAddressMode, setIsAddNewAddressMode] = useState(false);
 
-  const onImageUploadHandler = (previewUrl: string | ArrayBuffer | null, files: FileList) => {
-    console.log(previewUrl);
-    console.log(files[0]);
+  const onImageUploadHandler = (files: FileList) => {
     const formData = new FormData();
-    // formData.append('image', files[0]);
-
-    // http.post('upload/users', formData).then((data) => {
-    //   console.log(data);
-    //   setCurrentImage(data.imageUrl);
-    // });
-
-    formData.append('images', JSON.stringify(files));
-    // let newArr = [];
-    for (let i = 0; i < files.length; i++) {
-      formData.append('images', files[i]);
-    }
-
-    http.post('upload/products', formData).then((data) => {
-      console.log(data);
-      // setCurrentImage(data.imageUrl);
-    });
+    formData.append('userId', user._id);
+    formData.append('image', files[0]);
+    dispatch(updateUserAvatarAction(formData));
   };
 
   const onEditProfileHandler = () => setIsEditProfileMode((prev) => !prev);
@@ -82,7 +70,8 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
           <h1>User Profile</h1>
           <div className={styles['profile-information']}>
             <div className={styles['profile-picture']}>
-              <img src={currentImage} alt='profile-img' />
+              {isLoading && <LoadingSpinner className={styles.loading} />}
+              <img src={user?.image.url || noAvatarImage} alt='profile-img' />
               <ImageUpload
                 text='+ Add new Image'
                 onUploadFiles={onImageUploadHandler}

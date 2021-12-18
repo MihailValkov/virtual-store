@@ -1,8 +1,11 @@
+const createErrorMessage = require('../utils/create-error-message');
+const productModel = require('../models/Product');
+
 const categories = [
   {
     _id: 'laptop',
     category: 'Laptop',
-    imageUrl: 'http://localhost:5500/categories/computer.png',
+    imageUrl: 'http://localhost:5500/categories/laptop.png',
   },
   {
     _id: 'computer',
@@ -56,8 +59,8 @@ const products = [
     price: 1659.85,
     year: 2018,
     availablePieces: 13,
-    inStock:false,
-    taxes:5,
+    inStock: false,
+    taxes: 5,
     brand: 'Huawei',
     model: 'P30 Pro',
     description: 'P30 Pro, Dual SIM, 128GB, 16GB RAM, 4G, Black',
@@ -78,8 +81,8 @@ const products = [
     price: 359.85,
     year: 2021,
     availablePieces: 1,
-    inStock:true,
-    taxes:5,
+    inStock: true,
+    taxes: 5,
     brand: 'Huawei',
     model: 'Nova',
     description: 'Huawei Nova, Dual SIM, 128GB, 8GB RAM, 4G, Black',
@@ -100,8 +103,8 @@ const products = [
     price: 659.85,
     year: 2019,
     availablePieces: 51,
-    inStock:true,
-    taxes:5,
+    inStock: true,
+    taxes: 5,
     brand: 'Huawei',
     model: 'Nova 9',
     description: 'Huawei Nova 9, Dual SIM, 128GB, 8GB RAM, 4G, Black',
@@ -134,5 +137,56 @@ module.exports = {
       }
     },
   },
-  post: {},
+  post: {
+    addNewProduct: async (req, res) => {
+      const {
+        name,
+        price,
+        year,
+        availablePieces,
+        brand,
+        model,
+        description,
+        colors,
+        category,
+        images,
+      } = req.body;
+      console.log(
+        name,
+        price,
+        year,
+        availablePieces,
+        brand,
+        model,
+        description,
+        colors,
+        category,
+        images
+      );
+      try {
+      const record = await productModel.create({
+        name,
+        price,
+        year,
+        availablePieces,
+        brand,
+        model,
+        description,
+        colors,
+        category,
+        images,
+      });
+      res.status(201).json({ product: record });
+      
+      } catch (error) {
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: 'Something went wrong!' });
+        } else {
+          const message = createErrorMessage(error);
+          res.status(400).json({ message });
+        }
+      }
+    },
+  },
 };

@@ -11,8 +11,6 @@ const Colors: FC<{ colors: string[]; onSelectColor: (color: {}) => void; inputTy
 
   useEffect(() => {
     const initialState = colors.reduce((a, b) => Object.assign(a, { [b]: false }), {});
-    console.log('colors effect');
-    
     setState(initialState);
   }, [colors]);
 

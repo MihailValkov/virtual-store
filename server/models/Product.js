@@ -1,0 +1,97 @@
+const { Schema, model } = require('mongoose');
+const enumColors = ['red', 'blue', 'green', 'black', 'purple', 'yellow'];
+const enumCategories = [
+  'Laptop',
+  'Computer',
+  'Computer Accessories',
+  'Monitor',
+  'Tablet',
+  'Phone',
+  'Tv',
+  'Camera',
+];
+
+const productSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      minLength: [4, 'Product name should be at least 4 characters long!'],
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: [0.001, 'Price should be a positive number!'],
+    },
+    year: {
+      type: Number,
+      required: true,
+      validate: {
+        validator: (v) =>
+          Number(v) <= new Date().getFullYear() && Number(v) >= new Date().getFullYear() - 20,
+        message: () =>
+          `Year should be between ${
+            new Date().getFullYear() - 20
+          } and ${new Date().getFullYear()}!`,
+      },
+    },
+    availablePieces: {
+      type: Number,
+      required: true,
+      min: [0, 'Available pieces should be greater than zero!'],
+    },
+    brand: {
+      type: String,
+      required: true,
+      minLength: [3, 'Brand should be at least 3 characters long!'],
+    },
+    model: {
+      type: String,
+      required: true,
+      minLength: [3, 'Model should be at least 3 characters long!'],
+    },
+    description: {
+      type: String,
+      required: true,
+      minLength: [20, 'Description should be at least 20 characters long!'],
+    },
+    colors: [
+      {
+        type: String,
+        enum: {
+          values: enumColors,
+          message: '{VALUE} is not a valid color for this product!',
+        },
+      },
+    ],
+    category: {
+      type: String,
+      enum: {
+        values: enumCategories,
+        message: '{VALUE} is not a valid category for this product!',
+      },
+    },
+    images: [
+      {
+        type: String,
+        validate: {
+          validator: (v) => /^https?:\/\/.+/.test(v),
+          message: (props) => `${props.value} is not a valid Image URL!`,
+        },
+      },
+    ],
+    taxes: {
+      type: Number,
+      default: 5,
+    },
+    rating: {
+      type: Number,
+      default: 100,
+    },
+    // address: { type: Schema.Types.ObjectId, ref: 'Address' },
+    // deliveryAddresses: [{ type: Schema.Types.ObjectId, ref: 'Address' }],
+  },
+  { timestamps: true }
+);
+
+module.exports = model('Product', productSchema);

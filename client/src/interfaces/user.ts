@@ -17,7 +17,10 @@ export interface IUser {
   phone: string;
   address: IAddress;
   deliveryAddresses: IAddress[];
-  imageUrl: string;
+  image: {
+    _id: string;
+    url: string;
+  };
   createdAt: string;
   updatedAt: string;
 }

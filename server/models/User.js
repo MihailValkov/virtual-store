@@ -19,10 +19,9 @@ const userSchema = new Schema(
       required: true,
       minLength: [4, 'Password should be at least 4 characters long!'],
     },
-    imageUrl: {
-      type: String,
-      default:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX8iiAjB9x1X1KlcfkYJRRKxDZJ7x2eyoTnQ&usqp=CAU',
+    image: {
+      _id: String,
+      url: String,
     },
     role: {
       type: String,
