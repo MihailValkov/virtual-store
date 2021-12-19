@@ -10,6 +10,9 @@
 }
 .products ul li section {
   width: 270px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 450px;
 }
 .products ul li {
   margin-right: 10px;

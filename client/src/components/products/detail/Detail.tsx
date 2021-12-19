@@ -41,7 +41,12 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
   const isFavorite = useSelector((state: AppRootState) => state.favorites.products).find(
     (p) => p._id === product._id
   );
-
+  const moreInformation = {
+    category: product.category,
+    brand: product.brand,
+    model: product.model,
+    year: product.year,
+  };
   const changeImageHandler = (src: string) => {
     setCurrentImage(src);
   };
@@ -111,7 +116,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
           <h3 className={styles.price}>{product.price} BGN</h3>
           <div className={styles['more-info']}>
             <h3>More Information</h3>
-            <MoreInfo />
+            <MoreInfo information={moreInformation}/>
           </div>
           <div className={styles.description}>
             <h3>Description</h3>
@@ -120,11 +125,11 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
         </div>
         <div className={styles.right}>
           <p className={`${styles['total-price']}`}> {product.price} BGN </p>
-          {
-            product.inStock ? <p className={`${styles['available']}`}> Available </p>
-            : <p className={`${styles['available']} ${styles['unavailable']}`}> Not Available </p>
-          }
-          
+          {product.availablePieces > 0 ? (
+            <p className={`${styles['available']}`}> Available </p>
+          ) : (
+            <p className={`${styles['available']} ${styles['unavailable']}`}> Not Available </p>
+          )}
 
           <div className={`${styles.actions}`}>
             <Button

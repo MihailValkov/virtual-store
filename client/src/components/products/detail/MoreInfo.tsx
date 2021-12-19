@@ -18,7 +18,7 @@ const TableRow: FC<{ propName: string; value: string | number }> = ({ propName, 
   );
 };
 
-const MoreInfo: FC<{}> = (props) => {
+const MoreInfo: FC<{ information: { [key: string]: string | number } }> = ({ information }) => {
   return (
     <table className={styles.table}>
       <tbody>

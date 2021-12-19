@@ -24,8 +24,7 @@ const SimilarProductsList: FC<{ products: ICategoryProduct[] }> = ({ products })
       currentWidth + width <= 0 && setCurrentWidth(currentWidth + width);
     }
   };
-  console.log(currentWidth);
-  
+
   return (
     <div className={styles.products}>
       <h2>Customers also viewed these products</h2>
