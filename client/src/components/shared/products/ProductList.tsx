@@ -7,6 +7,8 @@ import {
 } from '../../../+store/favorites/favorites-slice';
 import { ICategoryProduct } from '../../../interfaces/category-product';
 import Product from './Product';
+
+import noProductsImg from '../../../assets/no-products.png';
 import styles from './ProductList.module.css';
 
 const ProductList: FC<{ products: ICategoryProduct[]; width?: number }> = ({ products, width }) => {
@@ -23,6 +25,15 @@ const ProductList: FC<{ products: ICategoryProduct[]; width?: number }> = ({ pro
   const onDeleteProductFromFavoritesHandler = (id: string) => {
     dispatch(deleteProductFromFavorites({ id }));
   };
+
+
+  if (products.length === 0) {
+    return (
+      <div className={styles['no-products']}>
+        <img src={noProductsImg} alt='product' />
+      </div>
+    );
+  }
 
   return (
     <ul className={styles.container} style={style}>

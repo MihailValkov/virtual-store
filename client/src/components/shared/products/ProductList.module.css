@@ -9,3 +9,9 @@
 .container section {
   width: 315px;
 }
+
+.no-products {
+  text-align: center;
+  width: 100%;
+  height: auto;
+}

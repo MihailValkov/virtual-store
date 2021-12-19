@@ -25,13 +25,18 @@ import Colors from '../../shared/Colors';
 import PreviewImages from '../../shared/PreviewImages';
 import { ICategory } from '../../../interfaces/category';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewProductAction, uploadProductImagesAction } from '../../../+store/products/products-actions';
+import {
+  addNewProductAction,
+  uploadProductImagesAction,
+} from '../../../+store/products/products-actions';
 import { AppRootState } from '../../../+store/store';
+import { useHistory } from 'react-router';
 
 const colors = ['red', 'blue', 'green', 'black', 'purple', 'yellow'];
 
 const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const uploadImages = useSelector((state: AppRootState) => state.products.currentImages.images);
   const isLoading = useSelector((state: AppRootState) => state.products.currentImages.isLoading);
   const error = useSelector((state: AppRootState) => state.products.currentImages.error);
@@ -160,7 +165,7 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
       category: selectedCategory,
       images: uploadImages,
     };
-    dispatch(addNewProductAction(product))
+    dispatch(addNewProductAction(product, history));
   };
 
   return (

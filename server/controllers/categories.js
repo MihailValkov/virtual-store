@@ -122,8 +122,13 @@ module.exports = {
       }
     },
     async products(req, res) {
+      const { category } = req.params;
       try {
-        return res.status(200).json(products.concat(...products).concat(...products));
+        const products = await productModel.find({
+          category: { $regex: category, $options: 'i' },
+        }).lean();
+
+        return res.status(200).json({ products: products});
       } catch (error) {
         return res.status(404).json({ message: 'Not Found 404' });
       }
@@ -151,33 +156,20 @@ module.exports = {
         category,
         images,
       } = req.body;
-      console.log(
-        name,
-        price,
-        year,
-        availablePieces,
-        brand,
-        model,
-        description,
-        colors,
-        category,
-        images
-      );
       try {
-      const record = await productModel.create({
-        name,
-        price,
-        year,
-        availablePieces,
-        brand,
-        model,
-        description,
-        colors,
-        category,
-        images,
-      });
-      res.status(201).json({ product: record });
-      
+        const record = await productModel.create({
+          name,
+          price,
+          year,
+          availablePieces,
+          brand,
+          model,
+          description,
+          colors,
+          category,
+          images,
+        });
+        res.status(201).json({ product: record });
       } catch (error) {
         if (error instanceof TypeError || error.name == 'MongoError') {
           console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);

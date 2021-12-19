@@ -39,7 +39,7 @@
 }
 .profile-picture img {
   height: 200px;
-  width: 220px;
+  width: auto;
   object-fit: contain;
 }
 
