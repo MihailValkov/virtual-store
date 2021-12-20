@@ -49,7 +49,7 @@ const AsideMenu: FC<{}> = () => {
   const userContent = (
     <>
       <div className={styles['user-info']}>
-        <img src={user?.image.url || noAvatarImage} alt='profile-img' />
+        <img src={user?.image?.url || noAvatarImage} alt='profile-img' />
         <p>{user?.username}</p>
       </div>
       <ul className={styles.navigation}>

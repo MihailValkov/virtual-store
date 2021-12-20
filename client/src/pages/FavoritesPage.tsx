@@ -2,10 +2,8 @@ import { FC } from 'react';
 
 import Favorites from '../components/favorites/Favorites';
 
-const items = [{}];
-
 const FavoritesPage: FC<{}> = () => {
-  return <Favorites items={items} />;
+  return <Favorites />;
 };
 
 export default FavoritesPage;

@@ -85,8 +85,29 @@ const productSchema = new Schema(
       default: 5,
     },
     rating: {
-      type: Number,
-      default: 100,
+      comments: [
+        {
+          user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+          },
+          comment: String,
+          status: String,
+          rating: Number,
+          createdAt: { type: Date, required: true, default: Date.now },
+        },
+      ],
+      rate: {
+        1: { type: Number, default: 0 },
+        2: { type: Number, default: 0 },
+        3: { type: Number, default: 0 },
+        4: { type: Number, default: 0 },
+        5: { type: Number, default: 0 },
+      },
+      totalRating: {
+        type: Number,
+        default: 0,
+      },
     },
     // address: { type: Schema.Types.ObjectId, ref: 'Address' },
     // deliveryAddresses: [{ type: Schema.Types.ObjectId, ref: 'Address' }],

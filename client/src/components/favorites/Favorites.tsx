@@ -8,7 +8,7 @@ import MyProductsList from '../shared/MyProducts/MyProductsList';
 
 import styles from './Favorites.module.css';
 
-const Favorites: FC<{ items: {}[] }> = ({ items }) => {
+const Favorites: FC<{}> = () => {
   const products = useSelector((state:AppRootState) => state.favorites.products);
 
   return (

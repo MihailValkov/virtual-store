@@ -1,4 +1,4 @@
-import { FC,memo } from 'react';
+import { FC, memo } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 import styles from './PreviewImages.module.css';
 
@@ -20,7 +20,7 @@ const PreviewImages: FC<{
             key={i}
             src={src}
             alt='img desc'
-            onClick={onChangeImage.bind(null, src)}
+            onMouseOver={onChangeImage.bind(null, src)}
           />
         ))}
       </div>

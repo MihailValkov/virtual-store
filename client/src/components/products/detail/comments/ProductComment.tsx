@@ -4,21 +4,22 @@ import styles from './ProductComment.module.css';
 
 const ProductComment: FC<{
   userImage: string;
-  username: string;
+  email: string;
+  status: string;
   date: string;
   comment: string;
   rating: number;
-}> = ({ userImage, username, date, comment, rating }) => {
+}> = ({ userImage, email, status, date, comment, rating }) => {
   return (
     <li className={styles.comment}>
       <div className={styles['user-info']}>
-        <img src={userImage} alt={`${username}'s profile`} />
-        <span>{username}</span>
-        <span>{date}</span>
+        <img src={userImage} alt={`${email}'s profile`} />
+        <span>{email}</span>
+        <span>{date ? new Date(date).toLocaleString() : 'unknown'}</span>
+        <p className={styles['comment-status']}>Rating: {status}</p>
       </div>
       <div className={styles['user-comment']}>
-        <p>Status</p>
-        <StarRating width={rating} />
+        <StarRating width={rating * 20} show/>
         <p>{comment}</p>
       </div>
     </li>

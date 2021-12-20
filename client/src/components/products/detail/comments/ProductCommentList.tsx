@@ -1,42 +1,21 @@
 import { FC } from 'react';
-import StarRating from '../../../shared/StarRating';
+import { IComment } from '../../../../interfaces/category-product';
 import ProductComment from './ProductComment';
+
+import noAvatarImage from '../../../../assets/no-avatar.png';
 import styles from './ProductCommentList.module.css';
 
-const comments_dummy = [
-  {
-    _id: 'comment_11',
-    userImage:
-      'https://res.cloudinary.com/dofijitd8/image/upload/v1628952324/shared-trips/images/s4iu2zctmmxmek3yi34r.jpg',
-    username: 'Mihail Valkov',
-    date: '18.02.2021',
-    comment: `Aparelho super leve, carrega rápido, fácil de usar, recebi antes do prazo, super
-    completo: além do carregador e adaptador para o fone, veio com película e capa. Estou
-    super feliz e satisfeita, o aparelho é lindo !!!`,
-    rating: 88,
-  },
-  {
-    _id: 'comment_13',
-    userImage:
-      'https://res.cloudinary.com/dofijitd8/image/upload/v1628952324/shared-trips/images/s4iu2zctmmxmek3yi34r.jpg',
-    username: 'Ivan',
-    date: '05.07.2021',
-    comment: `Super além do carregador e adaptador para o fone, veio com película e capa. Estou
-    super feliz e satisfeita, o aparelho é lindo !!!`,
-    rating: 88,
-  },
-];
-
-const ProductCommentList: FC<{}> = (props) => {
+const ProductCommentList: FC<{comments:IComment[]}> = ({comments}) => {
   return (
     <ul className={styles.comments}>
-      {comments_dummy.map((c) => (
+      {comments.map((c) => (
         <ProductComment
           key={c._id}
-          userImage={c.userImage}
-          username={c.username}
-          date={c.date}
+          userImage={c?.user?.image?.url || noAvatarImage}
+          email={c?.user.email}
+          date={c.createdAt}
           rating={c.rating}
+          status={c.status}
           comment={c.comment}
         />
       ))}

@@ -13,7 +13,7 @@ import Modal from '../../shared/Modal';
 import PreviewImages from '../../shared/PreviewImages';
 import Colors from '../../shared/Colors';
 import StarRating from '../../shared/StarRating';
-import RateProduct from './RateProduct';
+import RateProduct from './rate-product/RateProduct';
 import ProductList from '../../shared/products/ProductList';
 import MoreInfo from './MoreInfo';
 import Button from '../../shared/Button';
@@ -41,12 +41,19 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
   const isFavorite = useSelector((state: AppRootState) => state.favorites.products).find(
     (p) => p._id === product._id
   );
+  const user = useSelector((state: AppRootState) => state.auth.user);
   const moreInformation = {
     category: product.category,
     brand: product.brand,
     model: product.model,
     year: product.year,
   };
+  const { rating, ...others } = product;
+  const productRating = (rating?.totalRating / product?.rating?.comments?.length) * 20 || 0;
+  const rate = Object.entries(rating?.rate).map(([k, v]) => {
+    return { [k]: (v / rating?.comments?.length) * 100 || 0 };
+  });
+
   const changeImageHandler = (src: string) => {
     setCurrentImage(src);
   };
@@ -86,7 +93,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
   };
 
   const onAddProductToCart = () => {
-    dispatch(addProductToCart({ product }));
+    dispatch(addProductToCart({ product: { ...others, rating: productRating } }));
   };
 
   const onAddProductToFavorites = () => {
@@ -109,14 +116,14 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
         <div className={styles.center}>
           <h2>{product.name}</h2>
           <h3>Rating</h3>
-          <StarRating width={product.rating} />
+          <StarRating width={productRating} show/>
           <h3>Color</h3>
           <Colors colors={product.colors} inputType='radio' onSelectColor={selectColorHandler} />
           <h3>Price</h3>
           <h3 className={styles.price}>{product.price} BGN</h3>
           <div className={styles['more-info']}>
             <h3>More Information</h3>
-            <MoreInfo information={moreInformation}/>
+            <MoreInfo information={moreInformation} />
           </div>
           <div className={styles.description}>
             <h3>Description</h3>
@@ -155,8 +162,22 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
         </div>
       </div>
       {products.length === 0 ? null : <SimilarProductsList products={products} />}
-      {showModal && <Modal onClose={onShowModal}>{<RateProduct onClose={onShowModal} />}</Modal>}
-      <ProductCommentList />
+      {showModal && (
+        <Modal onClose={onShowModal}>
+          {
+            <RateProduct
+              onClose={onShowModal}
+              name={product.description}
+              price={product.price}
+              imageUrl={product.images[0]}
+              userId={user ? user._id : null}
+              productId={product._id}
+              rate={rate}
+            />
+          }
+        </Modal>
+      )}
+      <ProductCommentList comments={product?.rating?.comments || []} />
     </section>
   );
 };

@@ -3,8 +3,8 @@
 }
 .preview-container > img {
   width: 500px;
-  height: auto;
-  object-fit: contain;
+  height: 500px;
+  object-fit: fill;
   padding: 10px 0px;
   background: #767575;
   border-radius: 10px;
@@ -20,8 +20,8 @@
 
 .preview > img {
   width: 90px;
-  height: auto;
-  object-fit: cover;
+  height: 90px;
+  object-fit: fill;
   padding: 5px;
   margin: 5px;
   border-radius: 10px;

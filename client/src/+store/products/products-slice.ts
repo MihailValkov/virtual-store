@@ -41,13 +41,26 @@ const productsSlice = createSlice({
         error: action.payload.error,
       },
     }),
-    addNewProduct:(state,action) => {
+    addNewProduct: (state, action) => {
       const product = action.payload.product;
+    },
+    rateProduct: (state, action) => {
+      if (state.product) {
+        state.product.rating = action.payload.rating;
+      }
+      return state;
     },
     error: (state, action) => ({ ...state, errorMessage: action.payload.message }),
   },
 });
 
 export const productsReducer = productsSlice.reducer;
-export const { loadProducts, loadProduct, loading, error, uploadProductImages,addNewProduct } =
-  productsSlice.actions;
+export const {
+  loadProducts,
+  loadProduct,
+  loading,
+  error,
+  uploadProductImages,
+  addNewProduct,
+  rateProduct,
+} = productsSlice.actions;

@@ -1,3 +1,19 @@
+export interface IComment {
+  _id: string;
+  comment: string;
+  user: {
+    email: string;
+    image: {
+      url: string;
+    };
+  };
+  status: string;
+  rating: number;
+  createdAt: string;
+}
+export interface IRate {
+  [prop: number]: number;
+}
 export interface ICategoryProduct {
   _id: string;
   name: string;
@@ -12,5 +28,9 @@ export interface ICategoryProduct {
   availablePieces: number;
   inStock: boolean;
   description: string;
-  rating: number;
+  rating: {
+    comments: IComment[];
+    rate: IRate;
+    totalRating: number;
+  };
 }

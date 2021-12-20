@@ -88,4 +88,10 @@ export const productValidations = {
   ),
 };
 
+export const reviewValidation = validation.bind(
+  null,
+  'Comment should be at least 20 characters long!',
+  /^.{20,}$/
+);
+
 export type IValidationFn = typeof emailValidation | typeof passwordValidation;

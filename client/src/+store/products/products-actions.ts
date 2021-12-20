@@ -7,6 +7,7 @@ import {
   loadProduct,
   uploadProductImages,
   addNewProduct,
+  rateProduct,
 } from './products-slice';
 import { History } from 'history';
 
@@ -27,8 +28,8 @@ export const loadProductAction =
     dispatch(loading({ isLoading: true }));
     dispatch(error({ error: null }));
     try {
-      const data = await http.get(`categories/${category}/${id}`);
-      dispatch(loadProduct({ product: data }));
+      const product = await http.get(`categories/${category}/${id}`);
+      dispatch(loadProduct(product));
     } catch (err: any) {
       dispatch(error({ message: err.message }));
     } finally {
@@ -49,12 +50,32 @@ export const uploadProductImagesAction =
 
 export const addNewProductAction =
   (product: {}, history: History) => async (dispatch: AppDispatch) => {
-    dispatch(loading(true));
+    dispatch(loading({ isLoading: true }));
     dispatch(error({ message: '' }));
     try {
-      const response = await http.post('categories/product', product);
+      const response = await http.post('categories/products', product);
       dispatch(addNewProduct({ product: response.product }));
       history.replace('/categories');
+    } catch (err: any) {
+      dispatch(error({ message: err.message }));
+    } finally {
+      dispatch(loading(false));
+    }
+  };
+
+export const rateProductAction =
+  (comment: string, rating: number, userId: string, productId: string, onClose: () => void) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(loading({ isLoading: true }));
+    dispatch(error({ message: '' }));
+    try {
+      const response = await http.patch(`categories/products/${productId}`, {
+        comment,
+        rating,
+        userId,
+      });
+      dispatch(rateProduct(response));
+      onClose();
     } catch (err: any) {
       dispatch(error({ message: err.message }));
     } finally {

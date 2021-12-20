@@ -10,16 +10,17 @@ import Product from './Product';
 
 import noProductsImg from '../../../assets/no-products.png';
 import styles from './ProductList.module.css';
+import { IBaseProduct } from '../../../interfaces/cart-product';
 
 const ProductList: FC<{ products: ICategoryProduct[]; width?: number }> = ({ products, width }) => {
   const dispatch = useDispatch();
   const style = { transform: `translate3d(${width}px, 0px, 0px)` };
 
-  const onAddProductToCartHandler = (product: ICategoryProduct) => {
+  const onAddProductToCartHandler = (product: IBaseProduct) => {
     dispatch(addProductToCart({ product }));
   };
 
-  const onAddProductToFavoritesHandler = (product: ICategoryProduct) => {
+  const onAddProductToFavoritesHandler = (product: IBaseProduct) => {
     dispatch(addProductToFavorites({ product }));
   };
   const onDeleteProductFromFavoritesHandler = (id: string) => {
@@ -41,8 +42,8 @@ const ProductList: FC<{ products: ICategoryProduct[]; width?: number }> = ({ pro
         <Product
           key={p._id}
           product={p}
-          onAddProductToCart={onAddProductToCartHandler.bind(null, p)}
-          onAddProductToFavorites={onAddProductToFavoritesHandler.bind(null, p)}
+          onAddProductToCart={onAddProductToCartHandler}
+          onAddProductToFavorites={onAddProductToFavoritesHandler}
           onDeleteProductFromFavorites={onDeleteProductFromFavoritesHandler.bind(null, p._id)}
         />
       ))}

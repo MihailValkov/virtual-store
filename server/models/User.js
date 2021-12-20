@@ -20,8 +20,8 @@ const userSchema = new Schema(
       minLength: [4, 'Password should be at least 4 characters long!'],
     },
     image: {
-      _id: String,
-      url: String,
+      _id: { type: String, default: '' },
+      url: { type: String, default: '' },
     },
     role: {
       type: String,

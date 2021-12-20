@@ -124,11 +124,13 @@ module.exports = {
     async products(req, res) {
       const { category } = req.params;
       try {
-        const products = await productModel.find({
-          category: { $regex: category, $options: 'i' },
-        }).lean();
+        const products = await productModel
+          .find({
+            category: { $regex: category, $options: 'i' },
+          })
+          .lean();
 
-        return res.status(200).json({ products: products});
+        return res.status(200).json({ products: products });
       } catch (error) {
         return res.status(404).json({ message: 'Not Found 404' });
       }
@@ -136,7 +138,15 @@ module.exports = {
     async product(req, res) {
       const { productId } = req.params;
       try {
-        return res.status(200).json(products.find((p) => p._id === productId));
+        const record = await productModel
+          .findById(productId)
+          .populate({
+            path: 'rating',
+            populate: { path: 'comments', populate: { path: 'user', select: 'email image' } },
+          })
+          .lean();
+
+        return res.status(200).json({ product: record });
       } catch (error) {
         return res.status(404).json({ message: 'Not Found 404' });
       }
@@ -178,6 +188,45 @@ module.exports = {
           const message = createErrorMessage(error);
           res.status(400).json({ message });
         }
+      }
+    },
+  },
+  patch: {
+    async rateProduct(req, res, next) {
+      const { productId } = req.params;
+      const { comment, userId, rating } = req.body;
+      try {
+        const product = await productModel.findByIdAndUpdate(productId);
+        if(product.toObject().rating.comments.find(comment => comment.user == userId)){
+          return res.status(403).json({ message: 'You have already rated this product!' });
+        }
+        const mapToStatus = {
+          1: 'Poor',
+          2: 'Fair',
+          3: 'Good',
+          4: 'Very Good',
+          5: 'Excellent',
+        };
+        product.rating.comments.push({
+          user: userId,
+          comment,
+          status: mapToStatus[rating],
+          rating,
+        });
+        product.rating.rate[rating]++;
+        product.rating.totalRating += rating;
+        await product.save();
+        const updatedProduct = await productModel
+          .findByIdAndUpdate(productId)
+          .populate({
+            path: 'rating',
+            populate: { path: 'comments', populate: { path: 'user', select: 'email image' } },
+          })
+          .lean();
+
+        return res.status(200).json({ rating: updatedProduct.rating });
+      } catch (error) {
+        console.log(error);
       }
     },
   },

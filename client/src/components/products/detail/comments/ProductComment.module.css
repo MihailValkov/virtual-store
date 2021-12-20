@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 5px 20px;
   background-color: #fff;
 }
 
@@ -21,8 +21,14 @@
 }
 .user-comment {
   flex: 10;
+  min-height: 120px;
 }
 .user-comment > *,
 .user-info > * {
-  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.comment-status {
+  font-weight: bold;
+  font-size: 1rem;
 }

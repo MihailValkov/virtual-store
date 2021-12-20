@@ -1,4 +1,4 @@
-export interface ICartProduct {
+export interface IBaseProduct {
   _id: string;
   name: string;
   category: string;
@@ -13,6 +13,9 @@ export interface ICartProduct {
   inStock: boolean;
   description: string;
   rating: number;
+}
+
+export interface ICartProduct extends IBaseProduct {
   finalPrice: number;
   quantity: number;
 }

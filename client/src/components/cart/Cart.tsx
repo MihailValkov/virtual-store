@@ -10,13 +10,10 @@ import Button from '../shared/Button';
 
 import styles from './Cart.module.css';
 
-const Cart: FC<{ items: {}[] }> = ({ items }) => {
+const Cart: FC<{}> = () => {
   const products = useSelector((state: AppRootState) => state.cart.products);
   const totalPrice = useSelector((state: AppRootState) => state.cart.totalPrice);
   const totalProducts = useSelector((state: AppRootState) => state.cart.totalProducts);
-  const user = useSelector((state: AppRootState) => state.auth.user);
-
-
   const taxes = products.length * products[0]?.taxes;
 
   return (

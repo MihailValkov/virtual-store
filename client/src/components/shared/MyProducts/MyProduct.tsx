@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useInput from '../../../hooks/use-input';
 import { isNumberValidation } from '../../../util/validations';
-import { ICartProduct } from '../../../interfaces/cart-product';
+import { IBaseProduct, ICartProduct } from '../../../interfaces/cart-product';
 import {
   addProductToCart,
   changeProductQuantity,
@@ -70,7 +70,7 @@ const MyProduct: FC<{
         {!order && (
           <div className={styles['product-available']}>
             <span>In Stock:</span>
-            {product.inStock ? (
+            {product.availablePieces > 0 ? (
               <span className={styles['product-status']}>Available</span>
             ) : (
               <span className={`${styles['product-status']} ${styles['unavailable']}`}>
@@ -104,7 +104,15 @@ const MyProduct: FC<{
         </div>
         <div className={styles['product-taxes']}>
           <p>Taxes: {product.taxes ? product.taxes.toFixed(2) : '0.00'} BNG </p>
-          <p>Total: {product.finalPrice ? product.finalPrice.toFixed(2) : !cart ? (product.price + product.taxes).toFixed(2) :'0.00'} BNG </p>
+          <p>
+            Total:{' '}
+            {product.finalPrice
+              ? product.finalPrice.toFixed(2)
+              : !cart
+              ? (product.price + product.taxes).toFixed(2)
+              : '0.00'}{' '}
+            BNG{' '}
+          </p>
         </div>
         {!order && (
           <div className={styles['product-action']}>
