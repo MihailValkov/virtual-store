@@ -93,7 +93,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
   };
 
   const onAddProductToCart = () => {
-    dispatch(addProductToCart({ product: { ...others, rating: productRating } }));
+    dispatch(addProductToCart({ product: { ...others, rating: productRating },selectedColor :'blue' }));
   };
 
   const onAddProductToFavorites = () => {
@@ -116,7 +116,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
         <div className={styles.center}>
           <h2>{product.name}</h2>
           <h3>Rating</h3>
-          <StarRating width={productRating} show/>
+          <StarRating width={productRating} show />
           <h3>Color</h3>
           <Colors colors={product.colors} inputType='radio' onSelectColor={selectColorHandler} />
           <h3>Price</h3>

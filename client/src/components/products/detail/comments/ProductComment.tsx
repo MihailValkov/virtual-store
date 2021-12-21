@@ -19,7 +19,7 @@ const ProductComment: FC<{
         <p className={styles['comment-status']}>Rating: {status}</p>
       </div>
       <div className={styles['user-comment']}>
-        <StarRating width={rating * 20} show/>
+        <StarRating width={rating * 20} show />
         <p>{comment}</p>
       </div>
     </li>

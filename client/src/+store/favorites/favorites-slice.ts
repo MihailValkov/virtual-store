@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICartProduct } from '../../interfaces/cart-product';
 
 export interface IFavoritesState {
@@ -23,8 +23,18 @@ const favoritesSlice = createSlice({
       index > -1 && state.products.splice(index, 1);
       return state;
     },
+    changeSelectedColorToFavorites: (
+      state,
+      action: PayloadAction<{ productId: string; selectedColor: string }>
+    ) => {
+      const existingProduct = state.products.find((p) => p._id === action.payload.productId);
+      if (existingProduct) {
+        existingProduct.selectedColor = action.payload.selectedColor;
+      }
+      return state;
+    },
   },
 });
 
 export const favoritesReducer = favoritesSlice.reducer;
-export const { addProductToFavorites, deleteProductFromFavorites } = favoritesSlice.actions;
+export const { addProductToFavorites, deleteProductFromFavorites,changeSelectedColorToFavorites } = favoritesSlice.actions;

@@ -39,7 +39,7 @@ const Cart: FC<{}> = () => {
         </p>
         <p className={styles['line']}></p>
         <div className={styles['total-price']}>
-          Total price: <span>{totalPrice ? totalPrice.toFixed(2): '0.00'} BGN</span>
+          Total price: <span>{totalPrice ? totalPrice.toFixed(2) : '0.00'} BGN</span>
         </div>
         <Button>Continue</Button>
       </Card>

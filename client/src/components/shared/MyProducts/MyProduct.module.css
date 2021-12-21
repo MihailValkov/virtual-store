@@ -11,6 +11,10 @@
   flex-direction: column;
   align-items: center;
   flex: 2;
+  margin-right: 20px;
+}
+.product-img-container.left {
+  flex: 1;
 }
 .product-img-container img {
   padding: 10px 0;
@@ -116,4 +120,35 @@
 }
 .product-action-delete:hover {
   background-color: #b75656;
+}
+
+.select-color {
+  width: 100px;
+  margin-left: 10px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 1px solid #d5dee6;
+  border-radius: 4px;
+}
+.select-color .select-icon {
+  position: absolute;
+  font-size: 1em;
+  right: 10px;
+  top: 0px;
+  pointer-events: none;
+}
+.select-color select {
+  background-color: transparent;
+  width: 100%;
+  height: 30px;
+  padding: 0px 10px;
+  -webkit-appearance: none;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.select-color option {
+  background-color: #f7f7f7;
 }

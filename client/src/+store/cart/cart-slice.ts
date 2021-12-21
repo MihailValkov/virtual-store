@@ -16,7 +16,10 @@ const cartSlice = createSlice({
   initialState: initialCartState,
   name: 'cart',
   reducers: {
-    addProductToCart: (state, action: PayloadAction<{ product: IBaseProduct }>) => {
+    addProductToCart: (
+      state,
+      action: PayloadAction<{ product: IBaseProduct; selectedColor: string }>
+    ) => {
       const existingProduct = state.products.find((p) => p._id === action.payload.product._id);
       state.totalProducts++;
       if (existingProduct) {
@@ -29,7 +32,12 @@ const cartSlice = createSlice({
         const finalPrice = Number(
           (1 * action.payload.product.price + action.payload.product.taxes).toFixed(2)
         );
-        state.products.push({ ...action.payload.product, finalPrice, quantity: 1 });
+        state.products.push({
+          ...action.payload.product,
+          finalPrice,
+          quantity: 1,
+          selectedColor: action.payload.selectedColor,
+        });
         state.totalPrice = Number((state.totalPrice + finalPrice).toFixed(2));
       }
       return state;
@@ -68,8 +76,18 @@ const cartSlice = createSlice({
       }
       return state;
     },
+    changeSelectedColorToCart: (
+      state,
+      action: PayloadAction<{ productId: string; selectedColor: string }>
+    ) => {
+      const existingProduct = state.products.find((p) => p._id === action.payload.productId);
+      if (existingProduct) {
+        existingProduct.selectedColor = action.payload.selectedColor;
+      }
+      return state;
+    },
   },
 });
 
 export const cartReducer = cartSlice.reducer;
-export const { addProductToCart, deleteProductFromCart, changeProductQuantity } = cartSlice.actions;
+export const { addProductToCart, deleteProductFromCart, changeProductQuantity,changeSelectedColorToCart } = cartSlice.actions;

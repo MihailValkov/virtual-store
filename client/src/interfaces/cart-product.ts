@@ -18,4 +18,5 @@ export interface IBaseProduct {
 export interface ICartProduct extends IBaseProduct {
   finalPrice: number;
   quantity: number;
+  selectedColor:string;
 }
