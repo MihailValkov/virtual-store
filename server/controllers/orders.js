@@ -126,7 +126,9 @@ module.exports = {
           quantity: x.quantity,
           selectedColor: x.selectedColor,
           ...x._id.toObject(),
-          rating: (x._id.toObject().rating.totalRating / x._id.toObject().rating.comments?.length) * 20 || 0,
+          rating:
+            (x._id.toObject().rating.totalRating / x._id.toObject().rating.comments?.length) * 20 ||
+            0,
         }));
         return res.status(200).json(order);
       } catch (error) {
@@ -156,8 +158,7 @@ module.exports = {
           products,
           paymentMethod,
         });
-        const user = await userModel.findById(userId);
-        user.orders.push(order);
+        await userModel.findByIdAndUpdate(userId, { $addToSet: { orders: order } });
         res.status(201).json(order.toObject());
       } catch (error) {
         if (error instanceof TypeError || error.name == 'MongoError') {

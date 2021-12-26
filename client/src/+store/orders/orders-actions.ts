@@ -1,5 +1,6 @@
 import { ICreateOrder, IOrder } from '../../interfaces/order';
 import { http } from '../../util/http-request';
+import { updateUserOrdersList } from '../auth/auth-slice';
 import { clearCart } from '../cart/cart-slice';
 import { AppDispatch } from '../store';
 import { loadOrders, loading, error, createOrder, loadOrder } from './orders-slice';
@@ -36,6 +37,7 @@ export const createOrdersAction = (order: ICreateOrder) => async (dispatch: AppD
   try {
     const data = await http.post('orders', order);
     dispatch(createOrder({ order: data }));
+    dispatch(updateUserOrdersList(data._id));
     dispatch(clearCart());
   } catch (err: any) {
     dispatch(error({ message: err.message }));

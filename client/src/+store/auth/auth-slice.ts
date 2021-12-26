@@ -77,6 +77,10 @@ const authSlice = createSlice({
       state.user?.comments.push(action.payload);
       return state;
     },
+    updateUserOrdersList: (state, action) => {
+      state.user?.orders.push(action.payload);
+      return state;
+    },
     logout: () => initialAuthState,
     error: (state, action) => ({ ...state, errorMessage: action.payload.message }),
   },
@@ -99,4 +103,5 @@ export const {
   deleteAddress,
   changeCurrentAddress,
   addNewCommentToProduct,
+  updateUserOrdersList,
 } = authSlice.actions;
