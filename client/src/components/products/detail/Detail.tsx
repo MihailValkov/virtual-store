@@ -46,7 +46,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
     return { [k]: (v / rating?.comments?.length) * 100 || 0 };
   });
 
-  const alreadyRated = user?.comments.find((c) => c.productId === product._id);
+  const isAlreadyRated = user?.comments.find((c) => c.productId === product._id);
 
   const changeImageHandler = (src: string) => {
     setCurrentImage(src);
@@ -156,7 +156,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
               Add to favorites
             </Button>
 
-            {!alreadyRated && (
+            {!isAlreadyRated && user && (
               <Button icon={faStar} onClick={onShowModal} classes={`${styles.btn} ${styles.rate}`}>
                 Rate this product
               </Button>
@@ -164,7 +164,9 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
           </div>
         </div>
       </div>
-      {products.length === 0 ? null : <SimilarProductsList products={products} category={product.category}/>}
+      {products.length === 0 ? null : (
+        <SimilarProductsList products={products} category={product.category} />
+      )}
       {showModal && (
         <Modal onClose={onShowModal}>
           {

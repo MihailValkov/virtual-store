@@ -28,7 +28,7 @@ const AsideMenu: FC<{}> = () => {
         <p>Login or register so you can access extra functionality.</p>
       </div>
       <ul className={styles.navigation}>
-        <li className={styles['guest-login']}>
+        <li className={styles['guest']}>
           <NavLink to='/auth/login'>
             <FontAwesomeIcon
               icon={faSignInAlt}
@@ -37,7 +37,7 @@ const AsideMenu: FC<{}> = () => {
             <span>Login</span>
           </NavLink>
         </li>
-        <li className={styles['guest-register']}>
+        <li className={styles['guest']}>
           <NavLink to='/auth/register'>
             <FontAwesomeIcon icon={faUser} className={`${styles.icon} ${styles['nav-icon']}`} />
             <span>Register</span>

@@ -1,16 +1,17 @@
 import { FC } from 'react';
-import { Route, useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 
 import OrdersPage from './OrdersPage';
 import OrdersDetailPage from './OrdersDetailPage';
+import { AuthRoute } from '../../hocs/isAuth';
 
 const Orders: FC<{}> = () => {
   const { path } = useRouteMatch();
 
   return (
     <>
-      <Route path={`${path}`} exact component={OrdersPage} />
-      <Route path={`${path}/detail/:id`} component={OrdersDetailPage} />
+      <AuthRoute path={`${path}`} exact isAuthNeeded={true} component={OrdersPage} />
+      <AuthRoute path={`${path}/detail/:id`} isAuthNeeded={true} component={OrdersDetailPage} />
     </>
   );
 };

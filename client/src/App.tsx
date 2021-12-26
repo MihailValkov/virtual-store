@@ -8,36 +8,39 @@ import { AppRootState } from './+store/store';
 import Layout from './components/core/Layout';
 import LoadingSpinner from './components/shared/LoadingSpinner';
 
-const Auth = lazy(() => import('./pages/Auth/Auth'));
-const Categories = lazy(() => import('./pages/Categories/Categories'));
-const CartPage = lazy(() => import('./pages/CartPage'));
-const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
+const AuthPages = lazy(() => import('./pages/Auth/Auth'));
+const CategoriesPages = lazy(() => import('./pages/Categories/Categories'));
+const CartPages = lazy(() => import('./pages/Cart/CartPages'));
 const FavoritesPage = lazy(() => import('./pages/FavoritesPage'));
-const Orders = lazy(() => import('./pages/Orders/Orders'));
+const OrdersPages = lazy(() => import('./pages/Orders/Orders'));
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: AppRootState) => state.auth.user);
-  const isLogged = !!user;
+  const isLoading = useSelector((state: AppRootState) => state.auth.isLoading);
 
   useEffect(() => {
     dispatch(authenticateAction());
   }, [dispatch]);
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <Layout>
       <Switch>
         <Suspense fallback={<LoadingSpinner />}>
-          <Route path='/' exact><Redirect to="/categories" /></Route>
-          <Route path='/categories' component={Categories} />
-          <Route path='/cart' exact component={CartPage} />
-          <Route path='/cart/checkout' exact component={CheckoutPage} />
-          <Route path='/favorites' exact component={FavoritesPage} />
-          <Route path='/orders'>
-            <Orders />
+          <Route path='/' exact>
+            <Redirect to='/categories' />
           </Route>
+          <Route path='/categories' component={CategoriesPages} />
+          <Route path='/cart'>
+            <CartPages />
+          </Route>
+          <Route path='/favorites' exact component={FavoritesPage} />
+          <Route path='/orders' component={OrdersPages} />
           <Route path='/auth'>
-            <Auth isLogged={isLogged} />
+            <AuthPages />
           </Route>
         </Suspense>
       </Switch>

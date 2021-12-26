@@ -3,7 +3,6 @@
   height: 350px;
   width: 300px;
   top: 8rem;
-
 }
 .user-info {
   display: flex;
@@ -31,12 +30,16 @@
 
 .navigation li {
   margin: 5px;
+  border-radius: 0.25rem;
 }
 .navigation li a {
   color: black;
   display: flex;
   padding: 5px;
   align-items: center;
+  font-weight: bold;
+  border-radius: 0.25rem;
+  border-right: 10px solid #000000;
 }
 
 .navigation li a span {
@@ -53,11 +56,19 @@
 .navigation a:active {
   background-color: #767575;
   color: white;
-  border-right: 10px solid #000000;
+  border-radius: 0.25rem;
 }
 
-.guest-login,
-.guest-register {
+.guest {
   background-color: #2a87a5;
+}
+.navigation .guest a {
+  color: white;
+  border-right: 10px solid black;
+}
+.navigation .guest a:active,
+.navigation .guest a:hover,
+.navigation .guest a.active {
+  background-color: rgba(0, 0, 0, 0.39);
   border-radius: 0.25rem;
 }
