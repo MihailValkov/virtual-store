@@ -33,7 +33,7 @@ const Navigation: FC = () => {
 
   return (
     <header className={styles.header}>
-      <NavLink to='/' exact className={styles.logo}>
+      <NavLink to='/categories' exact className={styles.logo}>
         <FontAwesomeIcon icon={faStore} />
         <span className={styles.text}>Virtual Store</span>
       </NavLink>

@@ -1,6 +1,6 @@
 import { FC, lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 
 import { authenticateAction } from './+store/auth/auth-actions';
 import { AppRootState } from './+store/store';
@@ -28,10 +28,11 @@ const App: FC<{}> = () => {
     <Layout>
       <Switch>
         <Suspense fallback={<LoadingSpinner />}>
+          <Route path='/' exact><Redirect to="/categories" /></Route>
+          <Route path='/categories' component={Categories} />
           <Route path='/cart' exact component={CartPage} />
           <Route path='/cart/checkout' exact component={CheckoutPage} />
           <Route path='/favorites' exact component={FavoritesPage} />
-          <Route path='/categories' component={Categories} />
           <Route path='/orders'>
             <Orders />
           </Route>

@@ -103,18 +103,17 @@ const MyProduct: FC<{
             )}
           </div>
         )}
-        {!order && (
-          <div className={styles['product-color']}>
-            <span>Color:</span>
-            <Colors
-              classes={styles['select-color']}
-              colors={product.colors}
-              selectedColor={product.selectedColor}
-              inputType='radio'
-              onSelectColor={onChangeSelectedColor}
-            />
-          </div>
-        )}
+
+        <div className={styles['product-color']}>
+          <span>Color:</span>
+          <Colors
+            classes={styles['select-color']}
+            colors={product.colors}
+            selectedColor={product.selectedColor}
+            inputType='radio'
+            onSelectColor={onChangeSelectedColor}
+          />
+        </div>
       </div>
       <div className={styles['product-actions']}>
         <div className={styles['product-price-container']}>
