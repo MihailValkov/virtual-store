@@ -36,6 +36,7 @@ const orderSchema = new Schema(
     taxes: { type: Number, default: 0 },
     totalPrice: { type: Number, default: 0 },
     deliveryAddress: { type: String, default: '' },
+    paymentMethod: { type: String, required: true },
   },
   { timestamps: true }
 );

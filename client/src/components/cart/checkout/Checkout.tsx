@@ -11,7 +11,7 @@ import {
   faUser,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootState } from '../../../+store/store';
 import CheckoutComplete from './CheckoutComplete';
@@ -26,6 +26,7 @@ import noAvatarImage from '../../../assets/no-avatar.png';
 import styles from './Checkout.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createOrdersAction } from '../../../+store/orders/orders-actions';
+import { Redirect } from 'react-router';
 
 const locations: { icon: IconDefinition; text: string; to: string }[] = [
   {
@@ -45,6 +46,7 @@ const locations: { icon: IconDefinition; text: string; to: string }[] = [
   },
 ];
 const Checkout: FC<{}> = (props) => {
+  const selectedMethodRef = useRef<HTMLSelectElement>(null);
   const dispatch = useDispatch();
   const user = useSelector((state: AppRootState) => state.auth.user);
   const [addNewAddressMode, setIsAddNewAddressMode] = useState(false);
@@ -70,6 +72,7 @@ const Checkout: FC<{}> = (props) => {
         deliveryAddress: `${currentAddress?.country}, ${currentAddress?.city}, ${currentAddress?.street}  № ${currentAddress?.streetNumber}`,
         totalPrice,
         taxes,
+        paymentMethod: selectedMethodRef.current!.value,
         products: products.map((p) => ({
           _id: p._id,
           quantity: p.quantity,
@@ -81,7 +84,7 @@ const Checkout: FC<{}> = (props) => {
   };
 
   if (!user) {
-    return null;
+    return <Redirect to='/auth/login' />;
   }
 
   return (
@@ -124,7 +127,7 @@ const Checkout: FC<{}> = (props) => {
               <FontAwesomeIcon icon={faMoneyBill} /> Payment method:
             </h3>
             <div className={styles['category-select']}>
-              <select>
+              <select ref={selectedMethodRef}>
                 <option value='cache'>Cache</option>
               </select>
               <span className={styles['select-icon']}>

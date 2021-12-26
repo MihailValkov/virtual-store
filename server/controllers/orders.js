@@ -126,7 +126,7 @@ module.exports = {
           quantity: x.quantity,
           selectedColor: x.selectedColor,
           ...x._id.toObject(),
-          rating: (x._id.totalRating / x._id.comments?.length) * 20 || 0,
+          rating: (x._id.toObject().rating.totalRating / x._id.toObject().rating.comments?.length) * 20 || 0,
         }));
         return res.status(200).json(order);
       } catch (error) {
@@ -136,7 +136,7 @@ module.exports = {
   },
   post: {
     async createOrder(req, res) {
-      const { userId, deliveryAddress, totalPrice, taxes, products } = req.body;
+      const { userId, deliveryAddress, totalPrice, taxes, products, paymentMethod } = req.body;
       const ids = products.map((p) => p._id);
       try {
         const existingProducts = await productModel.find({ _id: ids });
@@ -154,6 +154,7 @@ module.exports = {
           totalPrice: Number(totalPrice),
           taxes: Number(taxes),
           products,
+          paymentMethod,
         });
         const user = await userModel.findById(userId);
         user.orders.push(order);

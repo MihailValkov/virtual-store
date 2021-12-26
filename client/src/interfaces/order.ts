@@ -14,6 +14,7 @@ export interface ICreateOrder {
   deliveryAddress: string;
   totalPrice: number;
   taxes: number;
+  paymentMethod: string;
   products: {
     _id: string;
     quantity: number;
