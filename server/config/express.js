@@ -1,7 +1,11 @@
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const auth = require('../middlewares/auth');
-const whitelist = ['http://localhost:3000'];
+const whitelist = [
+  'http://localhost:3000',
+  'http://localhost:5500',
+  'https://online-virtual-store.herokuapp.com',
+];
 
 module.exports = (app, express) => {
   app.use(express.static('public'));
