@@ -32,6 +32,7 @@ import LoadingSpinner from '../shared/LoadingSpinner';
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: AppRootState) => state.auth.isLoading);
+  const favoriteProducts = useSelector((state: AppRootState) => state.favorites.products);
   const [isEditProfileMode, setIsEditProfileMode] = useState(false);
   const [isAddNewAddressMode, setIsAddNewAddressMode] = useState(false);
 
@@ -111,9 +112,24 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
 
           <h3>User Activity</h3>
           <div className={styles['profile-activity']}>
-            <BoxCard icon={faListUl} title='12' text='Orders' classes='green' />
-            <BoxCard icon={faHeart} title='5' text='Favorites' classes='red' />
-            <BoxCard icon={faStar} title='3' text='Rates' classes='orange' />
+            <BoxCard
+              icon={faListUl}
+              title={user?.orders?.length || 0}
+              text='Orders'
+              classes='green'
+            />
+            <BoxCard
+              icon={faHeart}
+              title={favoriteProducts?.length || 0}
+              text='Favorites'
+              classes='red'
+            />
+            <BoxCard
+              icon={faStar}
+              title={user?.comments?.length || 0}
+              text='Rates'
+              classes='orange'
+            />
           </div>
 
           <h3>Delivery Address</h3>

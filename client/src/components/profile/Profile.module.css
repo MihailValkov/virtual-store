@@ -39,7 +39,7 @@
 }
 .profile-picture img {
   height: 200px;
-  width: auto;
+  width: 200px;
   object-fit: contain;
 }
 
@@ -50,13 +50,6 @@
 .profile-info {
   margin-left: 20px;
   flex: 6;
-}
-
-.profile-actions {
-  flex: 2;
-  flex-direction: column;
-  display: flex;
-  align-items: flex-end;
 }
 
 .profile-info > * {
@@ -71,6 +64,12 @@
   width: 100%;
 }
 
+.profile-actions {
+  flex: 2;
+  flex-direction: column;
+  display: flex;
+  align-items: flex-end;
+}
 .profile-activity {
   margin: 20px 0px;
   display: flex;

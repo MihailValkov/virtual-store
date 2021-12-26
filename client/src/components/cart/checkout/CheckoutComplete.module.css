@@ -1,0 +1,38 @@
+.order-complete {
+  text-align: center;
+}
+.order-complete .order-status {
+  width: 100%;
+  min-height: 180px;
+  position: relative;
+}
+.order-status img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-top: 10px;
+}
+.order-status h3 {
+  color: rgb(56, 161, 202);
+}
+/* .order-status p */
+.loading {
+  left: calc(50% - 32px);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.actions a {
+  color: rgb(56, 161, 202);
+  border: 1px solid rgb(56, 161, 202);
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+.actions .icon {
+  margin-right: 10px;
+}

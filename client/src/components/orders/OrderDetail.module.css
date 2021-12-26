@@ -41,7 +41,7 @@
 }
 
 .product > div:first-of-type {
-  flex: 1;
+  flex: 4;
 }
 .product > div img {
   width: 100px;

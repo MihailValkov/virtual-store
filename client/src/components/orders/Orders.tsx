@@ -27,10 +27,10 @@ const Orders: FC<{}> = (props) => {
             <Order
               key={order._id}
               _id={order._id}
-              date={order.date}
-              address={order.address}
+              date={order.createdAt}
+              address={order.deliveryAddress}
               status={order.status}
-              totalQuantity={order.totalQuantity}
+              totalQuantity={order.products.length}
               totalPrice={order.totalPrice}
             />
           ))}

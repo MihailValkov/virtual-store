@@ -41,7 +41,7 @@ export const streetNumberValidation = validation.bind(
 export const usernameValidation = validation.bind(
   null,
   'Username should be at least 4 characters long!',
-  /^[A-Za-z0-9_\-.]{4,}$/
+  /^[A-Za-z0-9_\-. ]{4,}$/
 );
 
 export const phoneValidation = validation.bind(

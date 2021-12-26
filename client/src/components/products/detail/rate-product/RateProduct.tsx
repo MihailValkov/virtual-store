@@ -28,6 +28,7 @@ const RateProduct: FC<{
   const dispatch = useDispatch();
   const isLoading = useSelector((state: AppRootState) => state.products.isLoading);
   const errorMessage = useSelector((state: AppRootState) => state.products.errorMessage);
+
   const {
     value: reviewValue,
     isValid: reviewIsValid,
@@ -62,7 +63,7 @@ const RateProduct: FC<{
       <div className={styles.content}>
         <h2>Rating</h2>
 
-        <Form isLoading={!isLoading} onSubmitHandler={onSubmitHandler}>
+        <Form isLoading={isLoading} onSubmitHandler={onSubmitHandler}>
           <div className={styles['rate-buttons']}>
             <RateButton type='radio' id='5' name='rating' icon={faStar} />
             <RateButton type='radio' id='4' name='rating' icon={faStar} />

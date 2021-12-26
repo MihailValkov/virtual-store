@@ -1,19 +1,29 @@
-import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { loadOrderAction } from '../../+store/orders/orders-actions';
 import { AppRootState } from '../../+store/store';
 
 import AsideMenu from '../shared/AsideMenu/AsideMenu';
 import Card from '../shared/Card';
+import LoadingSpinner from '../shared/LoadingSpinner';
 import MyProductsList from '../shared/MyProducts/MyProductsList';
 
 import styles from './OrderDetail.module.css';
 
 const OrderDetail: FC<{}> = (props) => {
   const { id } = useParams<{ id: string }>();
-  const ordersList = useSelector((state:AppRootState) => state.orders.ordersList);
-  const user = useSelector((state:AppRootState) => state.auth.user);
-  const currentOrder = ordersList.find(o => o._id === id);
+  const user = useSelector((state: AppRootState) => state.auth.user);
+  const currentOrder = useSelector((state: AppRootState) => state.orders.order);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadOrderAction(id));
+  }, [dispatch, id]);
+
+  if (!currentOrder) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <section className={styles['order-detail']}>
@@ -24,7 +34,8 @@ const OrderDetail: FC<{}> = (props) => {
         <div className={styles['order-content']}>
           <div>
             <p>
-              <span>Register Date:</span> <strong>{currentOrder?.date}</strong>
+              <span>Register Date:</span>{' '}
+              <strong>{new Date(currentOrder?.createdAt).toLocaleString()}</strong>
             </p>
             <p>
               <span>Status:</span> <strong> {currentOrder?.status}</strong>
@@ -32,7 +43,7 @@ const OrderDetail: FC<{}> = (props) => {
           </div>
           <div>
             <p>
-              <span>Address:</span> <strong>{currentOrder?.address}</strong>
+              <span>Address:</span> <strong>{currentOrder?.deliveryAddress}</strong>
             </p>
             <p>
               <span>Name:</span> <strong>{user?.username}</strong>
@@ -40,7 +51,7 @@ const OrderDetail: FC<{}> = (props) => {
           </div>
           <div>
             <p>
-              <span>Amount:</span> <strong>{currentOrder?.totalQuantity}</strong>
+              <span>Amount:</span> <strong>{currentOrder?.products.length}</strong>
             </p>
             <p>
               <span>Total Price:</span> <strong>{currentOrder?.totalPrice} BGN</strong>
@@ -52,7 +63,7 @@ const OrderDetail: FC<{}> = (props) => {
         <div className={styles['price']}>
           <div className={styles['total-price']}>
             <p>Total: </p>
-            <strong>{(currentOrder!.totalPrice).toFixed(2)} BGN</strong>
+            <strong>{currentOrder!.totalPrice.toFixed(2)} BGN</strong>
           </div>
         </div>
       </Card>

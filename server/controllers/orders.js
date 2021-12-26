@@ -1,3 +1,7 @@
+const orderModel = require('../models/Order');
+const productModel = require('../models/Product');
+const userModel = require('../models/User');
+const createErrorMessage = require('../utils/create-error-message');
 const products = [
   {
     _id: 'p1123',
@@ -20,7 +24,7 @@ const products = [
     model: 'P30 Pro',
     description: 'P30 Pro, Dual SIM, 128GB, 16GB RAM, 4G, Black',
     rating: 99,
-    quantity:2,
+    quantity: 2,
   },
   {
     _id: 'p1224',
@@ -43,7 +47,7 @@ const products = [
     model: 'Nova',
     description: 'Huawei Nova, Dual SIM, 128GB, 8GB RAM, 4G, Black',
     rating: 66,
-    quantity:3,
+    quantity: 3,
   },
   {
     _id: 'p1325',
@@ -66,7 +70,7 @@ const products = [
     model: 'Nova 9',
     description: 'Huawei Nova 9, Dual SIM, 128GB, 8GB RAM, 4G, Black',
     rating: 85,
-    quantity:1,
+    quantity: 1,
   },
 ];
 
@@ -104,7 +108,8 @@ module.exports = {
   get: {
     async orders(req, res) {
       try {
-        return res.status(200).json(orders_dummy);
+        const orders = await orderModel.find({ userId: req.user._id }).lean();
+        return res.status(200).json(orders);
       } catch (error) {
         return res.status(404).json({ message: 'Not Found 404' });
       }
@@ -112,11 +117,56 @@ module.exports = {
     async order(req, res) {
       const { id } = req.params;
       try {
-        return res.status(200).json(orders_dummy.find((o) => o._id === id));
+        const order = await orderModel
+          .findById(id)
+          .populate({ path: 'products', populate: '_id' })
+          .lean();
+        order.products = order.products.map((x) => ({
+          finalPrice: x.finalPrice,
+          quantity: x.quantity,
+          selectedColor: x.selectedColor,
+          ...x._id.toObject(),
+          rating: (x._id.totalRating / x._id.comments?.length) * 20 || 0,
+        }));
+        return res.status(200).json(order);
       } catch (error) {
         return res.status(404).json({ message: 'Not Found 404' });
       }
     },
   },
-  post: {},
+  post: {
+    async createOrder(req, res) {
+      const { userId, deliveryAddress, totalPrice, taxes, products } = req.body;
+      const ids = products.map((p) => p._id);
+      try {
+        const existingProducts = await productModel.find({ _id: ids });
+        products.map((x) => {
+          const product = existingProducts.find((p) => p._id == x._id);
+          if (product.availablePieces - x.quantity < 0) {
+            throw new TypeError(`${product.name} quantity is not available!`);
+          }
+          product.availablePieces -= x.quantity;
+        });
+        await Promise.all([...existingProducts.map((p) => p.save())]);
+        const order = await orderModel.create({
+          userId,
+          deliveryAddress,
+          totalPrice: Number(totalPrice),
+          taxes: Number(taxes),
+          products,
+        });
+        const user = await userModel.findById(userId);
+        user.orders.push(order);
+        res.status(201).json(order.toObject());
+      } catch (error) {
+        if (error instanceof TypeError || error.name == 'MongoError') {
+          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
+          return res.status(500).json({ message: error.message || 'Something went wrong!' });
+        } else {
+          const message = createErrorMessage(error);
+          res.status(400).json({ message });
+        }
+      }
+    },
+  },
 };

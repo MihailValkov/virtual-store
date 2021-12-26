@@ -10,6 +10,7 @@ import {
   rateProduct,
 } from './products-slice';
 import { History } from 'history';
+import { addNewCommentToProduct } from '../auth/auth-slice';
 
 export const loadProductsAction = (category: string) => async (dispatch: AppDispatch) => {
   dispatch(loading({ isLoading: true }));
@@ -75,6 +76,7 @@ export const rateProductAction =
         userId,
       });
       dispatch(rateProduct(response));
+      dispatch(addNewCommentToProduct({ productId, comment, rating, status: response.status }));
       onClose();
     } catch (err: any) {
       dispatch(error({ message: err.message }));

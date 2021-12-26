@@ -34,6 +34,15 @@ const userSchema = new Schema(
       required: [true, 'Phone number is required!'],
     },
     address: { type: Schema.Types.ObjectId, ref: 'Address' },
+    orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
+    comments: [
+      {
+        productId: { type: Schema.Types.ObjectId, ref: 'Product' },
+        comment: { type: String },
+        status: { type: String },
+        rating: { type: Number },
+      },
+    ],
     deliveryAddresses: [{ type: Schema.Types.ObjectId, ref: 'Address' }],
   },
   { timestamps: true }

@@ -16,45 +16,4 @@
   margin-bottom: 20px;
 }
 
-.actions {
-  flex: 2;
-  height: 300px;
-  max-width: 250px;
-  display: flex;
-  flex-direction: column;
-  position: sticky;
-  top: 8rem;
-}
 
-.actions h2 {
-  margin-bottom: 10px;
-}
-.actions > p {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.line {
-  width: 100%;
-  height: 1px;
-  background-color: #ccc;
-  margin: 20px 0px;
-}
-
-.total-price {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-.total-price span {
-  font-weight: bold;
-}
-
-.actions button {
-  padding: 0.5rem;
-  background-color: #2aa58b;
-}
-
-.actions button:hover {
-  background-color: #227e6a;
-}

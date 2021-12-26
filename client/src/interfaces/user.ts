@@ -21,6 +21,13 @@ export interface IUser {
     _id: string;
     url: string;
   };
+  orders: string[];
+  comments: {
+    productId:string;
+    comment:string;
+    status:string;
+    rating:number;
+  }[];
   createdAt: string;
   updatedAt: string;
 }

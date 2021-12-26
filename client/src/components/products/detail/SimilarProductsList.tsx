@@ -10,7 +10,10 @@ import { AppRootState } from '../../../+store/store';
 import Button from '../../shared/Button';
 import { ICategoryProduct } from '../../../interfaces/category-product';
 
-const SimilarProductsList: FC<{ products: ICategoryProduct[] }> = ({ products }) => {
+const SimilarProductsList: FC<{ products: ICategoryProduct[]; category: string }> = ({
+  products,
+  category,
+}) => {
   const productsContainer = useRef<HTMLDivElement>(null);
   const [currentWidth, setCurrentWidth] = useState(0);
   const showNextProduct = (direction: string) => {
@@ -27,7 +30,7 @@ const SimilarProductsList: FC<{ products: ICategoryProduct[] }> = ({ products })
 
   return (
     <div className={styles.products}>
-      <h2>Customers also viewed these products</h2>
+      <h2>Similar products of category {category}</h2>
       <div className={styles['products-inner']} ref={productsContainer}>
         <Button
           icon={faArrowLeft}

@@ -2,12 +2,14 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import Color from './Color';
 import styles from './Colors.module.css';
 
-const Colors: FC<{ colors: string[]; onSelectColor: (color: {}) => void; inputType: string }> = ({
-  colors,
-  onSelectColor,
-  inputType,
-}) => {
-  const [state, setState] = useState<{}>({});
+const Colors: FC<{
+  colors: string[];
+  selectedColor?: string;
+  onSelectColor: (color: {}) => void;
+  inputType: string;
+  classes?: string;
+}> = ({ colors, selectedColor, onSelectColor, inputType, classes }) => {
+  const [state, setState] = useState<{ [prop: string]: boolean | string }>({});
 
   useEffect(() => {
     const initialState = colors.reduce((a, b) => Object.assign(a, { [b]: false }), {});
@@ -25,7 +27,7 @@ const Colors: FC<{ colors: string[]; onSelectColor: (color: {}) => void; inputTy
   };
 
   return (
-    <div className={styles.colors}>
+    <div className={`${styles.colors} ${classes}`}>
       {colors.map((c) => (
         <Color
           key={c}
@@ -33,6 +35,7 @@ const Colors: FC<{ colors: string[]; onSelectColor: (color: {}) => void; inputTy
           type={inputType}
           name={inputType === 'radio' ? 'color' : c}
           onChange={changeInputHandler}
+          checked={selectedColor === c || state[c] === true}
         />
       ))}
     </div>

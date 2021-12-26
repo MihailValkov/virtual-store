@@ -17,7 +17,7 @@ const Color: FC<{
         onChange={onChange}
         value={color}
         checked={checked}
-        readOnly={!!checked}
+        readOnly={checked}
       />
       <label htmlFor={color}>
         <span></span>

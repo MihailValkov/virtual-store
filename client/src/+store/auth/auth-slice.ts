@@ -34,10 +34,7 @@ const authSlice = createSlice({
         deliveryAddresses: state.user?.deliveryAddresses,
       },
     }),
-    updateUserAvatar: (
-      state,
-      action: PayloadAction<{ image: { _id: string; url: string } }>
-    ) => {
+    updateUserAvatar: (state, action: PayloadAction<{ image: { _id: string; url: string } }>) => {
       if (state.user) {
         state.user.image = action.payload.image;
       }
@@ -76,6 +73,10 @@ const authSlice = createSlice({
       }
       return state;
     },
+    addNewCommentToProduct: (state, action) => {
+      state.user?.comments.push(action.payload);
+      return state;
+    },
     logout: () => initialAuthState,
     error: (state, action) => ({ ...state, errorMessage: action.payload.message }),
   },
@@ -97,4 +98,5 @@ export const {
   editAddress,
   deleteAddress,
   changeCurrentAddress,
+  addNewCommentToProduct,
 } = authSlice.actions;

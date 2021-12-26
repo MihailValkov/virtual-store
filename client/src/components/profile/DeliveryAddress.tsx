@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Button from '../shared/Button';
 import Modal from '../shared/Modal';
@@ -13,10 +13,6 @@ const DeliveryAddress: FC<{
   street: string;
   streetNumber: number;
   checked: boolean;
-  showEditModal: boolean;
-  showDeleteModal: boolean;
-  onShowEditModal: () => void;
-  onShowDeleteModal: () => void;
   onChangeAddress: () => void;
   onDeleteAddress: (onClose: () => void) => void;
 }> = ({
@@ -26,19 +22,20 @@ const DeliveryAddress: FC<{
   street,
   streetNumber,
   checked,
-  showEditModal,
-  onShowEditModal,
-  showDeleteModal,
-  onShowDeleteModal,
   onChangeAddress,
   onDeleteAddress,
 }) => {
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const onShowEditModalHandler = useCallback(() => setShowEditModal((prev) => !prev), []);
+  const onShowDeleteModalHandler = useCallback(() => setShowDeleteModal((prev) => !prev), []);
+  
   return (
     <>
       {showEditModal && (
-        <Modal onClose={onShowEditModal}>
+        <Modal onClose={onShowEditModalHandler}>
           <AddNewAddress
-            onClose={onShowEditModal}
+            onClose={onShowEditModalHandler}
             id={id}
             country={country}
             city={city}
@@ -49,10 +46,10 @@ const DeliveryAddress: FC<{
         </Modal>
       )}
       {showDeleteModal && (
-        <Modal onClose={onShowDeleteModal}>
+        <Modal onClose={onShowDeleteModalHandler}>
           <Confirm
-            onClose={onShowDeleteModal}
-            onConfirm={onDeleteAddress.bind(null, onShowDeleteModal)}
+            onClose={onShowDeleteModalHandler}
+            onConfirm={onDeleteAddress.bind(null, onShowDeleteModalHandler)}
           />
         </Modal>
       )}
@@ -74,12 +71,12 @@ const DeliveryAddress: FC<{
           <Button
             icon={faEdit}
             classes={`${styles['edit-btn']} ${styles.btn}`}
-            onClick={onShowEditModal}
+            onClick={onShowEditModalHandler}
           ></Button>
           <Button
             icon={faTrash}
             classes={`${styles['delete-btn']} ${styles.btn}`}
-            onClick={onShowDeleteModal}
+            onClick={onShowDeleteModalHandler}
           ></Button>
         </p>
       </li>

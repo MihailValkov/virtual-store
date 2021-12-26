@@ -1,20 +1,12 @@
-import { FC, useState, useRef } from 'react';
-import {
-  faHeart,
-  faCartArrowDown,
-  faPlus,
-  faMinus,
-  faArrowLeft,
-  faArrowRight,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FC, useState } from 'react';
+import { faHeart, faCartArrowDown, faStar } from '@fortawesome/free-solid-svg-icons';
+
 import Modal from '../../shared/Modal';
 import PreviewImages from '../../shared/PreviewImages';
 import Colors from '../../shared/Colors';
 import StarRating from '../../shared/StarRating';
 import RateProduct from './rate-product/RateProduct';
-import ProductList from '../../shared/products/ProductList';
+
 import MoreInfo from './MoreInfo';
 import Button from '../../shared/Button';
 import ProductCommentList from './comments/ProductCommentList';
@@ -24,8 +16,7 @@ import styles from './Detail.module.css';
 import { ICategoryProduct } from '../../../interfaces/category-product';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootState } from '../../../+store/store';
-import LoadingSpinner from '../../shared/LoadingSpinner';
-import { addProductToCart, deleteProductFromCart } from '../../../+store/cart/cart-slice';
+import { addProductToCart } from '../../../+store/cart/cart-slice';
 import {
   addProductToFavorites,
   deleteProductFromFavorites,
@@ -37,6 +28,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [currentImage, setCurrentImage] = useState(product.images[0]);
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const dispatch = useDispatch();
   const isFavorite = useSelector((state: AppRootState) => state.favorites.products).find(
     (p) => p._id === product._id
@@ -53,6 +45,8 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
   const rate = Object.entries(rating?.rate).map(([k, v]) => {
     return { [k]: (v / rating?.comments?.length) * 100 || 0 };
   });
+
+  const alreadyRated = user?.comments.find((c) => c.productId === product._id);
 
   const changeImageHandler = (src: string) => {
     setCurrentImage(src);
@@ -88,16 +82,18 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
   //   }
   // };
 
-  const selectColorHandler = (color: {}) => {
-    console.log(color);
+  const selectColorHandler = (obj: { [prop: string]: string }) => {
+    setSelectedColor(obj.color);
   };
 
   const onAddProductToCart = () => {
-    dispatch(addProductToCart({ product: { ...others, rating: productRating },selectedColor :'blue' }));
+    dispatch(addProductToCart({ product: { ...others, rating: productRating }, selectedColor }));
   };
 
   const onAddProductToFavorites = () => {
-    dispatch(addProductToFavorites({ product }));
+    dispatch(
+      addProductToFavorites({ product: { ...others, rating: productRating }, selectedColor })
+    );
   };
   const onDeleteProductFromFavorites = () => {
     dispatch(deleteProductFromFavorites({ id: product._id }));
@@ -118,7 +114,12 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
           <h3>Rating</h3>
           <StarRating width={productRating} show />
           <h3>Color</h3>
-          <Colors colors={product.colors} inputType='radio' onSelectColor={selectColorHandler} />
+          <Colors
+            colors={product.colors}
+            inputType='radio'
+            onSelectColor={selectColorHandler}
+            selectedColor={selectedColor}
+          />
           <h3>Price</h3>
           <h3 className={styles.price}>{product.price} BGN</h3>
           <div className={styles['more-info']}>
@@ -155,13 +156,15 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
               Add to favorites
             </Button>
 
-            <Button icon={faStar} onClick={onShowModal} classes={`${styles.btn} ${styles.rate}`}>
-              Rate this product
-            </Button>
+            {!alreadyRated && (
+              <Button icon={faStar} onClick={onShowModal} classes={`${styles.btn} ${styles.rate}`}>
+                Rate this product
+              </Button>
+            )}
           </div>
         </div>
       </div>
-      {products.length === 0 ? null : <SimilarProductsList products={products} />}
+      {products.length === 0 ? null : <SimilarProductsList products={products} category={product.category}/>}
       {showModal && (
         <Modal onClose={onShowModal}>
           {

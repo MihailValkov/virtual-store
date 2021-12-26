@@ -17,16 +17,15 @@ const ProductList: FC<{ products: ICategoryProduct[]; width?: number }> = ({ pro
   const style = { transform: `translate3d(${width}px, 0px, 0px)` };
 
   const onAddProductToCartHandler = (product: IBaseProduct) => {
-    dispatch(addProductToCart({ product,selectedColor:'blue' }));
+    dispatch(addProductToCart({ product, selectedColor: product.colors[0] }));
   };
 
   const onAddProductToFavoritesHandler = (product: IBaseProduct) => {
-    dispatch(addProductToFavorites({ product }));
+    dispatch(addProductToFavorites({ product, selectedColor: product.colors[0] }));
   };
   const onDeleteProductFromFavoritesHandler = (id: string) => {
     dispatch(deleteProductFromFavorites({ id }));
   };
-
 
   if (products.length === 0) {
     return (

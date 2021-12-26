@@ -15,7 +15,11 @@ const favoritesSlice = createSlice({
   reducers: {
     addProductToFavorites: (state, action) => {
       const index = state.products.findIndex((p) => p._id === action.payload.product._id);
-      index === -1 && state.products.push(action.payload.product);
+      index === -1 &&
+        state.products.push({
+          ...action.payload.product,
+          selectedColor: action.payload.selectedColor,
+        });
       return state;
     },
     deleteProductFromFavorites: (state, action) => {
@@ -37,4 +41,5 @@ const favoritesSlice = createSlice({
 });
 
 export const favoritesReducer = favoritesSlice.reducer;
-export const { addProductToFavorites, deleteProductFromFavorites,changeSelectedColorToFavorites } = favoritesSlice.actions;
+export const { addProductToFavorites, deleteProductFromFavorites, changeSelectedColorToFavorites } =
+  favoritesSlice.actions;

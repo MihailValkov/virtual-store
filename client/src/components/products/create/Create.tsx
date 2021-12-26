@@ -144,6 +144,7 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
       (a: string[], [k, v]) => (v !== false ? a.concat(k) : a),
       []
     );
+    console.log(selectedColors)
     setSelectedColors(selectedColors);
   }, []);
 
@@ -322,7 +323,7 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
               onBlur={descriptionBlurHandler}
             />
           </FormGroup>
-          <FormActions responseError={'errorMessage'}>
+          <FormActions responseError={''}>
             <Button type='submit' disabled={!formIsValid}>
               Add new Item
             </Button>

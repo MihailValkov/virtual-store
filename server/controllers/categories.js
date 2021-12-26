@@ -1,5 +1,6 @@
 const createErrorMessage = require('../utils/create-error-message');
 const productModel = require('../models/Product');
+const userModel = require('../models/User');
 
 const categories = [
   {
@@ -43,74 +44,14 @@ const categories = [
     imageUrl: 'http://localhost:5500/categories/camera.png',
   },
 ];
-const products = [
-  {
-    _id: 'p1123',
-    images: [
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_110fe86401f58b10a8a223b14f017a8a.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_da22c15b78ab4b9743a085ccc9dfd577.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_a0ae106d44c5ef737055bf8ea9146941.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_624f129e976b8be5b997ec63be975bbc.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_c4117c439b862b7517cc87d2c57ac78c.jpg',
-    ],
-    category: 'phone',
-    colors: ['black', 'purple', 'yellow'],
-    name: 'Huawei P30 Pro',
-    price: 1659.85,
-    year: 2018,
-    availablePieces: 13,
-    inStock: false,
-    taxes: 5,
-    brand: 'Huawei',
-    model: 'P30 Pro',
-    description: 'P30 Pro, Dual SIM, 128GB, 16GB RAM, 4G, Black',
-    rating: 99,
-  },
-  {
-    _id: 'p1224',
-    images: [
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_da22c15b78ab4b9743a085ccc9dfd577.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_a0ae106d44c5ef737055bf8ea9146941.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_624f129e976b8be5b997ec63be975bbc.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_c4117c439b862b7517cc87d2c57ac78c.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_110fe86401f58b10a8a223b14f017a8a.jpg',
-    ],
-    category: 'phone',
-    colors: ['red', 'blue', 'yellow'],
-    name: 'Huawei Nova',
-    price: 359.85,
-    year: 2021,
-    availablePieces: 1,
-    inStock: true,
-    taxes: 5,
-    brand: 'Huawei',
-    model: 'Nova',
-    description: 'Huawei Nova, Dual SIM, 128GB, 8GB RAM, 4G, Black',
-    rating: 66,
-  },
-  {
-    _id: 'p1325',
-    images: [
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_a0ae106d44c5ef737055bf8ea9146941.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_624f129e976b8be5b997ec63be975bbc.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_c4117c439b862b7517cc87d2c57ac78c.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_da22c15b78ab4b9743a085ccc9dfd577.jpg',
-      'https://s13emagst.akamaized.net/products/32170/32169398/images/res_110fe86401f58b10a8a223b14f017a8a.jpg',
-    ],
-    category: 'phone',
-    colors: ['red', 'blue', 'green', 'black', 'purple', 'yellow'],
-    name: 'Huawei Nova 9',
-    price: 659.85,
-    year: 2019,
-    availablePieces: 51,
-    inStock: true,
-    taxes: 5,
-    brand: 'Huawei',
-    model: 'Nova 9',
-    description: 'Huawei Nova 9, Dual SIM, 128GB, 8GB RAM, 4G, Black',
-    rating: 85,
-  },
-];
+
+const mapToStatus = {
+  1: 'Poor',
+  2: 'Fair',
+  3: 'Good',
+  4: 'Very Good',
+  5: 'Excellent',
+};
 
 module.exports = {
   get: {
@@ -196,17 +137,14 @@ module.exports = {
       const { productId } = req.params;
       const { comment, userId, rating } = req.body;
       try {
+        const user = await userModel.findById(userId);
+        if (!user) {
+          return res.status(404).json({ message: 'No such user' });
+        }
         const product = await productModel.findByIdAndUpdate(productId);
-        if(product.toObject().rating.comments.find(comment => comment.user == userId)){
+        if (product.toObject().rating.comments.find((comment) => comment.user == userId)) {
           return res.status(403).json({ message: 'You have already rated this product!' });
         }
-        const mapToStatus = {
-          1: 'Poor',
-          2: 'Fair',
-          3: 'Good',
-          4: 'Very Good',
-          5: 'Excellent',
-        };
         product.rating.comments.push({
           user: userId,
           comment,
@@ -224,7 +162,9 @@ module.exports = {
           })
           .lean();
 
-        return res.status(200).json({ rating: updatedProduct.rating });
+        await user.comments.push({ productId, comment, status: mapToStatus[rating], rating });
+        await user.save();
+        return res.status(200).json({ rating: updatedProduct.rating, status: mapToStatus[rating] });
       } catch (error) {
         console.log(error);
       }

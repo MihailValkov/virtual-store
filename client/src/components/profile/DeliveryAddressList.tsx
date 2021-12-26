@@ -13,14 +13,8 @@ import styles from './DeliveryAddressList.module.css';
 const DeliveryAddressLists: FC<{
   addressList: IAddress[];
 }> = ({ addressList }) => {
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-
   const dispatch = useDispatch();
   const isLoading = useSelector((state: AppRootState) => state.auth.isLoading);
-
-  const onShowEditModalHandler = useCallback(() => setShowEditModal((prev) => !prev), []);
-  const onShowDeleteModalHandler = useCallback(() => setShowDeleteModal((prev) => !prev), []);
 
   const onChangeAddressHandler = useCallback(
     (id: string) => {
@@ -47,10 +41,6 @@ const DeliveryAddressLists: FC<{
           street={a.street}
           streetNumber={a.streetNumber}
           checked={a.default}
-          onShowEditModal={onShowEditModalHandler}
-          showEditModal={showEditModal}
-          onShowDeleteModal={onShowDeleteModalHandler}
-          showDeleteModal={showDeleteModal}
           onChangeAddress={onChangeAddressHandler.bind(null, a._id)}
           onDeleteAddress={onDeleteAddressHandler.bind(null, a._id)}
         />

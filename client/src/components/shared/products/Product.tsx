@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, useParams, useRouteMatch } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { faCartArrowDown, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { ICategoryProduct } from '../../../interfaces/category-product';

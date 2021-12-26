@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { ICategoryProduct } from '../../interfaces/category-product';
 
 import styles from './Order.module.css';
 
@@ -20,7 +19,7 @@ const Order: FC<{
       </header>
       <div className={styles['order-content']}>
         <div className={`${styles['order-info']} ${styles.left}`}>
-          <p>Register Date: {date}</p>
+          <p>Register Date: {new Date(date).toLocaleString()}</p>
           <p>Address: {address}</p>
           <p>Status: {status}</p>
         </div>
