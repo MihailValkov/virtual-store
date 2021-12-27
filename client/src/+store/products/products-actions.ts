@@ -70,6 +70,9 @@ export const rateProductAction =
     dispatch(loading({ isLoading: true }));
     dispatch(error({ message: '' }));
     try {
+      if (rating <= 0 || rating > 5) {
+        throw new Error('Please select rating for this product!');
+      }
       const response = await http.patch(`categories/products/${productId}`, {
         comment,
         rating,

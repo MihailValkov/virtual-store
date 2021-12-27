@@ -91,10 +91,18 @@ const productSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',
           },
-          comment: String,
+          comment: {
+            type: String,
+            required: true,
+            minLength: [20, 'Comment should be at least 20 characters long!'],
+          },
           status: String,
-          rating: Number,
-          createdAt: { type: Date, required: true, default: Date.now },
+          rating: {
+            type: Number,
+            min: [1, 'Please select correct rating between 1-5!'],
+            max: [5, 'Please select correct rating between 1-5!'],
+          },
+          createdAt: { type: Date, default: Date.now },
         },
       ],
       rate: {
@@ -109,8 +117,6 @@ const productSchema = new Schema(
         default: 0,
       },
     },
-    // address: { type: Schema.Types.ObjectId, ref: 'Address' },
-    // deliveryAddresses: [{ type: Schema.Types.ObjectId, ref: 'Address' }],
   },
   { timestamps: true }
 );
