@@ -1,4 +1,14 @@
 import { FC, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addProductToCart } from '../../../+store/cart/cart-slice';
+import {
+  addProductToFavorites,
+  deleteProductFromFavorites,
+} from '../../../+store/favorites/favorites-slice';
+import { ICategoryProduct } from '../../../interfaces/category-product';
+import { AppRootState } from '../../../+store/store';
+
 import { faHeart, faCartArrowDown, faStar } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from '../../shared/Modal';
@@ -6,21 +16,12 @@ import PreviewImages from '../../shared/PreviewImages';
 import Colors from '../../shared/Colors';
 import StarRating from '../../shared/StarRating';
 import RateProduct from './rate-product/RateProduct';
-
 import MoreInfo from './MoreInfo';
 import Button from '../../shared/Button';
 import ProductCommentList from './comments/ProductCommentList';
 import SimilarProductsList from './SimilarProductsList';
 
 import styles from './Detail.module.css';
-import { ICategoryProduct } from '../../../interfaces/category-product';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppRootState } from '../../../+store/store';
-import { addProductToCart } from '../../../+store/cart/cart-slice';
-import {
-  addProductToFavorites,
-  deleteProductFromFavorites,
-} from '../../../+store/favorites/favorites-slice';
 
 const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = ({
   product,
@@ -53,34 +54,6 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
   };
 
   const onShowModal = () => setShowModal((prev) => !prev);
-  // const showNextProduct = (direction: string) => {
-  //   const maxWidth = Number(productsContainer.current?.getBoundingClientRect().width);
-  //   const total = Math.floor(maxWidth / 270);
-  //   const productsLength = 13;
-  //   const width = 280.8;
-  //   const pages = productsLength / total - 1;
-  //   if (direction === 'right') {
-  //     const step =
-  //       currentWidth > -Math.floor(total * width)
-  //         ? total * width
-  //         : (currentWidth / width / total + pages) * total * width;
-  //     setCurrentWidth(currentWidth - step);
-  //   } else if (direction === 'left') {
-  //     const step = currentWidth + width * total < 0 ? width * total : -currentWidth;
-  //     setCurrentWidth(currentWidth + step);
-  //   }
-  // };
-  // const showNextProduct = (direction: string) => {
-  //   const width = 281;
-  //   const productsLength = 13;
-  //   const maxItems = 5;
-  //   if (direction === 'right') {
-  //     Math.abs(currentWidth - width) + maxItems * width <= productsLength * width &&
-  //       setCurrentWidth(currentWidth - width);
-  //   } else if (direction === 'left') {
-  //     currentWidth + width <= 0 && setCurrentWidth(currentWidth + width);
-  //   }
-  // };
 
   const selectColorHandler = (obj: { [prop: string]: string }) => {
     setSelectedColor(obj.color);
@@ -101,6 +74,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
 
   return (
     <section>
+      <h2>{product.name}</h2>
       <div className={styles.container}>
         <div className={styles.left}>
           <PreviewImages

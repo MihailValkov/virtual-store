@@ -14,3 +14,9 @@
   border-bottom: 1px solid #ccc;
   margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+  .favorites-container {
+    flex-direction: column;
+  }
+}

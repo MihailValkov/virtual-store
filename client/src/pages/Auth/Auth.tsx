@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
+import { AuthRoute } from '../../hocs/isAuth';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import ProfilePage from './ProfilePage';
-import { AuthRoute } from '../../hocs/isAuth';
 
 const Auth: FC<{}> = () => {
   const { path } = useRouteMatch();

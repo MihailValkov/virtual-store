@@ -1,14 +1,12 @@
 import { FC, useRef, useState } from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ICategoryProduct } from '../../../interfaces/category-product';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+
+import ProductList from '../../shared/products/ProductList';
+import Button from '../../shared/Button';
 
 import styles from './SimilarProductsList.module.css';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import ProductList from '../../shared/products/ProductList';
-import { useSelector } from 'react-redux';
-import { AppRootState } from '../../../+store/store';
-import Button from '../../shared/Button';
-import { ICategoryProduct } from '../../../interfaces/category-product';
 
 const SimilarProductsList: FC<{ products: ICategoryProduct[]; category: string }> = ({
   products,
@@ -19,7 +17,7 @@ const SimilarProductsList: FC<{ products: ICategoryProduct[]; category: string }
   const showNextProduct = (direction: string) => {
     const width = 281;
     const productsLength = products.length;
-    const maxItems = 5;
+    const maxItems = products.length < 5 ? 1 : 5;
     if (direction === 'right') {
       Math.abs(currentWidth - width) + maxItems * width <= productsLength * width &&
         setCurrentWidth(currentWidth - width);

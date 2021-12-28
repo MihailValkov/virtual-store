@@ -1,8 +1,10 @@
 import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
+
 import { logoutAction } from '../../+store/auth/auth-actions';
 import { AppRootState } from '../../+store/store';
+
 import {
   faHeart,
   faCartArrowDown,
@@ -12,10 +14,12 @@ import {
   faSignOutAlt,
   faStore,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import NavigationLink from '../shared/NavigationLink';
 import Button from '../shared/Button';
+
 import styles from './Navigation.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navigation: FC = () => {
   const dispatch = useDispatch();

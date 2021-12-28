@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+
 import styles from './Category.module.css';
 
 const Category: FC<{ category: string; imageUrl: string }> = ({ category, imageUrl }) => {

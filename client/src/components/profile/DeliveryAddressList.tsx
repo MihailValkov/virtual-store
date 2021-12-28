@@ -1,13 +1,16 @@
-import { FC, useState, useEffect, ChangeEvent, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   changeCurrentAddressAction,
   deleteDeliveryAddressAction,
 } from '../../+store/auth/auth-actions';
 import { AppRootState } from '../../+store/store';
 import { IAddress } from '../../interfaces/user';
+
 import LoadingSpinner from '../shared/LoadingSpinner';
 import DeliveryAddress from './DeliveryAddress';
+
 import styles from './DeliveryAddressList.module.css';
 
 const DeliveryAddressLists: FC<{

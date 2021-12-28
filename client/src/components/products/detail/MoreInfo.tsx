@@ -1,13 +1,6 @@
 import { FC } from 'react';
-import styles from './MoreInfo.module.css';
 
-const information = {
-  category: 'Phone',
-  brand: 'Xiaomi',
-  model: 'Xiaomi 11 Lite 5G NE',
-  year: '2021',
-  color: 'Black',
-};
+import styles from './MoreInfo.module.css';
 
 const TableRow: FC<{ propName: string; value: string | number }> = ({ propName, value }) => {
   return (

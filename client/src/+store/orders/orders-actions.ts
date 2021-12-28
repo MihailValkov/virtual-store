@@ -1,4 +1,4 @@
-import { ICreateOrder, IOrder } from '../../interfaces/order';
+import { ICreateOrder } from '../../interfaces/order';
 import { http } from '../../util/http-request';
 import { updateUserOrdersList } from '../auth/auth-slice';
 import { clearCart } from '../cart/cart-slice';

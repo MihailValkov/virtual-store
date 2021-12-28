@@ -1,8 +1,10 @@
-import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+
+import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadingSpinner from '../../shared/LoadingSpinner';
+
 import styles from './CheckoutComplete.module.css';
 
 const CheckoutComplete: FC<{ orderId?: string; isLoading: boolean; errorMessage: string | null }> =

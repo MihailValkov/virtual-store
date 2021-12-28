@@ -81,3 +81,17 @@
 .btn.toggle svg {
   color: #ef2809;
 }
+
+@media (max-width: 768px) {
+  .product {
+    margin: auto;
+  }
+  .actions {
+    transform: none;
+    opacity: 1;
+    bottom: 0;
+  }
+  .product > section:hover .actions {
+    transform: none;
+  }
+}

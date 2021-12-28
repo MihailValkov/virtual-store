@@ -1,8 +1,9 @@
 import { FC } from 'react';
-import Card from '../shared/Card';
-import Button from '../shared/Button';
-import styles from './CartInformation.module.css';
 import { Link } from 'react-router-dom';
+
+import Card from '../shared/Card';
+
+import styles from './CartInformation.module.css';
 
 const CartInformation: FC<{
   classes?: string;

@@ -1,29 +1,30 @@
 import { FC, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useInput from '../../../hooks/use-input';
 import { isNumberValidation } from '../../../util/validations';
 import { ICartProduct } from '../../../interfaces/cart-product';
+import { AppRootState } from '../../../+store/store';
 import {
   addProductToCart,
   changeProductQuantity,
   changeSelectedColorToCart,
   deleteProductFromCart,
 } from '../../../+store/cart/cart-slice';
-
-import Button from '../Button';
-import StarRating from '../StarRating';
-
-import styles from './MyProduct.module.css';
-import { AppRootState } from '../../../+store/store';
 import {
   addProductToFavorites,
   changeSelectedColorToFavorites,
   deleteProductFromFavorites,
 } from '../../../+store/favorites/favorites-slice';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+
+import Button from '../Button';
+import StarRating from '../StarRating';
 import Colors from '../Colors';
+
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+
+import styles from './MyProduct.module.css';
 
 const MyProduct: FC<{
   cart?: boolean;

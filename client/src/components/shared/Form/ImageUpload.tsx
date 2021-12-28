@@ -1,5 +1,7 @@
-import { FC, useRef, useState, ChangeEvent } from 'react';
+import { FC, useRef, ChangeEvent } from 'react';
+
 import Button from '../Button';
+
 import styles from './ImageUpload.module.css';
 
 const ImageUpload: FC<{
@@ -8,7 +10,6 @@ const ImageUpload: FC<{
   text: string;
   classes?: string;
 }> = ({ onUploadFiles, text, classes, errorMessage }) => {
-  // const [images, setImages] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onPickFile = () => inputRef.current!.click();
@@ -19,14 +20,6 @@ const ImageUpload: FC<{
       return;
     }
     onUploadFiles(files);
-    // const reader = new FileReader();
-    // reader.readAsDataURL(files[0]);
-    //     reader.onloadend = () => {
-    //       onUploadFiles(files);
-    //     };
-    // const fileList = new Array(files.length).fill(0).map((x, i) => URL.createObjectURL(files[i]));
-    // setImages(fileList);
-    // onUploadFiles(fileList);
   };
 
   return (

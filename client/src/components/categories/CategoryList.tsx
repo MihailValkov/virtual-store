@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { ICategory } from '../../interfaces/category';
+
 import Category from './Category';
 
 import styles from './CategoryList.module.css';

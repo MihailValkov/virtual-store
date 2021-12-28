@@ -1,6 +1,7 @@
 import { FC, FormEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+
 import { emailValidation, passwordValidation } from '../../util/validations';
 import { faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 

@@ -1,10 +1,14 @@
 import { FC } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './Location.module.css';
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
-const Location: FC<{ locations: { icon: IconDefinition; text: string,to:string }[] }> = ({ locations }) => {
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import styles from './Location.module.css';
+
+const Location: FC<{ locations: { icon: IconDefinition; text: string; to: string }[] }> = ({
+  locations,
+}) => {
   return (
     <div className={styles.location}>
       <ul>

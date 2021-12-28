@@ -27,6 +27,13 @@
     left: calc(50% - 20rem);
   }
 }
+@media (max-width: 768px) {
+  .modal {
+    top: 5vh;
+    height: 90vh;
+    overflow: auto;
+  }
+}
 
 @keyframes slide-down {
   from {

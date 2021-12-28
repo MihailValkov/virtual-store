@@ -7,6 +7,7 @@
 }
 .location li {
   display: inline;
+  cursor: none;
 }
 .location li a {
   display: block;
@@ -56,11 +57,13 @@
   border-bottom-right-radius: 10px;
 }
 
-.location li a:hover, .location a.active {
+.location li a:hover,
+.location a.active {
   cursor: pointer;
   background: #357dfd;
   color: #fff;
 }
-.location li a:hover .after,.location a.active .after {
+.location li a:hover .after,
+.location a.active .after {
   border-left-color: #357dfd;
 }

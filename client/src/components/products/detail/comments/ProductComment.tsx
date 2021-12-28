@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import StarRating from '../../../shared/StarRating';
+
 import styles from './ProductComment.module.css';
 
 const ProductComment: FC<{

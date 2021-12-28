@@ -1,5 +1,7 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
+
 import Color from './Color';
+
 import styles from './Colors.module.css';
 
 const Colors: FC<{

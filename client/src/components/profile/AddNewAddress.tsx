@@ -1,12 +1,6 @@
 import { FC, FormEvent } from 'react';
-import Form from '../shared/Form/Form';
-import FormRow from '../shared/Form/FormRow';
-import FormActions from '../shared/Form/FormActions';
-import FormGroup from '../shared/Form/FormGroup';
-import Button from '../shared/Button';
-import { faCity, faHome, faMapMarkedAlt, faStreetView } from '@fortawesome/free-solid-svg-icons';
-import styles from './AddNewAddress.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+
 import useInput from '../../hooks/use-input';
 import {
   addNewDeliveryAddressAction,
@@ -19,6 +13,16 @@ import {
   streetNumberValidation,
 } from '../../util/validations';
 import { AppRootState } from '../../+store/store';
+
+import { faCity, faHome, faMapMarkedAlt, faStreetView } from '@fortawesome/free-solid-svg-icons';
+
+import Form from '../shared/Form/Form';
+import FormRow from '../shared/Form/FormRow';
+import FormActions from '../shared/Form/FormActions';
+import FormGroup from '../shared/Form/FormGroup';
+import Button from '../shared/Button';
+
+import styles from './AddNewAddress.module.css';
 
 const AddNewAddress: FC<{
   id?: string;

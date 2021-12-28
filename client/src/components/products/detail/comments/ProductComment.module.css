@@ -34,3 +34,15 @@
   font-weight: bold;
   font-size: 1rem;
 }
+
+@media (max-width: 768px) {
+  .user-info {
+    flex: 4;
+    padding-right: 10px;
+    margin: 0;
+  }
+  .user-comment {
+    flex: 8;
+    padding-left: 10px;
+  }
+}

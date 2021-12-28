@@ -1,5 +1,7 @@
 import { FC, memo } from 'react';
+
 import LoadingSpinner from './LoadingSpinner';
+
 import styles from './PreviewImages.module.css';
 
 const PreviewImages: FC<{

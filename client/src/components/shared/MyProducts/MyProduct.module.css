@@ -125,3 +125,9 @@
 .product-action-delete:hover {
   background-color: #b75656;
 }
+
+@media (max-width: 768px) {
+  .product {
+    flex-direction: column;
+  }
+}

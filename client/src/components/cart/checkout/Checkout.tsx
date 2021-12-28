@@ -1,3 +1,9 @@
+import { FC, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { createOrdersAction } from '../../../+store/orders/orders-actions';
+import { AppRootState } from '../../../+store/store';
+
 import {
   faCartArrowDown,
   faCreditCard,
@@ -11,9 +17,8 @@ import {
   faUser,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { FC, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppRootState } from '../../../+store/store';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import CheckoutComplete from './CheckoutComplete';
 import AddNewAddress from '../../profile/AddNewAddress';
 import BoxCard from '../../profile/BoxCard';
@@ -23,10 +28,8 @@ import Card from '../../shared/Card';
 import Modal from '../../shared/Modal';
 import Location from '../../shared/Location';
 import noAvatarImage from '../../../assets/no-avatar.png';
+
 import styles from './Checkout.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { createOrdersAction } from '../../../+store/orders/orders-actions';
-import { Redirect } from 'react-router';
 
 const locations: { icon: IconDefinition; text: string; to: string }[] = [
   {
@@ -83,10 +86,6 @@ const Checkout: FC<{}> = (props) => {
     );
   };
 
-  if (!user) {
-    return <Redirect to='/auth/login' />;
-  }
-
   return (
     <>
       <Location locations={locations} />{' '}
@@ -110,16 +109,16 @@ const Checkout: FC<{}> = (props) => {
               <img src={user?.image.url || noAvatarImage} alt='profile-img' />
             </div>
             <div className={styles['profile-info']}>
-              <BoxCard icon={faUser} title={user.username} classes='blue' />
-              <BoxCard icon={faEnvelope} title={user.email} classes='blue' />
-              <BoxCard icon={faPhoneAlt} title={user.phone} classes='blue' />
+              <BoxCard icon={faUser} title={user!.username} classes='blue' />
+              <BoxCard icon={faEnvelope} title={user!.email} classes='blue' />
+              <BoxCard icon={faPhoneAlt} title={user!.phone} classes='blue' />
             </div>
           </div>
           <div className={styles['delivery-address']}>
             <h3>
               <FontAwesomeIcon icon={faStreetView} /> Choose an address for delivery:
             </h3>
-            <DeliveryAddressList addressList={user.deliveryAddresses} />
+            <DeliveryAddressList addressList={user!.deliveryAddresses} />
             <Button classes={styles.btn} onClick={onAddNewAddressHandler}>
               + Add new Address
             </Button>

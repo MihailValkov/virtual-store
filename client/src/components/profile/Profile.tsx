@@ -1,4 +1,6 @@
 import { FC, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   faCity,
   faClock,
@@ -11,9 +13,10 @@ import {
   faStreetView,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+
 import { IUser } from '../../interfaces/user';
+import { AppRootState } from '../../+store/store';
 import { updateUserAvatarAction } from '../../+store/auth/auth-actions';
-import { useDispatch, useSelector } from 'react-redux';
 
 import AsideMenu from '../shared/AsideMenu/AsideMenu';
 import Card from '../shared/Card';
@@ -24,10 +27,10 @@ import Button from '../shared/Button';
 import Modal from '../shared/Modal';
 import AddNewAddress from './AddNewAddress';
 import DeliveryAddressList from './DeliveryAddressList';
+import LoadingSpinner from '../shared/LoadingSpinner';
+
 import noAvatarImage from '../../assets/no-avatar.png';
 import styles from './Profile.module.css';
-import { AppRootState } from '../../+store/store';
-import LoadingSpinner from '../shared/LoadingSpinner';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const dispatch = useDispatch();

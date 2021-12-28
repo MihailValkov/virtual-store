@@ -1,8 +1,13 @@
 import { FC, FormEvent } from 'react';
-import { faComment, faStar } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+
 import useInput from '../../../../hooks/use-input';
 import { reviewValidation } from '../../../../util/validations';
+import { rateProductAction } from '../../../../+store/products/products-actions';
 import { IRate } from '../../../../interfaces/category-product';
+import { AppRootState } from '../../../../+store/store';
+
+import { faComment, faStar } from '@fortawesome/free-solid-svg-icons';
 
 import Form from '../../../shared/Form/Form';
 import FormActions from '../../../shared/Form/FormActions';
@@ -10,11 +15,8 @@ import FormGroup from '../../../shared/Form/FormGroup';
 import RateButton from './RateButton';
 import Button from '../../../shared/Button';
 import RatingDiagram from './RatingDiagram';
-import { http } from '../../../../util/http-request';
+
 import styles from './RateProduct.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { rateProductAction } from '../../../../+store/products/products-actions';
-import { AppRootState } from '../../../../+store/store';
 
 const RateProduct: FC<{
   onClose: () => void;

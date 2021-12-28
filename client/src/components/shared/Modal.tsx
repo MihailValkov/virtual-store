@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import ReactDOM from 'react-dom';
+
 import styles from './Modal.module.css';
 
 const Backdrop: FC<{ onClose: () => void }> = ({ onClose }) => {

@@ -131,3 +131,10 @@
 .delivery-address li:last-child {
   margin-bottom: 5px;
 }
+
+
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
+  }
+}

@@ -85,3 +85,19 @@
   top: calc(100px - 32px);
   left: calc(110px - 32px);
 }
+
+@media (max-width: 768px) {
+  .profile-information {
+    flex-direction: column;
+  }
+  .profile-picture {
+    margin: auto;
+  }
+  .profile-picture img {
+    height: 150px;
+    width: 150px;
+  }
+  .profile-picture .btn {
+    justify-content: center;
+  }
+}

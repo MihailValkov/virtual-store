@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { ICartProduct } from '../../../interfaces/cart-product';
 
 import MyProduct from './MyProduct';
-import noProductsImg from '../../../assets/no-products.png';
 
+import noProductsImg from '../../../assets/no-products.png';
 import styles from './MyProductsList.module.css';
 
 const MyProductsList: FC<{

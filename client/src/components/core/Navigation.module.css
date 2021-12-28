@@ -44,3 +44,9 @@
 .actions button:hover {
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .header .logo {
+    font-size: 1.2rem;
+  }
+}

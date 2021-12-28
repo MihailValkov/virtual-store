@@ -1,15 +1,16 @@
 import { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { AppRootState } from '../../+store/store';
+import { loadOrdersAction } from '../../+store/orders/orders-actions';
 
 import AsideMenu from '../shared/AsideMenu/AsideMenu';
 import Order from './Order';
 import Card from '../shared/Card';
 
 import styles from './Orders.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppRootState } from '../../+store/store';
-import { loadOrdersAction } from '../../+store/orders/orders-actions';
 
-const Orders: FC<{}> = (props) => {
+const Orders: FC<{}> = () => {
   const orders = useSelector((state: AppRootState) => state.orders.ordersList);
   const dispatch = useDispatch();
 

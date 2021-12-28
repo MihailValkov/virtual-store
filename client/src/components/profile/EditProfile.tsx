@@ -1,9 +1,6 @@
 import { FC, FormEvent, useCallback, useState } from 'react';
-import Form from '../shared/Form/Form';
-import FormActions from '../shared/Form/FormActions';
-import FormGroup from '../shared/Form/FormGroup';
-import FormRow from '../shared/Form/FormRow';
-import Button from '../shared/Button';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   faCity,
   faHome,
@@ -13,7 +10,7 @@ import {
   faStreetView,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import styles from './EditProfile.module.css';
+
 import useInput from '../../hooks/use-input';
 import {
   cityValidation,
@@ -24,9 +21,16 @@ import {
   phoneValidation,
   passwordValidation,
 } from '../../util/validations';
-import { useDispatch, useSelector } from 'react-redux';
 import { updateUserInformationAction } from '../../+store/auth/auth-actions';
 import { AppRootState } from '../../+store/store';
+
+import Form from '../shared/Form/Form';
+import FormActions from '../shared/Form/FormActions';
+import FormGroup from '../shared/Form/FormGroup';
+import FormRow from '../shared/Form/FormRow';
+import Button from '../shared/Button';
+
+import styles from './EditProfile.module.css';
 
 const EditProfile: FC<{
   onClose: () => void;

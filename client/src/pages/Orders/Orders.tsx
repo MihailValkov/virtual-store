@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
+import { AuthRoute } from '../../hocs/isAuth';
 import OrdersPage from './OrdersPage';
 import OrdersDetailPage from './OrdersDetailPage';
-import { AuthRoute } from '../../hocs/isAuth';
 
 const Orders: FC<{}> = () => {
   const { path } = useRouteMatch();

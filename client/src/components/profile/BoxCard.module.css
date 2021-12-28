@@ -53,3 +53,9 @@
 .orange span {
   background-color: #f9bf3b;
 }
+
+@media (max-width: 768px) {
+    .box {
+      width: 30%;
+    }
+}

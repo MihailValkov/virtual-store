@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import styles from './LoadingSpinner.module.css';
 
 const LoadingSpinner: FC<{ className?: string }> = ({ className }) => {

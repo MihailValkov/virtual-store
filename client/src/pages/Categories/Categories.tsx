@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
+import { AppRootState } from '../../+store/store';
 import { AdminRoute } from '../../hocs/isAdmin';
 
 import CategoriesPage from './CategoriesPage';
 import CategoryPage from './CategoryPage';
 import CategoryDetailPage from './CategoryDetailPage';
 import CategoryCreatePage from './CategoryCreatePage';
-import { useSelector } from 'react-redux';
-import { AppRootState } from '../../+store/store';
 
 const Categories: FC<{}> = () => {
   const { path } = useRouteMatch();

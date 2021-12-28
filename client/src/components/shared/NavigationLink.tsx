@@ -1,8 +1,11 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
 import { withHighlighted } from '../../hocs/isHighlighted';
+
 import styles from './NavigationLink.module.css';
 
 const NavigationLink: FC<{
@@ -21,7 +24,7 @@ const NavigationLink: FC<{
         <FontAwesomeIcon icon={icon} className={styles.icon} />
         {badge && <span className={styles.badge}>{count}</span>}
       </div>
-      {text && <span>{text}</span>}
+      {text && <span className={styles.text}>{text}</span>}
     </NavLink>
   );
 };

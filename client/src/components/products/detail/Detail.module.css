@@ -60,7 +60,7 @@
   color: #037c28;
 }
 .favorite:hover svg,
-.favorite.highlighted svg{
+.favorite.highlighted svg {
   color: #ff2600;
 }
 .rate:hover svg {
@@ -87,4 +87,38 @@
 
 .unavailable {
   background-color: #df390f;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .left {
+    padding: 0;
+  }
+  .left > div {
+    text-align: center;
+  }
+  .left > div > img {
+    width: 350px;
+    height: 350px;
+  }
+  .center {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .right,
+  .total-price {
+    text-align: center;
+  }
+  .right .actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  .right .actions button {
+    width: 30%;
+  }
 }

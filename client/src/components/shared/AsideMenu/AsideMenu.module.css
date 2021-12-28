@@ -72,3 +72,9 @@
   background-color: rgba(0, 0, 0, 0.39);
   border-radius: 0.25rem;
 }
+
+@media (max-width: 768px) {
+  .user {
+    display: none;
+  }
+}

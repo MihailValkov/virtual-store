@@ -1,9 +1,12 @@
 import { FC, useCallback, useState } from 'react';
+
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import Button from '../shared/Button';
 import Modal from '../shared/Modal';
 import Confirm from '../shared/Confirm';
 import AddNewAddress from './AddNewAddress';
+
 import styles from './DeliveryAddress.module.css';
 
 const DeliveryAddress: FC<{

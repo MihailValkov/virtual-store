@@ -1,9 +1,11 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { AppRootState } from '../../+store/store';
+
 import Button from '../shared/Button';
-import styles from './Confirm.module.css';
 import LoadingSpinner from './LoadingSpinner';
+
+import styles from './Confirm.module.css';
 
 const Confirm: FC<{
   onClose: () => void;

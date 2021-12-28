@@ -1,12 +1,8 @@
 import { FC, FormEvent, useState, useCallback, useMemo } from 'react';
-import Card from '../../shared/Card';
-import Form from '../../shared/Form/Form';
-import FormGroup from '../../shared/Form/FormGroup';
-import FormActions from '../../shared/Form/FormActions';
-import Button from '../../shared/Button';
-import ImageUpload from '../../shared/Form/ImageUpload';
+
 import { productValidations } from '../../../util/validations';
 import useInput from '../../../hooks/use-input';
+
 import {
   faCalendar,
   faComment,
@@ -18,6 +14,14 @@ import {
   faStamp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import Card from '../../shared/Card';
+import Form from '../../shared/Form/Form';
+import FormGroup from '../../shared/Form/FormGroup';
+import FormActions from '../../shared/Form/FormActions';
+import Button from '../../shared/Button';
+import ImageUpload from '../../shared/Form/ImageUpload';
+
 import styles from './Create.module.css';
 
 import noImage from '../../../assets/no-image.png';
@@ -144,7 +148,6 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
       (a: string[], [k, v]) => (v !== false ? a.concat(k) : a),
       []
     );
-    console.log(selectedColors)
     setSelectedColors(selectedColors);
   }, []);
 

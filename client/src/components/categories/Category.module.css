@@ -32,3 +32,9 @@
 .category:hover h3 {
   background-color: #7ee37980;
 }
+
+@media (max-width: 768px) {
+  .category {
+    max-width: 100%;
+  }
+}

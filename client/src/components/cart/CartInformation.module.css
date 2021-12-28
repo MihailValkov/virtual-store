@@ -45,3 +45,10 @@
 .actions a:hover {
   background-color: #227e6a;
 }
+
+@media (max-width: 768px) {
+  .actions {
+    max-width: 100%;
+    width: 100%;
+  }
+}

@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import { IRate } from '../../../../interfaces/category-product';
+
 import styles from './RatingDiagram.module.css';
 
 const DiagramItem: FC<{ prop: number; value: number }> = ({ prop, value }) => {

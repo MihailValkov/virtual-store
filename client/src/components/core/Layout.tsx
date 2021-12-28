@@ -1,16 +1,18 @@
-import { Fragment, FC } from 'react';
+import { FC } from 'react';
+
 import Footer from './Footer';
-import styles from './Layout.module.css';
 import Navigation from './Navigation';
 
+import styles from './Layout.module.css';
+
 const Layout: FC = (props) => {
-    return (
-        <Fragment>
-            <Navigation />
-            <main className={styles.main}>{props.children}</main>
-            <Footer />
-        </Fragment>
-    );
+  return (
+    <>
+      <Navigation />
+      <main className={styles.main}>{props.children}</main>
+      <Footer />
+    </>
+  );
 };
 
 export default Layout;

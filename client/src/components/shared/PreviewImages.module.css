@@ -42,3 +42,10 @@
 .loading {
   left: 20%;
 }
+
+
+@media (max-width: 768px) {
+  .preview {
+    width: 100%;
+  }
+}

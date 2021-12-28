@@ -1,7 +1,9 @@
 import { FC } from 'react';
+
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import styles from './Button.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import styles from './Button.module.css';
 
 const Button: FC<{
   type?: 'button' | 'submit' | 'reset';
