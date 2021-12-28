@@ -1,7 +1,15 @@
 import { FC, FormEvent, useState, useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
-import { productValidations } from '../../../util/validations';
 import useInput from '../../../hooks/use-input';
+import { productValidations } from '../../../util/validations';
+import { AppRootState } from '../../../+store/store';
+import { ICategory } from '../../../interfaces/category';
+import {
+  addNewProductAction,
+  uploadProductImagesAction,
+} from '../../../+store/products/products-actions';
 
 import {
   faCalendar,
@@ -21,20 +29,12 @@ import FormGroup from '../../shared/Form/FormGroup';
 import FormActions from '../../shared/Form/FormActions';
 import Button from '../../shared/Button';
 import ImageUpload from '../../shared/Form/ImageUpload';
-
-import styles from './Create.module.css';
-
-import noImage from '../../../assets/no-image.png';
 import Colors from '../../shared/Colors';
 import PreviewImages from '../../shared/PreviewImages';
-import { ICategory } from '../../../interfaces/category';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  addNewProductAction,
-  uploadProductImagesAction,
-} from '../../../+store/products/products-actions';
-import { AppRootState } from '../../../+store/store';
-import { useHistory } from 'react-router';
+
+import styles from './Create.module.css';
+import noImage from '../../../assets/no-image.png';
+import FormRow from '../../shared/Form/FormRow';
 
 const colors = ['red', 'blue', 'green', 'black', 'purple', 'yellow'];
 
@@ -208,7 +208,7 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
         </div>
 
         <Form onSubmitHandler={onSubmitHandler} isLoading={false}>
-          <div className={styles['form-row']}>
+          <FormRow>
             <FormGroup
               label='Name'
               name='name'
@@ -242,8 +242,8 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
                 onBlur={priceBlurHandler}
               />
             </FormGroup>
-          </div>
-          <div className={styles['form-row']}>
+          </FormRow>
+          <FormRow>
             <FormGroup
               label='Year'
               name='year'
@@ -276,8 +276,8 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
                 onBlur={availablePiecesBlurHandler}
               />
             </FormGroup>
-          </div>
-          <div className={styles['form-row']}>
+          </FormRow>
+          <FormRow >
             <FormGroup
               label='Brand'
               name='brand'
@@ -310,7 +310,7 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
                 onBlur={modelBlurHandler}
               />
             </FormGroup>
-          </div>
+          </FormRow>
           <FormGroup
             classes={styles.description}
             label='Description'

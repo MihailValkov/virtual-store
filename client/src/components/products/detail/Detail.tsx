@@ -142,7 +142,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
         <SimilarProductsList products={products} category={product.category} />
       )}
       {showModal && (
-        <Modal onClose={onShowModal}>
+        <Modal onClose={onShowModal} classes={styles['rate-modal']}>
           {
             <RateProduct
               onClose={onShowModal}

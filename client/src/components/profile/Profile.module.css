@@ -100,4 +100,9 @@
   .profile-picture .btn {
     justify-content: center;
   }
+  .edit-modal {
+    top: 5vh;
+    height: 90vh;
+    overflow: auto;
+  }
 }

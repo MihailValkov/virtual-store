@@ -27,6 +27,7 @@
 .product-name {
   color: #2269f4;
   font-weight: 600;
+  word-break: break-word;
 }
 .product-price {
   font-weight: bold;
@@ -81,4 +82,8 @@
   max-height: 150px;
   resize: none;
   padding: 5px 10px !important;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
 }

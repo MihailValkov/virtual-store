@@ -20,6 +20,12 @@
   animation: slide-down 300ms ease-out forwards;
 }
 
+@media (max-width: 768px) {
+  .form-row {
+    display: block;
+  }
+}
+
 @keyframes slide-down {
   from {
     opacity: 0;

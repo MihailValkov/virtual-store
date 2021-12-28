@@ -51,7 +51,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
   return (
     <>
       {isEditProfileMode && (
-        <Modal onClose={onEditProfileHandler}>
+        <Modal onClose={onEditProfileHandler} classes={styles['edit-modal']}>
           <EditProfile
             onClose={onEditProfileHandler}
             username={user.username}

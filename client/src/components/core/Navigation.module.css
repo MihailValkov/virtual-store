@@ -46,7 +46,13 @@
 }
 
 @media (max-width: 768px) {
+  .header {
+    padding: 0 5%;
+  }
   .header .logo {
     font-size: 1.2rem;
+  }
+  .text {
+    display: none;
   }
 }

@@ -20,4 +20,7 @@
   .cart-container {
     flex-direction: column;
   }
+  .cart {
+    margin-bottom: 20px;
+  }
 }

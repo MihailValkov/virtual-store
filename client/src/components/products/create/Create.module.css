@@ -87,24 +87,23 @@ form {
   align-items: center;
 }
 
-.form-row {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.form-row > div:first-of-type {
-  margin-right: 10px;
-}
-
-.form-row > ul {
-  width: 100%;
-}
-
 .description textarea {
   height: 150px;
   resize: none;
 }
 
-
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .left {
+    padding: 0;
+    margin: auto;
+  }
+  .upload-button {
+    justify-content: center;
+  }
+  .upload-button > button {
+    padding: 0.5rem 1rem;
+  }
+}

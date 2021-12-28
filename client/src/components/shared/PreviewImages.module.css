@@ -43,9 +43,21 @@
   left: 20%;
 }
 
-
 @media (max-width: 768px) {
-  .preview {
+  .preview-container {
+    flex-direction: column;
+  }
+  .preview-container > img {
+    min-width: 300px !important;
+    height: 250px !important;
+  }
+  .preview-container .preview {
     width: 100%;
+    flex-direction: row;
+    margin: 10px 0 0 0;
+  }
+  .preview-container .preview img {
+    width: 70px;
+    height: 75px;
   }
 }

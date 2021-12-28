@@ -121,4 +121,9 @@
   .right .actions button {
     width: 30%;
   }
+  .rate-modal {
+    top: 5vh;
+    height: 90vh;
+    overflow: auto;
+  }
 }

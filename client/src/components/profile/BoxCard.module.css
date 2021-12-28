@@ -57,5 +57,6 @@
 @media (max-width: 768px) {
     .box {
       width: 30%;
+      height: 80px;
     }
 }
