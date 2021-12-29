@@ -59,7 +59,6 @@ const LoginPage: FC<RouteComponentProps> = ({ history }) => {
   };
 
   return (
-    <section>
       <Card>
         <h2>Login Page</h2>
         <Form onSubmitHandler={onSubmitHandler} isLoading={isLoading}>
@@ -102,7 +101,6 @@ const LoginPage: FC<RouteComponentProps> = ({ history }) => {
           </FormActions>
         </Form>
       </Card>
-    </section>
   );
 };
 

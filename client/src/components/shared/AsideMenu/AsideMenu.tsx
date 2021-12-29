@@ -30,28 +30,35 @@ const AsideMenu: FC<{}> = () => {
 
   const guestContent = (
     <>
-      <div className={styles['user-info']}>
-        <img src={noAvatarImage} alt='profile-img' />
-        <h3 className={styles['anonymous-title']}>You are anonymous user currently.</h3>
-        <p>Login or register so you can access extra functionality.</p>
-      </div>
-      <ul className={styles.navigation}>
-        <li className={styles['guest']}>
-          <NavLink to='/auth/login'>
-            <FontAwesomeIcon
-              icon={faSignInAlt}
-              className={`${styles.icon} ${styles['nav-icon']}`}
-            />
-            <span>Login</span>
-          </NavLink>
-        </li>
-        <li className={styles['guest']}>
-          <NavLink to='/auth/register'>
-            <FontAwesomeIcon icon={faUser} className={`${styles.icon} ${styles['nav-icon']}`} />
-            <span>Register</span>
-          </NavLink>
-        </li>
-      </ul>
+      <Button
+        onClick={toggleHandler}
+        icon={!isToggle ? faArrowAltCircleLeft : faArrowAltCircleRight}
+        classes={styles['aside-btn']}
+      />
+      <section className={styles['aside-content']}>
+        <div className={styles['user-info']}>
+          <img src={noAvatarImage} alt='profile-img' />
+          <h3 className={styles['anonymous-title']}>You are anonymous user currently.</h3>
+          <p>Login or register so you can access extra functionality.</p>
+        </div>
+        <ul className={styles.navigation}>
+          <li className={styles['guest']}>
+            <NavLink to='/auth/login'>
+              <FontAwesomeIcon
+                icon={faSignInAlt}
+                className={`${styles.icon} ${styles['nav-icon']}`}
+              />
+              <span>Login</span>
+            </NavLink>
+          </li>
+          <li className={styles['guest']}>
+            <NavLink to='/auth/register'>
+              <FontAwesomeIcon icon={faUser} className={`${styles.icon} ${styles['nav-icon']}`} />
+              <span>Register</span>
+            </NavLink>
+          </li>
+        </ul>
+      </section>
     </>
   );
   const userContent = (
