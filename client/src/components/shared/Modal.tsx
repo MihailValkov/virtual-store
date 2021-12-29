@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import styles from './Modal.module.css';
 
-const Backdrop: FC<{ onClose: () => void }> = ({ onClose }) => {
+export const Backdrop: FC<{ onClose: () => void }> = ({ onClose }) => {
   return <div className={styles.backdrop} onClick={onClose} />;
 };
 

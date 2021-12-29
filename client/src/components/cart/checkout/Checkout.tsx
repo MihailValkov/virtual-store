@@ -48,7 +48,7 @@ const locations: { icon: IconDefinition; text: string; to: string }[] = [
     to: '/cart/checkout',
   },
 ];
-const Checkout: FC<{}> = (props) => {
+const Checkout: FC<{}> = () => {
   const selectedMethodRef = useRef<HTMLSelectElement>(null);
   const dispatch = useDispatch();
   const user = useSelector((state: AppRootState) => state.auth.user);
@@ -153,7 +153,7 @@ const Checkout: FC<{}> = (props) => {
             <div className={styles['action']}>
               <p>Total Price: </p>
               <strong>{totalPrice.toFixed(2)} BGN</strong>
-              <Button classes={styles.btn} onClick={submitHandler}>
+              <Button classes={styles.btn} onClick={submitHandler} disabled={products.length === 0}>
                 Confirm
               </Button>
             </div>

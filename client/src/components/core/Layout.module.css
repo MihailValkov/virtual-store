@@ -11,6 +11,6 @@
 @media (max-width: 768px) {
   .main {
     margin: 1rem auto;
-    min-height: calc(100vh - 10rem);
+    min-height: calc(100vh - 9rem);
   }
 }

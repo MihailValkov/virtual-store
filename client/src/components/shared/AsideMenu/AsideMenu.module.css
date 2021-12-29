@@ -4,6 +4,9 @@
   width: 300px;
   top: 8rem;
 }
+.aside-btn {
+  display: none;
+}
 .user-info {
   display: flex;
   align-items: center;
@@ -39,7 +42,7 @@
   align-items: center;
   font-weight: bold;
   border-radius: 0.25rem;
-  border-right: 10px solid #000000;
+  border: 1px solid black;
 }
 
 .navigation li a span {
@@ -75,6 +78,41 @@
 
 @media (max-width: 768px) {
   .user {
+    width: 300px;
+    height: 380px;
+    z-index: 25;
+    position: fixed;
+    top: -1rem;
+    left: -1px;
+    padding: 10px;
+  }
+  .user.toggle {
+    padding-left: 0px;
+    padding-right: 0px;
+    background: #f7f7f7;
+    width: 50px;
+    height: 35px;
+    top: 4rem;
+  }
+  .user.toggle .aside-btn {
+    margin: 0;
+    padding: 0;
+  }
+  .user.toggle .aside-content {
     display: none;
+  }
+  .aside-btn {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding-right: 0;
+    color: black;
+    background-color: transparent;
+  }
+  .user.toggle .aside-btn {
+    justify-content: center;
+  }
+  .user.toggle .aside-btn svg {
+    margin-right: 0px;
   }
 }

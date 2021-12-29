@@ -23,7 +23,9 @@ const Cart: FC<{}> = () => {
         <h1>My Cart</h1>
         <MyProductsList cart products={products} />
       </Card>
-      <CartInformation totalPrice={totalPrice} totalProducts={totalProducts} taxes={taxes} />
+      {products.length > 0 && (
+        <CartInformation totalPrice={totalPrice} totalProducts={totalProducts} taxes={taxes} />
+      )}
     </section>
   );
 };

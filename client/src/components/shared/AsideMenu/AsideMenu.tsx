@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -9,6 +9,8 @@ import {
   faUser,
   faList,
   faSignInAlt,
+  faArrowAltCircleRight,
+  faArrowAltCircleLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { AppRootState } from '../../../+store/store';
@@ -16,10 +18,15 @@ import Card from '../Card';
 
 import noAvatarImage from '../../../assets/no-avatar.png';
 import styles from './AsideMenu.module.css';
+import { Backdrop } from '../Modal';
+import Button from '../Button';
 
 const AsideMenu: FC<{}> = () => {
   const user = useSelector((state: AppRootState) => state.auth.user);
   const isLogged = !!user;
+  const [isToggle, setIsToggle] = useState(true);
+
+  const toggleHandler = () => setIsToggle((prev) => !prev);
 
   const guestContent = (
     <>
@@ -49,42 +56,56 @@ const AsideMenu: FC<{}> = () => {
   );
   const userContent = (
     <>
-      <div className={styles['user-info']}>
-        <img src={user?.image?.url || noAvatarImage} alt='profile-img' />
-        <p>{user?.username}</p>
-      </div>
-      <ul className={styles.navigation}>
-        <li>
-          <NavLink to='/auth/profile' activeClassName={styles.active}>
-            <FontAwesomeIcon icon={faUser} className={`${styles.icon} ${styles['nav-icon']}`} />
-            <span>My Profile</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/cart' activeClassName={styles.active}>
-            <FontAwesomeIcon
-              icon={faCartArrowDown}
-              className={`${styles.icon} ${styles['nav-icon']}`}
-            />
-            <span>My Cart</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/favorites' activeClassName={styles.active}>
-            <FontAwesomeIcon icon={faHeart} className={`${styles.icon} ${styles['nav-icon']}`} />
-            <span>My Favorites</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/orders' activeClassName={styles.active}>
-            <FontAwesomeIcon icon={faList} className={`${styles.icon} ${styles['nav-icon']}`} />
-            <span>My Orders</span>
-          </NavLink>
-        </li>
-      </ul>
+      <Button
+        onClick={toggleHandler}
+        icon={!isToggle ? faArrowAltCircleLeft : faArrowAltCircleRight}
+        classes={styles['aside-btn']}
+      />
+      <section className={styles['aside-content']}>
+        <div className={styles['user-info']}>
+          <img src={user?.image?.url || noAvatarImage} alt='profile-img' />
+          <p>{user?.username}</p>
+        </div>
+        <ul className={styles.navigation}>
+          <li>
+            <NavLink to='/auth/profile' activeClassName={styles.active}>
+              <FontAwesomeIcon icon={faUser} className={`${styles.icon} ${styles['nav-icon']}`} />
+              <span>My Profile</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/cart' activeClassName={styles.active}>
+              <FontAwesomeIcon
+                icon={faCartArrowDown}
+                className={`${styles.icon} ${styles['nav-icon']}`}
+              />
+              <span>My Cart</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/favorites' activeClassName={styles.active}>
+              <FontAwesomeIcon icon={faHeart} className={`${styles.icon} ${styles['nav-icon']}`} />
+              <span>My Favorites</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/orders' activeClassName={styles.active}>
+              <FontAwesomeIcon icon={faList} className={`${styles.icon} ${styles['nav-icon']}`} />
+              <span>My Orders</span>
+            </NavLink>
+          </li>
+        </ul>
+      </section>
     </>
   );
-  return <Card classes={styles['user']}>{isLogged ? userContent : guestContent}</Card>;
+  return (
+    <>
+      {!isToggle && <Backdrop onClose={toggleHandler} />}
+      <Card classes={`${styles['user']} ${isToggle && styles['toggle']}`}>
+        {isLogged ? userContent : guestContent}
+      </Card>
+    </>
+  );
 };
 
 export default AsideMenu;

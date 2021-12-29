@@ -22,6 +22,9 @@
   text-decoration: none;
   color: black;
 }
+.location li:last-of-type a {
+  margin: 0;
+}
 .before {
   content: '';
   border-top: 25px solid transparent;
@@ -60,10 +63,27 @@
 .location li a:hover,
 .location a.active {
   cursor: pointer;
-  background: #357dfd;
+  background: #337ab7;
   color: #fff;
 }
 .location li a:hover .after,
 .location a.active .after {
-  border-left-color: #357dfd;
+  border-left-color: #337ab7;
+}
+
+@media (max-width: 768px) {
+  .location li a {
+    font-size: 16px;
+    height: 40px;
+    margin: 0 5px 0 0;
+  }
+  .after,
+  .before {
+    border-top-width: 20px;
+    border-bottom-width: 20px;
+    border-left-width: 20px;
+  }
+  .after {
+    right: -20px;
+  }
 }

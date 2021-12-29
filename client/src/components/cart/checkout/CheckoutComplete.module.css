@@ -15,7 +15,6 @@
 .order-status h3 {
   color: rgb(56, 161, 202);
 }
-/* .order-status p */
 .loading {
   left: calc(50% - 32px);
 }
