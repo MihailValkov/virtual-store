@@ -45,13 +45,17 @@
 
 .price {
   margin: 0.25rem;
+  /* border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  background: white; */
   font-weight: bold;
   color: #ad5502;
   font-size: 1.25rem;
 }
 
 .description {
-  min-height: 55px;
+  max-height: 50px;
+  overflow: hidden;
 }
 
 .actions {

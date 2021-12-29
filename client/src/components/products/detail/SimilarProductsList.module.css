@@ -24,6 +24,10 @@
   align-items: center;
   position: relative;
 }
+
+.products-inner li > section div:first-child {
+  margin-top: 15px;
+}
 .products-inner .arrow {
   background-color: #f7f7f7;
   height: 80px;
