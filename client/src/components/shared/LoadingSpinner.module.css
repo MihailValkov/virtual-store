@@ -1,7 +1,7 @@
 .spinner {
   position: absolute;
   top: calc(50% - 3rem);
-  left: 50%;
+  left: calc(50% - 32px);
 }
 .spinner:after {
   content: '';

@@ -90,8 +90,12 @@
   .profile-information {
     flex-direction: column;
   }
+  .profile-information > div {
+    padding: 0px;
+  }
   .profile-picture {
     margin: auto;
+    padding: 0;
   }
   .profile-picture img {
     height: 150px;
@@ -100,9 +104,16 @@
   .profile-picture .btn {
     justify-content: center;
   }
+  .profile-info {
+    margin-left: 0;
+  }
   .edit-modal {
     top: 5vh;
     height: 90vh;
     overflow: auto;
+  }
+  .address-modal {
+    top: 5vh;
+    height: 90vh;
   }
 }

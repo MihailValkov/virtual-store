@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, forwardRef, Ref } from 'react';
 import { useDispatch } from 'react-redux';
 import { addProductToCart } from '../../../+store/cart/cart-slice';
 import {
@@ -6,13 +6,17 @@ import {
   deleteProductFromFavorites,
 } from '../../../+store/favorites/favorites-slice';
 import { ICategoryProduct } from '../../../interfaces/category-product';
+import { IBaseProduct } from '../../../interfaces/cart-product';
 import Product from './Product';
 
 import noProductsImg from '../../../assets/no-products.png';
 import styles from './ProductList.module.css';
-import { IBaseProduct } from '../../../interfaces/cart-product';
 
-const ProductList: FC<{ products: ICategoryProduct[]; width?: number }> = ({ products, width }) => {
+const ProductList: FC<{
+  products: ICategoryProduct[];
+  width?: number;
+  mRef?: Ref<HTMLUListElement> | null;
+}> = forwardRef(({ products, width, mRef }) => {
   const dispatch = useDispatch();
   const style = { transform: `translate3d(${width}px, 0px, 0px)` };
 
@@ -36,7 +40,7 @@ const ProductList: FC<{ products: ICategoryProduct[]; width?: number }> = ({ pro
   }
 
   return (
-    <ul className={styles.container} style={style}>
+    <ul className={styles.container} style={style} ref={mRef}>
       {products.map((p) => (
         <Product
           key={p._id}
@@ -48,6 +52,6 @@ const ProductList: FC<{ products: ICategoryProduct[]; width?: number }> = ({ pro
       ))}
     </ul>
   );
-};
+});
 
 export default ProductList;

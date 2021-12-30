@@ -148,4 +148,8 @@
   .select-icon {
     top: -10px;
   }
+  .address-modal {
+    top: 5vh;
+    height: 90vh;
+  }
 }

@@ -82,30 +82,27 @@
     height: 380px;
     z-index: 25;
     position: fixed;
-    top: -1rem;
-    left: -1px;
+    top: 4rem;
+    left: 0px;
     padding: 10px;
   }
   .user.toggle {
     padding-left: 0px;
     padding-right: 0px;
     background: #f7f7f7;
-    width: 50px;
+    width: 30px;
     height: 35px;
-    top: 4rem;
-  }
-  .user.toggle .aside-btn {
-    margin: 0;
-    padding: 0;
   }
   .user.toggle .aside-content {
     display: none;
   }
   .aside-btn {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    padding-right: 0;
+    position: absolute;
+    display: block;
+    right: 0;
+    top: 0;
+    padding: 10px 5px;
+    color: #f7f6f6;
     color: black;
     background-color: transparent;
   }

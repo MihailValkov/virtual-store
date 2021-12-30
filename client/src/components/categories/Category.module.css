@@ -35,6 +35,10 @@
 
 @media (max-width: 768px) {
   .category {
-    max-width: 100%;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+  .category:last-child {
+    margin-bottom: 0;
   }
 }

@@ -1,3 +1,7 @@
+.product-name {
+  text-align: center;
+  margin-bottom: 10px;
+}
 .container {
   display: flex;
   margin-bottom: 10px;
@@ -10,6 +14,9 @@
 .center {
   flex: 6;
   margin: 0 20px;
+}
+.center > h2 {
+  display: none;
 }
 .center > * {
   margin-bottom: 5px;
@@ -100,8 +107,8 @@
     text-align: center;
   }
   .left > div > img {
-    width: 350px;
-    height: 350px;
+    width: 300px;
+    height: 300px;
   }
   .center {
     margin: 20px;
@@ -116,14 +123,16 @@
   }
   .right .actions {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
   }
   .right .actions button {
-    width: 30%;
+    width: 70%;
   }
   .rate-modal {
     top: 5vh;
     height: 90vh;
     overflow: auto;
+    border-radius: 5px;
   }
 }

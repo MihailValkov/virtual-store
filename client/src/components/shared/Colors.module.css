@@ -4,3 +4,15 @@
   align-items: center;
   justify-content: space-between;
 }
+
+@media (max-width: 768px) {
+  .colors {
+    width: auto;
+  }
+  .colors div {
+    margin-right: 5px;
+  }
+  .colors div:last-child {
+    margin-right: 0;
+  }
+}

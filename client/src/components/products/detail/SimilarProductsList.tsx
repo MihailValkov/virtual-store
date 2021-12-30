@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import { ICategoryProduct } from '../../../interfaces/category-product';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -8,38 +8,77 @@ import Button from '../../shared/Button';
 
 import styles from './SimilarProductsList.module.css';
 
-const SimilarProductsList: FC<{ products: ICategoryProduct[]; category: string }> = ({
-  products,
-  category,
-}) => {
-  const productsContainer = useRef<HTMLDivElement>(null);
-  const [currentWidth, setCurrentWidth] = useState(0);
-  const showNextProduct = (direction: string) => {
-    const width = 281;
-    const productsLength = products.length;
-    const maxItems = products.length < 5 ? 1 : 5;
+const initialState = {
+  currentPage: 1,
+  pages: 1,
+  containerWidth: 0,
+  currentWidth: 0,
+};
+
+const SimilarProductsList: FC<{
+  products: ICategoryProduct[];
+  category: string;
+  itemMaxWidth: number;
+}> = ({ products, category, itemMaxWidth }) => {
+  const productsContainer = useRef<HTMLUListElement>(null);
+  const [state, setState] = useState(initialState);
+
+  useEffect(() => {
+    setState((state) => ({
+      ...state,
+      containerWidth: Number(productsContainer.current!.offsetWidth),
+      pages: Math.ceil(
+        (products.length * itemMaxWidth) / Number(productsContainer.current!.offsetWidth)
+      ),
+    }));
+  }, [productsContainer.current?.offsetWidth, products.length, itemMaxWidth]);
+
+  const onButtonHandler = (direction: string) => {
     if (direction === 'right') {
-      Math.abs(currentWidth - width) + maxItems * width <= productsLength * width &&
-        setCurrentWidth(currentWidth - width);
+      if (state.currentPage + 1 < state.pages) {
+        setState((state) => ({
+          ...state,
+          currentWidth: state.currentWidth - state.containerWidth,
+          currentPage: state.currentPage + 1,
+        }));
+      } else {
+        setState((state) => ({
+          ...state,
+          currentWidth: -(products.length * itemMaxWidth - state.containerWidth),
+          currentPage: state.pages,
+        }));
+      }
     } else if (direction === 'left') {
-      currentWidth + width <= 0 && setCurrentWidth(currentWidth + width);
+      if (state.currentPage - 1 > 1) {
+        setState((state) => ({
+          ...state,
+          currentWidth: state.currentWidth + state.containerWidth,
+          currentPage: state.currentPage - 1,
+        }));
+      } else {
+        setState((state) => ({ ...state, currentWidth: 0, currentPage: 1 }));
+      }
     }
   };
 
   return (
     <div className={styles.products}>
       <h2>Similar products of category {category}</h2>
-      <div className={styles['products-inner']} ref={productsContainer}>
+      <div className={styles['products-inner']}>
         <Button
           icon={faArrowLeft}
           classes={`${styles.arrow} ${styles['arrow-left']}`}
-          onClick={showNextProduct.bind(null, 'left')}
+          onClick={onButtonHandler.bind(null, 'left')}
+          disabled={state.currentPage === 1}
         />
-        <ProductList width={currentWidth} products={products} />
+        <div className={styles['product-container']}>
+          <ProductList products={products} width={state.currentWidth} mRef={productsContainer} />
+        </div>
         <Button
           icon={faArrowRight}
           classes={`${styles.arrow} ${styles['arrow-right']}`}
-          onClick={showNextProduct.bind(null, 'right')}
+          onClick={onButtonHandler.bind(null, 'right')}
+          disabled={state.currentPage === state.pages}
         />
       </div>
     </div>

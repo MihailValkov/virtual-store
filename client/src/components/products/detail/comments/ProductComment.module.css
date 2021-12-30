@@ -45,4 +45,7 @@
     flex: 8;
     padding-left: 10px;
   }
+  .user-comment p {
+    word-break: break-word;
+  }
 }

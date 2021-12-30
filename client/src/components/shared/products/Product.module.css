@@ -45,9 +45,6 @@
 
 .price {
   margin: 0.25rem;
-  /* border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem;
-  background: white; */
   font-weight: bold;
   color: #ad5502;
   font-size: 1.25rem;
@@ -89,6 +86,10 @@
 @media (max-width: 768px) {
   .product {
     margin: auto;
+    margin-bottom: 20px;
+  }
+  .product:last-child {
+    margin-bottom: 0;
   }
   .actions {
     transform: none;

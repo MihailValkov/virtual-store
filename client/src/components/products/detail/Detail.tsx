@@ -73,8 +73,8 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
   };
 
   return (
-    <section>
-      <h2>{product.name}</h2>
+    <>
+      <h2 className={styles['product-name']}>{product.name}</h2>
       <div className={styles.container}>
         <div className={styles.left}>
           <PreviewImages
@@ -84,7 +84,6 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
           />
         </div>
         <div className={styles.center}>
-          <h2>{product.name}</h2>
           <h3>Rating</h3>
           <StarRating width={productRating} show />
           <h3>Color</h3>
@@ -139,7 +138,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
         </div>
       </div>
       {products.length === 0 ? null : (
-        <SimilarProductsList products={products} category={product.category} />
+        <SimilarProductsList products={products} category={product.category} itemMaxWidth={290}/>
       )}
       {showModal && (
         <Modal onClose={onShowModal} classes={styles['rate-modal']}>
@@ -157,7 +156,7 @@ const Detail: FC<{ product: ICategoryProduct; products: ICategoryProduct[] }> = 
         </Modal>
       )}
       <ProductCommentList comments={product?.rating?.comments || []} />
-    </section>
+    </>
   );
 };
 

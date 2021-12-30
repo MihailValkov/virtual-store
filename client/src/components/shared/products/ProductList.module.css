@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   transition: all 0.4s ease 0.2s;
+  padding-bottom: 5px;
 }
 
 .container section {

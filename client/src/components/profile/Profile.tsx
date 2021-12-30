@@ -64,7 +64,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
         </Modal>
       )}
       {isAddNewAddressMode && (
-        <Modal onClose={onAddNewAddressHandler}>
+        <Modal onClose={onAddNewAddressHandler} classes={styles['address-modal']}>
           <AddNewAddress onClose={onAddNewAddressHandler} />{' '}
         </Modal>
       )}

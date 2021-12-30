@@ -36,7 +36,7 @@ const DeliveryAddress: FC<{
   return (
     <>
       {showEditModal && (
-        <Modal onClose={onShowEditModalHandler}>
+        <Modal onClose={onShowEditModalHandler} classes={styles['address-modal']}>
           <AddNewAddress
             onClose={onShowEditModalHandler}
             id={id}

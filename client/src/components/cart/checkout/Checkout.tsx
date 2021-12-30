@@ -90,12 +90,12 @@ const Checkout: FC<{}> = () => {
     <>
       <Location locations={locations} />{' '}
       {addNewAddressMode && (
-        <Modal onClose={onAddNewAddressHandler}>
+        <Modal onClose={onAddNewAddressHandler} classes={styles['address-modal']}>
           <AddNewAddress onClose={onAddNewAddressHandler} />{' '}
         </Modal>
       )}
       {completeOrder && (
-        <Modal onClose={() => {}}>
+        <Modal onClose={() => {}} >
           <CheckoutComplete isLoading={isLoading} errorMessage={errorMessage} orderId={orderId} />
         </Modal>
       )}

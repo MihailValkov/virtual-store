@@ -116,8 +116,14 @@ module.exports = {
             category: { $regex: category, $options: 'i' },
           })
           .lean();
-
-        return res.status(200).json({ products: products });
+        const prod = products
+          .concat(products)
+          .concat(products)
+          .concat(products)
+          .concat(products)
+          .concat(products)
+          .map((p, i) => ({ ...p, _id: i > 3 ? p._id + i : p._id }));
+        return res.status(200).json({ products: prod });
       } catch (error) {
         return res.status(404).json({ message: 'Not Found 404' });
       }
@@ -182,7 +188,7 @@ module.exports = {
     async rateProduct(req, res, next) {
       const { productId } = req.params;
       const { comment, userId, rating } = req.body;
-      if(!userId) {
+      if (!userId) {
         return res.status(409).json({ message: 'No such a user!' });
       }
       try {

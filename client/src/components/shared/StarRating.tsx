@@ -22,7 +22,7 @@ const StarRating: FC<{ width: number; show?: boolean }> = ({ width, show }) => {
           <FontAwesomeIcon icon={faStar} className={styles['icon-overlay']} />
         </p>
       </div>
-      {show && <span>( {(width / 20 || 0).toFixed(1)} / 5.0 )</span>}
+      {show && <span className={styles.text}>( {(width / 20 || 0).toFixed(1)} / 5.0 )</span>}
     </div>
   );
 };

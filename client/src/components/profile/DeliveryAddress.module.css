@@ -48,3 +48,11 @@
 .address.active {
   border: 1px solid #2a87a5;
 }
+
+
+@media (max-width: 768px) {
+  .address-modal {
+    top: 5vh;
+    height: 90vh;
+  }
+}
