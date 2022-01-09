@@ -22,7 +22,7 @@ import Button from '../Button';
 import StarRating from '../StarRating';
 import Colors from '../Colors';
 
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faCartArrowDown, faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './MyProduct.module.css';
 
@@ -135,22 +135,26 @@ const MyProduct: FC<{
           <p className={styles['product-price']}>{(product?.price || 0).toFixed(2)}</p>
         </div>
         <div className={styles['product-taxes']}>
-          <p>Taxes: {product.taxes ? product.taxes.toFixed(2) : '0.00'} BNG </p>
           <p>
-            Total:{' '}
-            {product.finalPrice
-              ? product.finalPrice.toFixed(2)
-              : !cart
-              ? (product.price + product.taxes).toFixed(2)
-              : '0.00'}{' '}
-            BNG{' '}
+            <span>Taxes:</span> <span>{product.taxes ? product.taxes.toFixed(2) : '0.00'} BNG</span>{' '}
+          </p>
+          <p>
+            <span>Total:</span>{' '}
+            <span>
+              {product.finalPrice
+                ? product.finalPrice.toFixed(2)
+                : !cart
+                ? (product.price + product.taxes).toFixed(2)
+                : '0.00'}{' '}
+              BNG{' '}
+            </span>
           </p>
         </div>
         {!order && (
           <div className={styles['product-action']}>
             <Button
               classes={`${styles['product-action-favorite']} ${
-                isFavorite && styles['highlighted']
+                isFavorite && cart && styles['highlighted']
               }`}
               onClick={
                 cart
@@ -159,16 +163,19 @@ const MyProduct: FC<{
                     : onAddProductToFavorites
                   : onAddProductToCart
               }
-              icon={cart ? faHeart : null}
+              icon={cart ? faHeart : faCartArrowDown}
+              disabled={product.availablePieces === 0}
+              title={product.availablePieces === 0 ? 'This product is not available!' : ''}
             >
-              {cart ? 'Favorite' : 'Add to Cart'}
+              <span className={styles['btn-text']}>{cart ? 'Favorite' : 'Add to Cart'}</span>
             </Button>
 
             <Button
               onClick={cart ? onDeleteProductFromCart : onDeleteProductFromFavorites}
               classes={styles['product-action-delete']}
+              icon={faTrash}
             >
-              Delete
+              <span className={styles['btn-text']}>Delete</span>
             </Button>
           </div>
         )}

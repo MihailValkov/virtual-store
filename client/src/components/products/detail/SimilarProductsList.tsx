@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { ICategoryProduct } from '../../../interfaces/category-product';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ const SimilarProductsList: FC<{
   products: ICategoryProduct[];
   category: string;
   itemMaxWidth: number;
-}> = ({ products, category, itemMaxWidth }) => {
+}> = memo(({ products, category, itemMaxWidth }) => {
   const productsContainer = useRef<HTMLUListElement>(null);
   const [state, setState] = useState(initialState);
 
@@ -33,33 +33,36 @@ const SimilarProductsList: FC<{
     }));
   }, [productsContainer.current?.offsetWidth, products.length, itemMaxWidth]);
 
-  const onButtonHandler = (direction: string) => {
-    if (direction === 'right') {
-      if (state.currentPage + 1 < state.pages) {
-        setState((state) => ({
-          ...state,
-          currentWidth: state.currentWidth - state.containerWidth,
-          currentPage: state.currentPage + 1,
-        }));
-      } else {
-        setState((state) => ({
-          ...state,
-          currentWidth: -(products.length * itemMaxWidth - state.containerWidth),
-          currentPage: state.pages,
-        }));
+  const onButtonHandler = useCallback(
+    (direction: string) => {
+      if (direction === 'right') {
+        if (state.currentPage + 1 < state.pages) {
+          setState((state) => ({
+            ...state,
+            currentWidth: state.currentWidth - state.containerWidth,
+            currentPage: state.currentPage + 1,
+          }));
+        } else {
+          setState((state) => ({
+            ...state,
+            currentWidth: -(products.length * itemMaxWidth - state.containerWidth),
+            currentPage: state.pages,
+          }));
+        }
+      } else if (direction === 'left') {
+        if (state.currentPage - 1 > 1) {
+          setState((state) => ({
+            ...state,
+            currentWidth: state.currentWidth + state.containerWidth,
+            currentPage: state.currentPage - 1,
+          }));
+        } else {
+          setState((state) => ({ ...state, currentWidth: 0, currentPage: 1 }));
+        }
       }
-    } else if (direction === 'left') {
-      if (state.currentPage - 1 > 1) {
-        setState((state) => ({
-          ...state,
-          currentWidth: state.currentWidth + state.containerWidth,
-          currentPage: state.currentPage - 1,
-        }));
-      } else {
-        setState((state) => ({ ...state, currentWidth: 0, currentPage: 1 }));
-      }
-    }
-  };
+    },
+    [state, products.length, itemMaxWidth]
+  );
 
   return (
     <div className={styles.products}>
@@ -83,6 +86,6 @@ const SimilarProductsList: FC<{
       </div>
     </div>
   );
-};
+});
 
 export default SimilarProductsList;

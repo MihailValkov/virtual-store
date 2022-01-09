@@ -5,6 +5,8 @@ import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoadingSpinner from '../../shared/LoadingSpinner';
 
+import checkmarkPng from '../../../assets/checkmark.png';
+import notCheckmarkPng from '../../../assets/not-checkmark.png';
 import styles from './CheckoutComplete.module.css';
 
 const CheckoutComplete: FC<{ orderId?: string; isLoading: boolean; errorMessage: string | null }> =
@@ -12,10 +14,7 @@ const CheckoutComplete: FC<{ orderId?: string; isLoading: boolean; errorMessage:
     let statusContent = (
       <div className={styles['order-status']}>
         <h2>Thank you for ordering in our website.</h2>
-        <img
-          src='https://shared-travel.herokuapp.com/Checkmark.svg.b05811829509e7f60883.png'
-          alt='logo'
-        />
+        <img src={checkmarkPng} alt='logo' />
         <h3>Order Number: {orderId}</h3>
       </div>
     );
@@ -35,10 +34,7 @@ const CheckoutComplete: FC<{ orderId?: string; isLoading: boolean; errorMessage:
         <>
           <div className={styles['order-status']}>
             <h2>We're so sorry, it looks like your order couldn't be completed.</h2>
-            <img
-              src='https://shared-travel.herokuapp.com/not-Checkmark.svg.d40f49a46552019109df.png'
-              alt='logo'
-            />
+            <img src={notCheckmarkPng} alt='logo' />
           </div>
           <h3>{errorMessage}</h3>
         </>

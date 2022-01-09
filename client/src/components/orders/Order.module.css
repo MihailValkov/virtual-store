@@ -5,12 +5,15 @@
   padding: 10px;
 }
 .order header {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+}
+.order header a {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-bottom: 5px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #ccc;
   color: rgb(56, 161, 202);
 }
 
@@ -32,11 +35,35 @@
   font-weight: bold;
   font-size: 1.2rem;
 }
-.order a {
+.order a > P {
   color: rgb(56, 161, 202);
   border: 1px solid rgb(56, 161, 202);
   padding: 5px 10px;
   margin-bottom: 5px;
   border-radius: 10px;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .order header h3 {
+    font-size: 0.9rem;
+  }
+  .order header a p {
+    display: none;
+  }
+  .order header a {
+    border: 1px solid rgb(56, 161, 202);
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  .order-content {
+    flex-direction: column;
+    align-items: normal;
+  }
+  .order-info.left p {
+    display: flex;
+    flex-direction: column;
+  }
 }

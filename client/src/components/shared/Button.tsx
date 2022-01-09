@@ -11,13 +11,15 @@ const Button: FC<{
   disabled?: boolean;
   onClick?: () => void;
   icon?: IconDefinition | null;
-}> = ({ type, classes, children, disabled, onClick, icon }) => {
+  title?: string;
+}> = ({ type, classes, children, disabled, onClick, icon, title }) => {
   return (
     <button
       type={type || 'button'}
       className={`${styles.btn} ${classes}`}
       disabled={disabled}
       onClick={onClick}
+      title={title}
     >
       {icon && <FontAwesomeIcon icon={icon} />}
       {children}
@@ -26,4 +28,3 @@ const Button: FC<{
 };
 
 export default Button;
-

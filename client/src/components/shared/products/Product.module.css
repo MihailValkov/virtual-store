@@ -83,6 +83,13 @@
   color: #ef2809;
 }
 
+.btn:disabled {
+  background-color: transparent;
+}
+.btn:disabled svg {
+  color: #ccc;
+}
+
 @media (max-width: 768px) {
   .product {
     margin: auto;

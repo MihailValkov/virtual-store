@@ -21,17 +21,18 @@ const cartSlice = createSlice({
       action: PayloadAction<{ product: IBaseProduct; selectedColor: string }>
     ) => {
       const existingProduct = state.products.find((p) => p._id === action.payload.product._id);
-      state.totalProducts++;
       if (
         existingProduct &&
         existingProduct?.quantity + 1 < action.payload.product.availablePieces
       ) {
+        state.totalProducts++;
         existingProduct.quantity++;
         existingProduct.finalPrice = Number(
           (existingProduct.quantity * existingProduct.price + existingProduct.taxes).toFixed(2)
         );
         state.totalPrice = Number((state.totalPrice + existingProduct.price).toFixed(2));
-      } else if (action.payload.product.availablePieces >= 1) {
+      } else if (action.payload.product.availablePieces > 0) {
+        state.totalProducts++;
         const finalPrice = Number(
           (1 * action.payload.product.price + action.payload.product.taxes).toFixed(2)
         );
@@ -99,5 +100,5 @@ export const {
   deleteProductFromCart,
   changeProductQuantity,
   changeSelectedColorToCart,
-  clearCart
+  clearCart,
 } = cartSlice.actions;

@@ -85,11 +85,13 @@
     top: 4rem;
     left: 0px;
     padding: 10px;
+    box-shadow: none;
   }
   .user.toggle {
     padding-left: 0px;
     padding-right: 0px;
-    background: #f7f7f7;
+    /* background: #f7f7f7; */
+    background-color: transparent;
     width: 30px;
     height: 35px;
   }

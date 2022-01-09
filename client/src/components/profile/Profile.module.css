@@ -108,12 +108,6 @@
     margin-left: 0;
   }
   .edit-modal {
-    top: 5vh;
-    height: 90vh;
-    overflow: auto;
-  }
-  .address-modal {
-    top: 5vh;
     height: 90vh;
   }
 }

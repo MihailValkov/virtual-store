@@ -61,7 +61,7 @@ const Navigation: FC = () => {
         {!user && <NavigationLink icon={faUserPlus} path='/auth/register' text='Register' />}
         {user && (
           <Button onClick={logoutHandler} icon={faSignOutAlt}>
-            Logout
+            <span className={styles.text}>Logout</span>
           </Button>
         )}
       </nav>

@@ -110,7 +110,9 @@
 }
 .product-action button {
   padding: 0.3rem 0.5rem;
+  justify-content: center;
 }
+
 .product-action-favorite {
   margin-right: 10px;
 }
@@ -128,6 +130,51 @@
 
 @media (max-width: 768px) {
   .product {
+    flex-direction: column;
+  }
+  .product-info {
+    width: auto;
+    margin: auto;
+  }
+  .product-actions {
+    flex-direction: row;
+  }
+  .product-actions svg {
+    margin-right: 0;
+  }
+  .btn-text {
+    display: none;
+  }
+  .product-price-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .product-price-container span {
+    display: none;
+  }
+  .product-price-container input {
+    margin: 0;
+  }
+  .product-price {
+    font-size: 1rem;
+  }
+  .product-action {
+    flex-direction: column;
+  }
+  .product-taxes {
+    align-items: flex-start;
+    padding: 0px 5px;
+    justify-content: flex-end;
+  }
+  .product-action-favorite {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 368px) {
+  .product-taxes > p {
+    display: flex;
     flex-direction: column;
   }
 }

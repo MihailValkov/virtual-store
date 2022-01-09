@@ -40,6 +40,8 @@ const Product: FC<{
             classes={styles.btn}
             icon={faCartArrowDown}
             onClick={onAddProductToCart.bind(null, { ...others, rating: productRating })}
+            disabled={product.availablePieces === 0}
+            title={product.availablePieces === 0 ? 'This product is not available!' : ''}
           />
           <Button
             classes={`${styles.btn} ${isFavorite && styles.toggle}`}

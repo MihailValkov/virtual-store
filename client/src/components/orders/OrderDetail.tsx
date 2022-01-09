@@ -44,10 +44,10 @@ const OrderDetail: FC<{}> = (props) => {
           </div>
           <div>
             <p>
-              <span>Address:</span> <strong>{currentOrder?.deliveryAddress}</strong>
+              <span>Name:</span> <strong>{user?.username}</strong>
             </p>
             <p>
-              <span>Name:</span> <strong>{user?.username}</strong>
+              <span>Address:</span> <strong>{currentOrder?.deliveryAddress}</strong>
             </p>
           </div>
           <div>
@@ -55,7 +55,8 @@ const OrderDetail: FC<{}> = (props) => {
               <span>Amount:</span> <strong>{currentOrder?.products.length}</strong>
             </p>
             <p>
-              <span>Total Price:</span> <strong>{currentOrder?.totalPrice} BGN</strong>
+              <span>Total Price:</span>{' '}
+              <strong>{(currentOrder?.totalPrice || 0).toFixed(2)} BGN</strong>
             </p>
           </div>
         </div>
