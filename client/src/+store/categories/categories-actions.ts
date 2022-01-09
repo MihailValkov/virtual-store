@@ -16,10 +16,10 @@ import { ICategory } from '../../interfaces/category';
 
 export const loadCategoriesAction = () => async (dispatch: AppDispatch) => {
   dispatch(categoriesIsLoading({ isLoading: true }));
-  dispatch(categoriesError({ error: null }));
+  dispatch(categoriesError({ message: null }));
   try {
     const categories = await http.get('categories');
-    dispatch(loadCategories(categories));
+    dispatch(loadCategories({ categories }));
   } catch (err: any) {
     dispatch(categoriesError({ message: err.message }));
   } finally {
@@ -28,10 +28,10 @@ export const loadCategoriesAction = () => async (dispatch: AppDispatch) => {
 };
 export const addNewCategoryAction = (category: ICategory) => async (dispatch: AppDispatch) => {
   dispatch(addNewCategoryIsLoading({ isLoading: true }));
-  dispatch(addNewCategoryError({ error: null }));
+  dispatch(addNewCategoryError({ message: null }));
   try {
     const createdCategory = await http.post('categories', category);
-    dispatch(addNewCategory(createdCategory));
+    dispatch(addNewCategory({ category: createdCategory }));
   } catch (err: any) {
     dispatch(addNewCategoryError({ message: err.message }));
   } finally {
@@ -41,7 +41,7 @@ export const addNewCategoryAction = (category: ICategory) => async (dispatch: Ap
 
 export const uploadCategoryImageAction = (formData: FormData) => async (dispatch: AppDispatch) => {
   dispatch(uploadCategoryImageIsLoading({ isLoading: true }));
-  dispatch(uploadCategoryImageError({ error: null }));
+  dispatch(uploadCategoryImageError({ message: null }));
   try {
     const image = await http.post('upload/categories', formData);
     dispatch(uploadCategoryImage({ image }));

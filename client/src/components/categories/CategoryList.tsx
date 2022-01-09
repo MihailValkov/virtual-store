@@ -2,12 +2,29 @@ import { FC } from 'react';
 import { ICategory } from '../../interfaces/category';
 
 import Category from './Category';
+import LoadingSpinner from '../shared/LoadingSpinner';
+import ErrorModal from '../shared/ErrorModal';
 
 import styles from './CategoryList.module.css';
+import { useDispatch } from 'react-redux';
+import { categoriesError } from '../../+store/categories/categories-slice';
 
-const CategoryList: FC<{ categories: ICategory[] }> = ({
-  categories,
-}) => {
+const CategoryList: FC<{
+  categories: ICategory[];
+  isLoading: boolean;
+  errorMessage: string | null;
+}> = ({ categories, isLoading, errorMessage }) => {
+  const dispatch = useDispatch();
+
+  const onClearError = () => dispatch(categoriesError({ message: null }));
+
+  if (errorMessage && !isLoading) {
+    return <ErrorModal header='Error' errorMessage={errorMessage} onCloseModal={onClearError} />;
+  }
+  if (isLoading && !errorMessage) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <ul className={styles['categories-list']}>
       {categories.map((c) => (

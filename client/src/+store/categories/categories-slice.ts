@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICategory } from '../../interfaces/category';
 
 export interface ICategoriesState {
-  categories: ICategory[];
+  categoriesList: ICategory[];
   currentCategoryImage: {
     _id: string;
     url: string;
@@ -16,12 +16,12 @@ export interface ICategoriesState {
 }
 
 export const initialCategoriesState: ICategoriesState = {
-  categories: [],
+  categoriesList: [],
   currentCategoryImage: {
     _id: '',
     url: '',
   },
-  categoriesIsLoading: true,
+  categoriesIsLoading: false,
   categoriesErrorMessage: null,
   uploadImageIsLoading: false,
   uploadImageErrorMessage: null,
@@ -33,38 +33,42 @@ const categoriesSlice = createSlice({
   initialState: initialCategoriesState,
   name: 'category',
   reducers: {
-    loadCategories: (state, action) => ({ ...state, categories: action.payload.categories }),
-    categoriesIsLoading: (state, action) => ({
+    loadCategories: (state, action: PayloadAction<{ categories: ICategory[] }>) => ({
+      ...state,
+      categoriesList: action.payload.categories,
+    }),
+    categoriesIsLoading: (state, action: PayloadAction<{ isLoading: boolean }>) => ({
       ...state,
       categoriesIsLoading: action.payload.isLoading,
     }),
-    categoriesError: (state, action) => ({
+    categoriesError: (state, action: PayloadAction<{ message: string | null }>) => ({
       ...state,
-      categoriesErrorMessage: action.payload.error,
+      categoriesErrorMessage: action.payload.message,
     }),
-    addNewCategory: (state, action) => ({
+    addNewCategory: (state, action: PayloadAction<{ category: ICategory }>) => ({
       ...state,
-      categories: state.categories.concat(action.payload.category),
+      categoriesList: state.categoriesList.concat(action.payload.category),
+    }),
+    addNewCategoryIsLoading: (state, action: PayloadAction<{ isLoading: boolean }>) => ({
+      ...state,
       createCategoryIsLoading: action.payload.isLoading,
     }),
-    addNewCategoryIsLoading: (state, action) => ({
+    addNewCategoryError: (state, action: PayloadAction<{ message: string | null }>) => ({
       ...state,
-      createCategoryIsLoading: action.payload.isLoading,
+      createCategoryErrorMessage: action.payload.message,
     }),
-    addNewCategoryError: (state, action) => ({
-      ...state,
-      createCategoryErrorMessage: action.payload.error,
-    }),
-    uploadCategoryImage: (state, action) => ({
+    uploadCategoryImage: (
+      state,
+      action: PayloadAction<{ image: { _id: string; url: string } }>
+    ) => ({
       ...state,
       currentCategoryImage: action.payload.image,
-      uploadImageIsLoading: action.payload.isLoading,
     }),
-    uploadCategoryImageIsLoading: (state, action) => ({
+    uploadCategoryImageIsLoading: (state, action: PayloadAction<{ isLoading: boolean }>) => ({
       ...state,
       uploadImageIsLoading: action.payload.isLoading,
     }),
-    uploadCategoryImageError: (state, action) => ({
+    uploadCategoryImageError: (state, action: PayloadAction<{ message: string | null }>) => ({
       ...state,
       uploadImageErrorMessage: action.payload.message,
     }),
