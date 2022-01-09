@@ -9,6 +9,7 @@ import CategoriesPage from './CategoriesPage';
 import CategoryPage from './CategoryPage';
 import CategoryDetailPage from './CategoryDetailPage';
 import CategoryCreatePage from './CategoryCreatePage';
+import AddCategoryPage from './AddCategoryPage';
 
 const Categories: FC<{}> = () => {
   const { path } = useRouteMatch();
@@ -17,6 +18,7 @@ const Categories: FC<{}> = () => {
   return (
     <Switch>
       <Route path={`${path}`} exact component={CategoriesPage} />
+      <AdminRoute path={`${path}/create`} component={AddCategoryPage} isAdmin={isAdmin} />
       <AdminRoute path={`${path}/products/create`} component={CategoryCreatePage} isAdmin={isAdmin} />
       <Route path={`${path}/:category`} exact component={CategoryPage} />
       <Route path={`${path}/:category/detail/:productId`} component={CategoryDetailPage} />

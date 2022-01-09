@@ -75,7 +75,7 @@ const SimilarProductsList: FC<{
           disabled={state.currentPage === 1}
         />
         <div className={styles['product-container']}>
-          <ProductList products={products} width={state.currentWidth} mRef={productsContainer} />
+          <ProductList products={products} width={state.currentWidth} ref={productsContainer} />
         </div>
         <Button
           icon={faArrowRight}

@@ -6,4 +6,17 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-module.exports = { cloudinary };
+const cloudinaryUploadImage = async (path, location) =>
+  await cloudinary.uploader.upload(path, {
+    upload_preset: location,
+  });
+const cloudinaryDeleteImage = async (id) => {
+  return await cloudinary.api.delete_resources([id], (error, result) => {
+    if (error) {
+      throw new Error('Provided public_id is not correct!');
+    }
+    return result;
+  });
+};
+
+module.exports = { cloudinary, cloudinaryDeleteImage, cloudinaryUploadImage };

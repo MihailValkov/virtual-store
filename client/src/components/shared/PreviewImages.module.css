@@ -39,8 +39,8 @@
   font-size: 2em;
 }
 
-.loading {
-  left: 20%;
+.loading:after {
+  margin: 0;
 }
 
 @media (max-width: 768px) {

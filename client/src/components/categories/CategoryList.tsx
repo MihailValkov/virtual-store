@@ -11,7 +11,7 @@ const CategoryList: FC<{ categories: ICategory[] }> = ({
   return (
     <ul className={styles['categories-list']}>
       {categories.map((c) => (
-        <Category key={c._id} imageUrl={c.imageUrl} category={c.category} />
+        <Category key={c._id} imageUrl={c.image?.url} category={c.category} />
       ))}
     </ul>
   );

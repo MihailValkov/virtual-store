@@ -1,5 +1,8 @@
 export interface ICategory {
-  _id: string;
+  _id?: string;
   category: string;
-  imageUrl: string;
+  image: {
+    _id: string;
+    url: string;
+  };
 }

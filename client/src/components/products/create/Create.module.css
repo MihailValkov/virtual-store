@@ -1,11 +1,3 @@
-@media (min-width: 400px) {
-  .card {
-    width: 100%;
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-}
-
 .container {
   display: flex;
 }
@@ -90,6 +82,14 @@ form {
 .description textarea {
   height: 150px;
   resize: none;
+}
+
+@media (min-width: 400px) {
+  .card {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
 
 @media (max-width: 768px) {

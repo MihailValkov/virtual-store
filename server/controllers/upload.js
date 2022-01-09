@@ -1,6 +1,7 @@
+const { cloudinaryUploadImage, cloudinaryDeleteImage } = require('../utils/cloudinary');
+
 const userModel = require('../models/User');
-const createErrorMessage = require('../utils/create-error-message');
-const { cloudinary } = require('../utils/cloudinary');
+const { errorHandler } = require('../utils/errorHandler');
 
 module.exports = {
   post: {
@@ -8,44 +9,37 @@ module.exports = {
       const { userId } = req.body;
       const path = req.file.path;
       try {
-        const uploadResponse = await cloudinary.uploader.upload(path, {
-          upload_preset: 'virtual-store-users',
+        const response = await cloudinaryUploadImage(path, 'virtual-store-users');
+        const user = await userModel.findByIdAndUpdate(userId, {
+          image: { _id: response.public_id, url: response.secure_url },
         });
 
-        const user = await userModel.findByIdAndUpdate(userId, {
-          image: { _id: uploadResponse.public_id, url: uploadResponse.secure_url },
-        });
-        
         if (user.image?._id) {
-          await cloudinary.api.delete_resources([user.image?._id], (error, result) => {
-            if (error) {
-              throw new Error('Provided public_id is not correct!');
-            }
-          });
+          await cloudinaryDeleteImage(user.image?._id);
         }
-        res.status(200).json({ _id: uploadResponse.public_id, url: uploadResponse.secure_url });
+        res.status(200).json({ _id: response.public_id, url: response.secure_url });
       } catch (error) {
-        if (error instanceof TypeError || error.name == 'MongoError') {
-          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
-          return res.status(500).json({ message: 'Something went wrong!' });
-        } else {
-          const message = createErrorMessage(error);
-          res.status(400).json({ message });
-        }
+        errorHandler(error, res, req);
       }
     },
     async products(req, res) {
       const files = req.files;
       try {
         Promise.all([
-          ...files.map(({ path }) =>
-            cloudinary.uploader.upload(path, {
-              upload_preset: 'virtual-store-products',
-            })
-          ),
+          ...files.map(({ path }) => cloudinaryUploadImage(path, 'virtual-store-products')),
         ]).then((result) => res.status(201).json({ images: result.map((r) => r.secure_url) }));
       } catch (error) {
-        return res.status(400).json({ message: error.message });
+        errorHandler(error, res, req);
+      }
+    },
+    async categories(req, res) {
+      const path = req.file.path;
+      try {
+        const response = await cloudinaryUploadImage(path, 'virtual-store-categories');
+
+        res.status(200).json({ _id: response.public_id, url: response.secure_url });
+      } catch (error) {
+        errorHandler(error, res, req);
       }
     },
   },
@@ -53,16 +47,10 @@ module.exports = {
     async deleteById(req, res, next) {
       const { id } = req.params;
       try {
-        const deletedImage = await cloudinary.api.delete_resources(
-          [`virtual-store/images/users/${id}`],
-          (error, result) => {
-            if (error) {
-              return res.status(409).json({ message: 'Something went wrong' });
-            }
-            return res.status(202).json({ item: result });
-          }
-        );
-      } catch (error) {}
+        await cloudinaryDeleteImage(`virtual-store/images/users/${id}`);
+      } catch (error) {
+        errorHandler(error, res, req);
+      }
     },
   },
 };

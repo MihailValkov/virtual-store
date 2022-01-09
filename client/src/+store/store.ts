@@ -16,6 +16,7 @@ import { cartReducer, ICartState } from './cart/cart-slice';
 import { favoritesReducer, IFavoritesState } from './favorites/favorites-slice';
 import { IOrdersState, ordersReducer } from './orders/orders-slice';
 import { IProductsState, productsReducer } from './products/products-slice';
+import { ICategoriesState, categoriesReducer } from './categories/categories-slice';
 
 const persistConfig = {
   key: 'root',
@@ -29,6 +30,7 @@ const reducers = {
   favorites: favoritesReducer,
   orders: ordersReducer,
   products: productsReducer,
+  categories: categoriesReducer,
 };
 
 export const store = configureStore({
@@ -45,9 +47,10 @@ export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export interface AppRootState {
-  auth: IAuthState;
-  cart: ICartState;
-  favorites: IFavoritesState;
-  orders: IOrdersState;
-  products: IProductsState;
+  readonly auth: IAuthState;
+  readonly cart: ICartState;
+  readonly favorites: IFavoritesState;
+  readonly orders: IOrdersState;
+  readonly products: IProductsState;
+  readonly categories: ICategoriesState;
 }

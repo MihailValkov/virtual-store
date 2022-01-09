@@ -1,15 +1,5 @@
 const { Schema, model } = require('mongoose');
 const enumStatus = ['Pending', 'Completed'];
-// const enumCategories = [
-//   'Laptop',
-//   'Computer',
-//   'Computer Accessories',
-//   'Monitor',
-//   'Tablet',
-//   'Phone',
-//   'Tv',
-//   'Camera',
-// ];
 
 const orderSchema = new Schema(
   {

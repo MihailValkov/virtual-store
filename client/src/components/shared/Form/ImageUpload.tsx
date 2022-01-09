@@ -6,10 +6,10 @@ import styles from './ImageUpload.module.css';
 
 const ImageUpload: FC<{
   onUploadFiles: (files: FileList) => void;
-  errorMessage?: string;
+  errorMessage?: string | null;
   text: string;
   classes?: string;
-}> = ({ onUploadFiles, text, classes, errorMessage }) => {
+}> = ({ onUploadFiles, text, classes, errorMessage = '' }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onPickFile = () => inputRef.current!.click();

@@ -1,5 +1,5 @@
 const productModel = require('../models/Product');
-// const userModel = require('../models/User');
+const { errorHandler } = require('../utils/errorHandler');
 
 module.exports = {
   get: {},
@@ -30,7 +30,9 @@ module.exports = {
         images
       );
       try {
-      } catch (error) {}
+      } catch (error) {
+        errorHandler(error, res, req);
+      }
     },
   },
 };

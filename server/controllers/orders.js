@@ -1,7 +1,7 @@
 const orderModel = require('../models/Order');
+const { errorHandler } = require('../utils/errorHandler');
 const productModel = require('../models/Product');
 const userModel = require('../models/User');
-const createErrorMessage = require('../utils/create-error-message');
 const products = [
   {
     _id: 'p1123',
@@ -111,7 +111,7 @@ module.exports = {
         const orders = await orderModel.find({ userId: req.user._id }).lean();
         return res.status(200).json(orders);
       } catch (error) {
-        return res.status(404).json({ message: 'Not Found 404' });
+        errorHandler(error, res, req);
       }
     },
     async order(req, res) {
@@ -132,7 +132,7 @@ module.exports = {
         }));
         return res.status(200).json(order);
       } catch (error) {
-        return res.status(404).json({ message: 'Not Found 404' });
+        errorHandler(error, res, req);
       }
     },
   },
@@ -161,13 +161,7 @@ module.exports = {
         await userModel.findByIdAndUpdate(userId, { $addToSet: { orders: order } });
         res.status(201).json(order.toObject());
       } catch (error) {
-        if (error instanceof TypeError || error.name == 'MongoError') {
-          console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
-          return res.status(500).json({ message: error.message || 'Something went wrong!' });
-        } else {
-          const message = createErrorMessage(error);
-          res.status(400).json({ message });
-        }
+        errorHandler(error, res, req);
       }
     },
   },

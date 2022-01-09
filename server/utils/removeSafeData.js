@@ -1,8 +1,8 @@
-function removeUserPassword(user) {
-    const { __v, password, ...data } = user;
-    return data;
+function removeObjectFields(obj) {
+  const { __v, password, ...data } = obj;
+  return data;
 }
 
 module.exports = {
-    removeUserPassword
+  removeObjectFields,
 };

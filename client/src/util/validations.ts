@@ -94,4 +94,10 @@ export const reviewValidation = validation.bind(
   /^.{20,}$/
 );
 
+export const categoryNameValidation = validation.bind(
+  null,
+  'Category should be at least 2 characters long!',
+  /^[A-Za-z0-9_\-. ]{2,}$/
+);
+
 export type IValidationFn = typeof emailValidation | typeof passwordValidation;
