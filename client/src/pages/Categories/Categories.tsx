@@ -13,13 +13,12 @@ import AddCategoryPage from './AddCategoryPage';
 
 const Categories: FC<{}> = () => {
   const { path } = useRouteMatch();
-  const isAdmin = useSelector((state:AppRootState) => state.auth.user?.role === 'Admin');
 
   return (
     <Switch>
       <Route path={`${path}`} exact component={CategoriesPage} />
-      <AdminRoute path={`${path}/create`} component={AddCategoryPage} isAdmin={isAdmin} />
-      <AdminRoute path={`${path}/products/create`} component={CategoryCreatePage} isAdmin={isAdmin} />
+      <AdminRoute path={`${path}/create`} component={AddCategoryPage} />
+      <AdminRoute path={`${path}/products/create`} component={CategoryCreatePage} />
       <Route path={`${path}/:category`} exact component={CategoryPage} />
       <Route path={`${path}/:category/detail/:productId`} component={CategoryDetailPage} />
     </Switch>

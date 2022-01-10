@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { ICategory } from '../../interfaces/category';
 
 import Category from './Category';
@@ -15,12 +15,13 @@ const CategoryList: FC<{
   errorMessage: string | null;
 }> = ({ categories, isLoading, errorMessage }) => {
   const dispatch = useDispatch();
-
-  const onClearError = () => dispatch(categoriesError({ message: null }));
+  
+  const onClearError = useCallback(() => dispatch(categoriesError({ message: null })), [dispatch]);
 
   if (errorMessage && !isLoading) {
     return <ErrorModal header='Error' errorMessage={errorMessage} onCloseModal={onClearError} />;
   }
+
   if (isLoading && !errorMessage) {
     return <LoadingSpinner />;
   }

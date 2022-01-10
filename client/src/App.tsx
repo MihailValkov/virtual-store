@@ -1,8 +1,9 @@
 import { FC, lazy, Suspense, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router';
 
 import { authenticateAction } from './+store/auth/auth-actions';
+import { AppRootState } from './+store/store';
 
 import Layout from './components/core/Layout';
 import LoadingSpinner from './components/shared/LoadingSpinner';
@@ -15,10 +16,15 @@ const OrdersPages = lazy(() => import('./pages/Orders/Orders'));
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state: AppRootState) => state.auth.isLoading);
 
   useEffect(() => {
     dispatch(authenticateAction());
   }, [dispatch]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Layout>

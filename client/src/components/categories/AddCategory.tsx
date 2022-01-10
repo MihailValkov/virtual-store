@@ -71,18 +71,19 @@ const AddCategory: FC<{}> = () => {
     <Card classes={styles.card}>
       <h2>Add New Category</h2>
       <div className={styles.container}>
-        <PreviewImages
-          classes={styles.photo}
-          isLoading={uploadImageIsLoading}
-          currentImage={image?.url || noImage}
-        />
-        <ImageUpload
-          onUploadFiles={uploadImageHandler}
-          errorMessage={uploadImageErrorMessage}
-          text='Upload Image'
-          classes={styles['upload-button']}
-        />
-
+        <div>
+          <PreviewImages
+            classes={styles.photo}
+            isLoading={uploadImageIsLoading}
+            currentImage={image?.url || noImage}
+          />
+          <ImageUpload
+            onUploadFiles={uploadImageHandler}
+            errorMessage={uploadImageErrorMessage}
+            text='Upload Image'
+            classes={styles['upload-button']}
+          />
+        </div>
         <Form onSubmitHandler={onSubmitHandler} isLoading={addNewCategoryIsLoading}>
           <FormGroup
             label='Category Name'
