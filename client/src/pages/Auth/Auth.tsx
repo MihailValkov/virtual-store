@@ -11,21 +11,9 @@ const Auth: FC<{}> = () => {
   const { path } = useRouteMatch();
   return (
     <>
-      <AuthRoute
-        path={`${path}/login`}
-        isAuthNeeded={false}
-        component={LoginPage}
-      />
-      <AuthRoute
-        path={`${path}/register`}
-        isAuthNeeded={false}
-        component={RegisterPage}
-      />
-      <AuthRoute
-        path={`${path}/profile`}
-        isAuthNeeded={true}
-        component={ProfilePage}
-      />
+      <AuthRoute path={`${path}/login`} component={LoginPage} />
+      <AuthRoute path={`${path}/register`} component={RegisterPage} />
+      <AuthRoute path={`${path}/profile`} isAuthNeeded={true} component={ProfilePage} />
     </>
   );
 };

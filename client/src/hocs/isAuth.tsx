@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { AppRootState } from '../+store/store';
 interface IAuthRouteProps {
   component: FC<any>;
-  isAuthNeeded: boolean;
+  isAuthNeeded?: boolean;
   path: string;
   exact?: boolean;
 }

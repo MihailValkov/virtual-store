@@ -11,8 +11,9 @@ import {
   faUser,
   faSignInAlt,
   faUserPlus,
-  faSignOutAlt,
   faStore,
+  faUserShield,
+  faPowerOff,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -42,7 +43,13 @@ const Navigation: FC = () => {
         <span className={styles.text}>Virtual Store</span>
       </NavLink>
       <nav className={styles.actions}>
-        {user && <NavigationLink icon={faUser} path='/auth/profile' text='Profile' />}
+        {user && (
+          <NavigationLink
+            icon={user?.role === 'Admin' ? faUserShield : faUser}
+            path='/auth/profile'
+            text='Profile'
+          />
+        )}
         <NavigationLink
           icon={faHeart}
           path='/favorites'
@@ -60,7 +67,7 @@ const Navigation: FC = () => {
         {!user && <NavigationLink icon={faSignInAlt} path='/auth/login' text='Login' />}
         {!user && <NavigationLink icon={faUserPlus} path='/auth/register' text='Register' />}
         {user && (
-          <Button onClick={logoutHandler} icon={faSignOutAlt}>
+          <Button onClick={logoutHandler} icon={faPowerOff}>
             <span className={styles.text}>Logout</span>
           </Button>
         )}

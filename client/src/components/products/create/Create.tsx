@@ -174,7 +174,7 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
 
   return (
     <Card classes={styles.card}>
-      <h2>Create Page</h2>
+      <h2>Add New Product</h2>
       <div className={styles.container}>
         <div className={styles.left}>
           <PreviewImages
@@ -277,7 +277,7 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
               />
             </FormGroup>
           </FormRow>
-          <FormRow >
+          <FormRow>
             <FormGroup
               label='Brand'
               name='brand'
@@ -328,7 +328,7 @@ const Create: FC<{ categories: ICategory[] }> = ({ categories }) => {
           </FormGroup>
           <FormActions responseError={''}>
             <Button type='submit' disabled={!formIsValid}>
-              Add new Item
+            Add New Product
             </Button>
           </FormActions>
         </Form>

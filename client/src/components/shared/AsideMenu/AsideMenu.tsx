@@ -11,6 +11,11 @@ import {
   faSignInAlt,
   faArrowAltCircleRight,
   faArrowAltCircleLeft,
+  faUserShield,
+  faCircle,
+  faArrowAltCircleUp,
+  faArrowAltCircleDown,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { AppRootState } from '../../../+store/store';
@@ -20,13 +25,18 @@ import noAvatarImage from '../../../assets/no-avatar.png';
 import styles from './AsideMenu.module.css';
 import { Backdrop } from '../Modal';
 import Button from '../Button';
+import AsideLink from './AsideLink';
 
 const AsideMenu: FC<{}> = () => {
   const user = useSelector((state: AppRootState) => state.auth.user);
   const isLogged = !!user;
   const [isToggle, setIsToggle] = useState(true);
+  const [profileIsToggle, setProfileIsToggle] = useState(false);
+  const [adminIsToggle, setAdminIsToggle] = useState(false);
 
   const toggleHandler = () => setIsToggle((prev) => !prev);
+  const profileToggleHandler = () => setProfileIsToggle((prev) => !prev);
+  const adminToggleHandler = () => setAdminIsToggle((prev) => !prev);
 
   const guestContent = (
     <>
@@ -43,24 +53,54 @@ const AsideMenu: FC<{}> = () => {
         </div>
         <ul className={styles.navigation}>
           <li className={styles['guest']}>
-            <NavLink to='/auth/login'>
-              <FontAwesomeIcon
-                icon={faSignInAlt}
-                className={`${styles.icon} ${styles['nav-icon']}`}
-              />
-              <span>Login</span>
-            </NavLink>
+            <AsideLink path='/auth/login' icon={faSignInAlt} text='Login' isLogged={isLogged} />
           </li>
           <li className={styles['guest']}>
-            <NavLink to='/auth/register'>
-              <FontAwesomeIcon icon={faUser} className={`${styles.icon} ${styles['nav-icon']}`} />
-              <span>Register</span>
-            </NavLink>
+            <AsideLink path='/auth/register' icon={faUser} text='Register' isLogged={isLogged} />
           </li>
         </ul>
       </section>
     </>
   );
+
+  const adminNavigation = (
+    <ul className={`${styles['nav-list']} ${adminIsToggle && styles['nav-toggle']}`}>
+      <li>
+        <AsideLink
+          path='/categories/create'
+          icon={faPlus}
+          text='Add Category'
+          isLogged={isLogged}
+        />
+      </li>
+      <li>
+        <AsideLink
+          path='/categories/products/create'
+          icon={faPlus}
+          text='Add Product'
+          isLogged={isLogged}
+        />
+      </li>
+    </ul>
+  );
+
+  const userNavigation = (
+    <ul className={`${styles['nav-list']} ${profileIsToggle && styles['nav-toggle']}`}>
+      <li>
+        <AsideLink path='/auth/profile' icon={faUser} text='My Profile' isLogged={isLogged} />
+      </li>
+      <li>
+        <AsideLink path='/cart' icon={faCartArrowDown} text='My Cart' isLogged={isLogged} />
+      </li>
+      <li>
+        <AsideLink path='/favorites' icon={faHeart} text='My Favorites' isLogged={isLogged} />
+      </li>
+      <li>
+        <AsideLink path='/orders' icon={faList} text='My Orders' isLogged={isLogged} />
+      </li>
+    </ul>
+  );
+
   const userContent = (
     <>
       <Button
@@ -71,35 +111,41 @@ const AsideMenu: FC<{}> = () => {
       <section className={styles['aside-content']}>
         <div className={styles['user-info']}>
           <img src={user?.image?.url || noAvatarImage} alt='profile-img' />
-          <p>{user?.username}</p>
+          <div>
+            <strong className={styles['user-username']}>{user?.username}</strong>
+            <p className={styles['user-role']}>
+              <FontAwesomeIcon
+                className={styles.icon}
+                icon={user?.role === 'Admin' ? faUserShield : faUser}
+              />
+              <span>{user?.role}</span>
+            </p>
+            <p className={styles['user-status']}>
+              <FontAwesomeIcon className={styles.icon} icon={faCircle} />
+              <span>Online</span>
+            </p>
+          </div>
         </div>
         <ul className={styles.navigation}>
           <li>
-            <NavLink to='/auth/profile' activeClassName={styles.active}>
-              <FontAwesomeIcon icon={faUser} className={`${styles.icon} ${styles['nav-icon']}`} />
-              <span>My Profile</span>
-            </NavLink>
+            <Button
+              icon={profileIsToggle ? faArrowAltCircleUp : faArrowAltCircleDown}
+              onClick={profileToggleHandler}
+              classes={styles['nav-btn']}
+            >
+              Profile{' '}
+            </Button>
+            {userNavigation}
           </li>
           <li>
-            <NavLink to='/cart' activeClassName={styles.active}>
-              <FontAwesomeIcon
-                icon={faCartArrowDown}
-                className={`${styles.icon} ${styles['nav-icon']}`}
-              />
-              <span>My Cart</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/favorites' activeClassName={styles.active}>
-              <FontAwesomeIcon icon={faHeart} className={`${styles.icon} ${styles['nav-icon']}`} />
-              <span>My Favorites</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/orders' activeClassName={styles.active}>
-              <FontAwesomeIcon icon={faList} className={`${styles.icon} ${styles['nav-icon']}`} />
-              <span>My Orders</span>
-            </NavLink>
+            <Button
+              icon={adminIsToggle ? faArrowAltCircleUp : faArrowAltCircleDown}
+              onClick={adminToggleHandler}
+              classes={styles['nav-btn']}
+            >
+              Administration{' '}
+            </Button>
+            {adminNavigation}
           </li>
         </ul>
       </section>

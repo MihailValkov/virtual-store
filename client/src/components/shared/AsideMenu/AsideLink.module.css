@@ -1,0 +1,38 @@
+.user-link {
+  color: black;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 0.25rem;
+}
+
+.guest-link {
+  color: white;
+  border-right: 10px solid black;
+}
+
+.user-link.active,
+.user-link:hover,
+.user-link:active {
+  background-color: #767575;
+  color: white;
+  border-radius: 0.25rem;
+}
+
+.guest-link:active,
+.guest-link:hover,
+.guest-link.active {
+  background-color: rgba(0, 0, 0, 0.39);
+  border-radius: 0.25rem;
+}
+
+.user-link span,
+.guest-link {
+  flex: 10;
+}
+
+.icon {
+  flex: 2;
+  font-weight: bold;
+}

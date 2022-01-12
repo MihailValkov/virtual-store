@@ -70,6 +70,7 @@
 
 .category-select option {
   background-color: #f7f7f7;
+  text-transform: capitalize;
 }
 
 form {
@@ -93,8 +94,12 @@ form {
 }
 
 @media (max-width: 768px) {
+  .card {
+    padding-top: 0.5rem;
+  }
   .container {
     flex-direction: column;
+    margin-top: 10px;
   }
   .left {
     padding: 0;

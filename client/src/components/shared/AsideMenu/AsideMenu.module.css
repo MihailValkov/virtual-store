@@ -1,6 +1,5 @@
 .user {
   margin-right: 20px;
-  height: 350px;
   width: 300px;
   top: 8rem;
 }
@@ -10,8 +9,8 @@
 .user-info {
   display: flex;
   align-items: center;
-  flex-direction: column;
-  text-align: center;
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
 }
 
 .user-info img {
@@ -19,7 +18,17 @@
   height: 120px;
   object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.user-status .icon {
+  color: #5cb85c;
+  width: 15px;
+}
+
+.user-status > span,
+.user-role > span {
+  margin-left: 5px;
 }
 .anonymous-title {
   font-weight: bold;
@@ -28,58 +37,50 @@
 
 .navigation {
   margin-top: 10px;
-  border-top: 1px solid #ccc;
 }
 
 .navigation li {
-  margin: 5px;
+  margin: 5px 0px;
+  border: 1px solid rgb(228, 226, 226);
   border-radius: 0.25rem;
+  background: #f7f7f7;
 }
-.navigation li a {
+
+.navigation > li:hover {
+  cursor: pointer;
+}
+
+.nav-btn {
+  width: 100%;
+  padding: 0.5rem;
+  justify-content: flex-start;
+  background-color: transparent;
   color: black;
-  display: flex;
-  padding: 5px;
-  align-items: center;
-  font-weight: bold;
-  border-radius: 0.25rem;
-  border: 1px solid black;
 }
 
-.navigation li a span {
-  flex: 8;
+.nav-list {
+  background-color: white;
+  padding: 10px;
+  display: none;
 }
-
-.navigation li .nav-icon {
-  flex: 4;
-  font-weight: bold;
+.nav-list.nav-toggle {
+  display: block;
 }
-
-.navigation a.active,
-.navigation a:hover,
-.navigation a:active {
-  background-color: #767575;
-  color: white;
-  border-radius: 0.25rem;
+.nav-list a {
+  opacity: 0;
+  animation: fadeIn 1s ease-in;
+}
+.nav-list.nav-toggle a {
+  opacity: 1;
 }
 
 .guest {
   background-color: #2a87a5;
 }
-.navigation .guest a {
-  color: white;
-  border-right: 10px solid black;
-}
-.navigation .guest a:active,
-.navigation .guest a:hover,
-.navigation .guest a.active {
-  background-color: rgba(0, 0, 0, 0.39);
-  border-radius: 0.25rem;
-}
 
 @media (max-width: 768px) {
   .user {
     width: 300px;
-    height: 380px;
     z-index: 25;
     position: fixed;
     top: 4rem;
@@ -90,7 +91,6 @@
   .user.toggle {
     padding-left: 0px;
     padding-right: 0px;
-    /* background: #f7f7f7; */
     background-color: transparent;
     width: 30px;
     height: 35px;
@@ -113,5 +113,17 @@
   }
   .user.toggle .aside-btn svg {
     margin-right: 0px;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
   }
 }
