@@ -6,6 +6,7 @@
 .orders {
   width: 100%;
   flex: 10;
+  margin-left: 320px;
 }
 
 .orders h1 {
