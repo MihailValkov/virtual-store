@@ -16,7 +16,7 @@ export const loadProductsAction = (category: string) => async (dispatch: AppDisp
   dispatch(loading({ isLoading: true }));
   dispatch(error({ error: null }));
   try {
-    const products = await http.get(`categories/${category}`);
+    const products = await http.get(`products/${category}`);
     dispatch(loadProducts(products));
   } catch (err: any) {
     dispatch(error({ message: err.message }));
@@ -29,7 +29,7 @@ export const loadProductAction =
     dispatch(loading({ isLoading: true }));
     dispatch(error({ error: null }));
     try {
-      const product = await http.get(`categories/${category}/${id}`);
+      const product = await http.get(`products/${category}/${id}`);
       dispatch(loadProduct(product));
     } catch (err: any) {
       dispatch(error({ message: err.message }));
@@ -54,7 +54,7 @@ export const addNewProductAction =
     dispatch(loading({ isLoading: true }));
     dispatch(error({ message: '' }));
     try {
-      const response = await http.post('categories/products', product);
+      const response = await http.post('products', product);
       dispatch(addNewProduct({ product: response.product }));
       history.replace('/categories');
     } catch (err: any) {
@@ -73,7 +73,7 @@ export const rateProductAction =
       if (rating <= 0 || rating > 5) {
         throw new Error('Please select rating for this product!');
       }
-      const response = await http.patch(`categories/products/${productId}`, {
+      const response = await http.patch(`products/${productId}`, {
         comment,
         rating,
         userId,
