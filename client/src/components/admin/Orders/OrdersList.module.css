@@ -1,0 +1,7 @@
+section .orders-container {
+  width: 100%;
+}
+
+.paginator {
+  margin-top: 20px;
+}
