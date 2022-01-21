@@ -16,6 +16,7 @@ import {
   faArrowAltCircleUp,
   faArrowAltCircleDown,
   faPlus,
+  faUserFriends,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { AppRootState } from '../../../+store/store';
@@ -81,6 +82,22 @@ const AsideMenu: FC<{}> = () => {
           isLogged={isLogged}
         />
       </li>
+      <li>
+        <AsideLink
+          path='/admin/orders?page=1&limit=10'
+          icon={faList}
+          text='Orders'
+          isLogged={isLogged}
+        />
+      </li>
+      <li>
+        <AsideLink
+          path='/admin/users?page=1&limit=10'
+          icon={faUserFriends}
+          text='Users'
+          isLogged={isLogged}
+        />
+      </li>
     </ul>
   );
 
@@ -137,16 +154,18 @@ const AsideMenu: FC<{}> = () => {
             </Button>
             {userNavigation}
           </li>
-          <li>
-            <Button
-              icon={adminIsToggle ? faArrowAltCircleUp : faArrowAltCircleDown}
-              onClick={adminToggleHandler}
-              classes={styles['nav-btn']}
-            >
-              Administration{' '}
-            </Button>
-            {adminNavigation}
-          </li>
+          {user?.role === 'Admin' && (
+            <li>
+              <Button
+                icon={adminIsToggle ? faArrowAltCircleUp : faArrowAltCircleDown}
+                onClick={adminToggleHandler}
+                classes={styles['nav-btn']}
+              >
+                Administration{' '}
+              </Button>
+              {adminNavigation}
+            </li>
+          )}
         </ul>
       </section>
     </>

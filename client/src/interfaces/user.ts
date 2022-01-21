@@ -23,11 +23,21 @@ export interface IUser {
   };
   orders: string[];
   comments: {
-    productId:string;
-    comment:string;
-    status:string;
-    rating:number;
+    productId: string;
+    comment: string;
+    status: string;
+    rating: number;
   }[];
   createdAt: string;
   updatedAt: string;
+}
+export interface IAdminUser {
+  _id: string;
+  username: string;
+  email: string;
+  role: string;
+  phone: string;
+  address: string;
+  orders: number;
+  comments: number;
 }

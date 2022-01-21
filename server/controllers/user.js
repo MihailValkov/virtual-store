@@ -5,7 +5,7 @@ const { errorHandler } = require('../utils/errorHandler');
 const { cookie_name } = require('../config/config');
 const { removeObjectFields } = require('../utils/removeSafeData');
 
-const createToken = ({ _id, email }) => jwt.create({ _id, email });
+const createToken = ({ _id, email, role }) => jwt.create({ _id, email, role });
 
 module.exports = {
   get: {

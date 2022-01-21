@@ -9,6 +9,7 @@ import Layout from './components/core/Layout';
 import LoadingSpinner from './components/shared/LoadingSpinner';
 
 const AuthPages = lazy(() => import('./pages/Auth/Auth'));
+const AdminPages = lazy(() => import('./pages/Admin/Admin'));
 const CategoriesPages = lazy(() => import('./pages/Categories/Categories'));
 const CartPages = lazy(() => import('./pages/Cart/CartPages'));
 const FavoritesPage = lazy(() => import('./pages/FavoritesPage'));
@@ -41,6 +42,9 @@ const App: FC<{}> = () => {
           <Route path='/orders' component={OrdersPages} />
           <Route path='/auth'>
             <AuthPages />
+          </Route>
+          <Route path='/admin'>
+            <AdminPages />
           </Route>
         </Suspense>
       </Switch>

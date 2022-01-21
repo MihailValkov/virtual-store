@@ -22,3 +22,15 @@ export interface ICreateOrder {
     finalPrice: number;
   }[];
 }
+
+export interface IAdminOrder {
+  _id: string;
+  userId: string;
+  username: string;
+  deliveryAddress: string;
+  createdAt: string;
+  status: string;
+  amount: number;
+  totalPrice: number;
+  paymentMethod: string;
+}

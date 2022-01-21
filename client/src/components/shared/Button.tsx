@@ -11,8 +11,9 @@ const Button: FC<{
   disabled?: boolean;
   onClick?: () => void;
   icon?: IconDefinition | null;
+  iconPosition?: 'before' | 'after';
   title?: string;
-}> = ({ type, classes, children, disabled, onClick, icon, title }) => {
+}> = ({ type, classes, children, disabled, onClick, icon, title, iconPosition = 'before' }) => {
   return (
     <button
       type={type || 'button'}
@@ -21,8 +22,11 @@ const Button: FC<{
       onClick={onClick}
       title={title}
     >
-      {icon && <FontAwesomeIcon icon={icon} />}
+      {iconPosition === 'before' && icon && (
+        <FontAwesomeIcon icon={icon} className={styles.before} />
+      )}
       {children}
+      {iconPosition === 'after' && icon && <FontAwesomeIcon icon={icon} className={styles.after} />}
     </button>
   );
 };

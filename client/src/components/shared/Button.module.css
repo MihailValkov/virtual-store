@@ -23,7 +23,11 @@
 
 .btn svg {
   color: inherit;
-  margin-right: 10px;
   font-size: 1.25rem;
 }
-
+.before {
+  margin-right: 10px;
+}
+.after {
+  margin-left: 10px;
+}

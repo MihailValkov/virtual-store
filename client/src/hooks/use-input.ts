@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useEffect } from 'react';
+import { useReducer, useCallback, useEffect, FormEvent } from 'react';
 
 import { IValidationFn } from '../util/validations';
 import { initialState, reducer } from './input-reducer';
@@ -28,7 +28,7 @@ const useInput = (validateValue: IValidationFn, defaultValue?: string) => {
   }, [defaultValue]);
 
   const changeHandler = useCallback(
-    ({ currentTarget: { value } }: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    ({ currentTarget: { value } }: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       dispatch({ type: 'change', value });
     },
     []
