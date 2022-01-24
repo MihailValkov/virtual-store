@@ -11,7 +11,7 @@ const start = async () => {
     await db(dbConnection);
     require('./config/express')(app, express);
     require('./routes/router')(app);
-    if (process.env === 'development') {
+    if (process.env === 'production') {
       app.get('*', (req, res) => {
         if (allowed.filter((ext) => req.url.indexOf(ext) > 0).length > 0) {
           res.sendFile(path.resolve(`public/${req.url}`));
