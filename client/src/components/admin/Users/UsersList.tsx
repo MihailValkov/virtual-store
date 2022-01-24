@@ -1,10 +1,14 @@
-import { FC, FormEvent, useCallback, useEffect, useState } from 'react';
+import { FC, FormEvent, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useRouteMatch } from 'react-router';
-import { getUsersAction } from '../../../+store/admin/admin-actions';
-import { AppRootState } from '../../../+store/store';
+import { useHistory } from 'react-router';
+
 import { useQuery } from '../../../hooks/useQuery';
+import { AppRootState } from '../../../+store/store';
+import { getUsersAction } from '../../../+store/admin/admin-actions';
+import { sortUsers } from '../../../+store/admin/admin-slice';
+
 import Card from '../../shared/Card';
+import SearchBar from '../../shared/SearchBar';
 import Pagination from '../../shared/Pagination';
 import Table from '../Table';
 
@@ -23,71 +27,90 @@ const headers = {
 };
 
 const UsersList: FC<{}> = (props) => {
-  const { path } = useRouteMatch();
   const dispatch = useDispatch();
   const history = useHistory();
   const query = useQuery();
-  const [sorting, setSorting] = useState('asc');
-  const [search, setSearch] = useState('');
-  const limit = Number(query.get('limit') || 2);
-  const filter = query.get('filter') || '_id';
   const page = Number(query.get('page') || 1);
+  const limit = Number(query.get('limit') || 2);
+  const filter = query.get('filter') || '';
+  const sorting = query.get('sorting') || 'asc';
+  const search = query.get('search') || '';
+  const criteria = query.get('criteria') || '_id';
   const users = useSelector((state: AppRootState) => state.admin.users);
   const count = useSelector((state: AppRootState) => state.admin.usersCount);
+  const isLoading = useSelector((state: AppRootState) => state.admin.usersIsLoading);
+  const errorMessage = useSelector((state: AppRootState) => state.admin.usersErrorMessage);
   const pages = Math.ceil(count / limit) || 1;
 
-  const changeLimitHandler = useCallback(
-    ({ currentTarget: { value } }: FormEvent<HTMLSelectElement>) =>
-      history.push(`${path}?page=${page}&limit=${value}`),
-    [history, path, page]
-  );
-  const changeFilterHandler = useCallback(
-    ({ currentTarget: { value } }: FormEvent<HTMLSelectElement>) =>
-      history.push(`${path}?page=${page}&limit=${limit}&filter=${value}`),
-    [history, path, page, limit]
-  );
-
-  const changeSearchValueHandler = useCallback(
-    ({ currentTarget: { value } }: FormEvent<HTMLInputElement>) => setSearch(value),
-    []
+  const changeQueryParamHandler = useCallback(
+    (
+      type: 'limit' | 'filter' | 'search',
+      { currentTarget: { value } }: FormEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
+      let url = '';
+      if (type === 'limit') {
+        url = `/admin/users?page=${page}&limit=${value}&filter=${filter}&criteria=${criteria}&sorting=${sorting}&search=${search}`;
+      } else if (type === 'filter') {
+        url = `/admin/users?page=${page}&limit=${limit}&filter=${value}&criteria=${criteria}&sorting=${sorting}&search=${search}`;
+      } else if (type === 'search') {
+        url = `/admin/users?page=${page}&limit=${limit}&filter=${filter}&criteria=${criteria}&sorting=${sorting}&search=${value}`;
+      }
+      history.push(url);
+    },
+    [history, page, limit, filter, criteria, sorting, search]
   );
 
   const sortByCriteria = useCallback(
-    (criteria: string) => {
-      setSorting((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-      // dispatch(sortOrders({ criteria, sorting: sorting === 'asc' ? 'desc' : 'asc' }));
+    (sortCriteria: string) => {
+      const sort = sorting === 'asc' ? 'desc' : 'asc';
+      history.push(
+        `/admin/users?page=${page}&limit=${limit}&filter=${filter}&criteria=${sortCriteria}&sorting=${sort}&search=${search}`
+      );
     },
-    [dispatch, sorting]
+    [history, page, limit, filter, sorting, search]
   );
 
   useEffect(() => {
-    dispatch(getUsersAction(`${path.slice(1)}?page=${page}&limit=${limit}`));
-  }, [dispatch, path, page, limit]);
+    dispatch(getUsersAction(`admin/users?page=${page}&limit=${limit}`));
+  }, [dispatch, page, limit]);
+
+  useEffect(() => {
+    dispatch(sortUsers({ criteria, sorting }));
+  }, [dispatch, criteria, sorting]);
 
   useEffect(() => {
     let timer = setTimeout(() => {
-      dispatch(
-        getUsersAction(
-          `${path.slice(1)}?page=${page}&limit=${limit}&search=${search}&filter=${filter}`
-        )
-      );
+      filter && dispatch(getUsersAction(`admin/users?search=${search}&filter=${filter}`));
     }, 300);
     return () => clearTimeout(timer);
-  }, [dispatch, path, page, limit, search, filter]);
+  }, [dispatch, search, filter]);
 
   return (
     <section>
-      {/* <SearchBar
-        onChangeLimit={changeLimitHandler}
+      <SearchBar
+        onChangeLimit={changeQueryParamHandler.bind(null, 'limit')}
         limitValue={limit}
-        onChangeFilter={changeFilterHandler}
+        onChangeFilter={changeQueryParamHandler.bind(null, 'filter')}
         filterValue={filter}
-        onChangeInputValue={changeSearchValueHandler}
+        onChangeInputValue={changeQueryParamHandler.bind(null, 'search')}
         inputValue={search}
-      /> */}
+      />
       <Card classes={styles['users-container']}>
-        {/* <Table headers={headers} content={users} onSort={sortByCriteria} sorting={sorting} /> */}
-        {/* <Pagination classes={styles.paginator} currentPage={page} pages={pages} limit={limit} /> */}
+        <Table
+          headers={headers}
+          content={users}
+          onSort={sortByCriteria}
+          sorting={sorting}
+          isLoading={isLoading}
+          errorMessage={errorMessage}
+        />
+        <Pagination
+          classes={styles.paginator}
+          path='/admin/users'
+          currentPage={page}
+          pages={pages}
+          limit={limit}
+        />
       </Card>
     </section>
   );

@@ -84,7 +84,7 @@ const OrdersList: FC<{}> = () => {
       filter &&
         dispatch(
           getOrdersAction(
-            `admin/orders?page=${page}&limit=${limit}&search=${search}&filter=${filter}`
+            `admin/orders?search=${search}&filter=${filter}`
           )
         );
     }, 300);

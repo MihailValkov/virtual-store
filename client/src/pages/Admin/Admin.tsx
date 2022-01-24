@@ -7,7 +7,7 @@ const Admin: FC<{}> = () => {
   return (
     <>
       <AdminRoute path={'/admin/orders'} component={OrdersList} />
-      <AdminRoute path={'/admin/users?page=1&limit=10'} component={UsersList} />
+      <AdminRoute path={'/admin/users'} component={UsersList} />
     </>
   );
 };

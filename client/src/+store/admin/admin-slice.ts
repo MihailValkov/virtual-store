@@ -166,4 +166,5 @@ export const {
   getUsers,
   usersIsLoading,
   usersErrorMessage,
+  sortUsers,
 } = adminSlice.actions;
