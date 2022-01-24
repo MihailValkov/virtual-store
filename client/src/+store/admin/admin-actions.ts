@@ -10,7 +10,7 @@ import {
   ordersErrorMessage,
   getUsers,
   usersIsLoading,
-  usersErrorMessage
+  usersErrorMessage,
 } from './admin-slice';
 
 export const getOrderAction = (id: string) => async (dispatch: AppDispatch) => {
@@ -32,7 +32,7 @@ export const getOrdersAction = (path: string) => async (dispatch: AppDispatch) =
     const { orders, count } = await http.get(path);
     dispatch(getOrders({ orders, count }));
   } catch (err: any) {
-    dispatch(ordersErrorMessage({ message: err.message }));
+    dispatch(ordersErrorMessage({ message: err.message, count: 0 }));
   } finally {
     dispatch(ordersIsLoading({ isLoading: false }));
   }
@@ -45,7 +45,7 @@ export const getUsersAction = (path: string) => async (dispatch: AppDispatch) =>
     const { users, count } = await http.get(path);
     dispatch(getUsers({ users, count }));
   } catch (err: any) {
-    dispatch(usersErrorMessage({ message: err.message }));
+    dispatch(usersErrorMessage({ message: err.message, count: 0 }));
   } finally {
     dispatch(usersIsLoading({ isLoading: false }));
   }

@@ -86,8 +86,8 @@ const UsersList: FC<{}> = (props) => {
         inputValue={search}
       /> */}
       <Card classes={styles['users-container']}>
-        <Table headers={headers} content={users} onSort={sortByCriteria} sorting={sorting} />
-        <Pagination classes={styles.paginator} currentPage={page} pages={pages} limit={limit} />
+        {/* <Table headers={headers} content={users} onSort={sortByCriteria} sorting={sorting} /> */}
+        {/* <Pagination classes={styles.paginator} currentPage={page} pages={pages} limit={limit} /> */}
       </Card>
     </section>
   );

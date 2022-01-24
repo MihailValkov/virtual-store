@@ -1,11 +1,12 @@
 import { faArrowDown, faArrowUp, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import { IAdminOrder } from '../../interfaces/order';
 import { IAdminUser } from '../../interfaces/user';
 import Button from '../shared/Button';
+import LoadingSpinner from '../shared/LoadingSpinner';
 import styles from './Table.module.css';
 
 interface ITableInterface<T> {
@@ -13,6 +14,8 @@ interface ITableInterface<T> {
   content: T[] | null;
   onSort: (criteria: string) => void;
   sorting: string;
+  isLoading: boolean;
+  errorMessage: string | null;
 }
 
 const Table: FC<ITableInterface<IAdminOrder | IAdminUser>> = ({
@@ -20,19 +23,37 @@ const Table: FC<ITableInterface<IAdminOrder | IAdminUser>> = ({
   content,
   onSort,
   sorting,
+  isLoading,
+  errorMessage,
 }) => {
   const { path } = useRouteMatch();
   let tableContent = null;
 
-  if (!content) {
+  if (content?.length === 0 && !isLoading) {
     tableContent = (
       <tr>
-        <td>There is no orders yet.</td>
+        <td colSpan={Object.keys(headers).length} className={styles.center}>There is no orders.</td>
       </tr>
     );
   }
-  
-  if (content) {
+  if (isLoading && !errorMessage) {
+    tableContent = (
+      <tr className={styles.loading}>
+        <td>
+          <LoadingSpinner />
+        </td>
+      </tr>
+    );
+  }
+  if (!isLoading && errorMessage) {
+    tableContent = (
+      <tr>
+        <td colSpan={Object.keys(headers).length}>{errorMessage}</td>
+      </tr>
+    );
+  }
+
+  if (content?.length && !isLoading && !errorMessage) {
     tableContent = content.map((o) => (
       <tr key={o._id}>
         {Object.values(o).map((s, i) => (
@@ -76,4 +97,4 @@ const Table: FC<ITableInterface<IAdminOrder | IAdminUser>> = ({
   );
 };
 
-export default Table;
+export default memo(Table);

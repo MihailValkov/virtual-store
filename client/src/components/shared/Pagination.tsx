@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { useHistory, useRouteMatch } from 'react-router';
 import { faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
 import Button from './Button';
@@ -7,21 +7,24 @@ import styles from './Pagination.module.css';
 
 const Pagination: FC<{
   classes?: string;
+  path: string;
   currentPage: number;
   pages: number;
   limit: number;
-}> = ({ classes, currentPage, pages, limit }) => {
-  const { path } = useRouteMatch();
+}> = ({ classes, path, currentPage, pages, limit }) => {
   const history = useHistory();
-  const navigate = (destination: 'next' | 'previous') => {
-    if (destination === 'next') {
-      history.push(
-        `${path}?page=${currentPage + 1 >= pages ? pages : currentPage + 1}&limit=${limit}`
-      );
-    } else if (destination === 'previous') {
-      history.push(`${path}?page=${currentPage - 1 < 1 ? 1 : currentPage - 1}&limit=${limit}`);
-    }
-  };
+  const navigate = useCallback(
+    (destination: 'next' | 'previous') => {
+      if (destination === 'next') {
+        history.push(
+          `${path}?page=${currentPage + 1 >= pages ? pages : currentPage + 1}&limit=${limit}`
+        );
+      } else if (destination === 'previous') {
+        history.push(`${path}?page=${currentPage - 1 < 1 ? 1 : currentPage - 1}&limit=${limit}`);
+      }
+    },
+    [history, currentPage, pages, limit, path]
+  );
   return (
     <div className={`${styles.pagination} ${classes}`}>
       <Button

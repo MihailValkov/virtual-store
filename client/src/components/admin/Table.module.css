@@ -33,6 +33,13 @@
 .table td.email {
   text-transform: none;
 }
+.table td.center {
+  text-align: center;
+}
+.table tbody {
+  position: relative;
+  height: 200px;
+}
 
 .table tbody tr:nth-child(1n) {
   background: rgba(7, 6, 6, 0.3);
@@ -46,6 +53,11 @@
 .table tbody tr:hover {
   background: rgba(90, 133, 150, 0.514);
 }
+
+.table tr.loading {
+  background-color: transparent!important;
+}
+
 
 .actions {
   display: flex;

@@ -60,9 +60,10 @@ const adminSlice = createSlice({
     }),
     ordersErrorMessage: (
       state: IAdminState,
-      action: PayloadAction<{ message: string | null }>
+      action: PayloadAction<{ message: string | null; count?: number }>
     ) => ({
       ...state,
+      ordersCount: action.payload.count || state.ordersCount,
       ordersErrorMessage: action.payload.message,
     }),
     clearOrders: (state: IAdminState) => ({ ...state, orders: null }),
@@ -110,8 +111,12 @@ const adminSlice = createSlice({
       ...state,
       usersIsLoading: action.payload.isLoading,
     }),
-    usersErrorMessage: (state: IAdminState, action: PayloadAction<{ message: string | null }>) => ({
+    usersErrorMessage: (
+      state: IAdminState,
+      action: PayloadAction<{ message: string | null; count?: number }>
+    ) => ({
       ...state,
+      usersCount: action.payload.count || state.usersCount,
       usersErrorMessage: action.payload.message,
     }),
     sortUsers: (

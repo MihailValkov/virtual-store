@@ -5,9 +5,11 @@ function createErrorMessage(error) {
 }
 
 function errorHandler(error, res, req) {
+  console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
   if (error instanceof TypeError || error.name == 'MongoError') {
-    console.log(`${req.method} >> ${req.baseUrl}: ${error.message}`);
     return res.status(500).json({ message: 'Something went wrong!' });
+  } else if (error.name === 'CastError') {
+    return res.status(500).json({ message: error.message });
   } else {
     const message = createErrorMessage(error);
     res.status(400).json({ message });

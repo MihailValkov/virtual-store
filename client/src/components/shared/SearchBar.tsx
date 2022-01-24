@@ -1,8 +1,6 @@
 import { faList, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC, FormEvent, useEffect } from 'react';
-import useInput from '../../hooks/use-input';
-import useThrottle from '../../hooks/use-trottle';
+import { FC, FormEvent } from 'react';
 import Button from './Button';
 import Card from './Card';
 import styles from './SearchBar.module.css';
@@ -14,7 +12,14 @@ const SearchBar: FC<{
   onChangeFilter: (event: FormEvent<HTMLSelectElement>) => void;
   onChangeInputValue: (event: FormEvent<HTMLInputElement>) => void;
   inputValue: string;
-}> = ({ onChangeLimit, onChangeFilter, onChangeInputValue, limitValue,filterValue,inputValue }) => {
+}> = ({
+  onChangeLimit,
+  onChangeFilter,
+  onChangeInputValue,
+  limitValue,
+  filterValue,
+  inputValue,
+}) => {
   return (
     <Card classes={styles.card}>
       <form className={styles['search-form']}>
@@ -35,8 +40,14 @@ const SearchBar: FC<{
         </div>
 
         <div className={styles['filter']}>
-          <span>Filter By:</span>
-          <select name='filter' className={styles.criteria} value={filterValue} onChange={onChangeFilter}>
+          <span>Search Criteria:</span>
+          <select
+            name='criteria'
+            className={styles.criteria}
+            value={filterValue}
+            onChange={onChangeFilter}
+          >
+            <option >Select Search Criteria</option>
             <option value='_id'>Order ID</option>
             <option value='userId'>User ID</option>
             <option value='deliveryAddress'>Delivery Address</option>
