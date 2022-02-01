@@ -2,11 +2,12 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }
 .profile {
-  width: 100%;
-  flex: 10;
-  margin-left: 320px;
+  width: 100% !important;
+  margin-left: 320px !important;
+  flex: 10 !important;
 }
 
 .profile-container > h1,
