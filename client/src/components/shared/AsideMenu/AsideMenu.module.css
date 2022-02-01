@@ -7,14 +7,19 @@
 .aside-btn {
   display: none;
 }
-.user-info {
+.user-info,
+.guest-info {
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #ccc;
 }
+.guest-info {
+  flex-direction: column;
+}
 
-.user-info img {
+.user-info img,
+.guest-info img {
   width: 120px;
   height: 120px;
   object-fit: cover;
@@ -75,10 +80,6 @@
   opacity: 1;
 }
 
-.guest {
-  background-color: #2a87a5;
-}
-
 @media (max-width: 768px) {
   .user {
     width: 300px;
@@ -114,6 +115,10 @@
   }
   .user.toggle .aside-btn svg {
     margin-right: 0px;
+  }
+  .navigation {
+    height: 50vh;
+    overflow: auto;
   }
 }
 

@@ -47,7 +47,7 @@ const AsideMenu: FC<{}> = () => {
         classes={styles['aside-btn']}
       />
       <section className={styles['aside-content']}>
-        <div className={styles['user-info']}>
+        <div className={styles['guest-info']}>
           <img src={noAvatarImage} alt='profile-img' />
           <h3 className={styles['anonymous-title']}>You are anonymous user currently.</h3>
           <p>Login or register so you can access extra functionality.</p>

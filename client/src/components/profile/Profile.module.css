@@ -1,10 +1,9 @@
-.profile {
+.profile-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
 }
-.profile-container {
+.profile {
   width: 100%;
   flex: 10;
   margin-left: 320px;
@@ -88,6 +87,9 @@
 }
 
 @media (max-width: 768px) {
+  .profile-container {
+    margin-left: 0px;
+  }
   .profile-information {
     flex-direction: column;
   }

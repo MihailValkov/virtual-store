@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const auth = require('../middlewares/auth');
 const whitelist = [
   'http://localhost:3000',
+  'http://localhost:3001',
   'http://localhost:5500',
   'https://online-virtual-store.herokuapp.com',
 ];

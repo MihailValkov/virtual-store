@@ -20,4 +20,7 @@
   .favorites-container {
     flex-direction: column;
   }
+  .favorites {
+    margin-left: 0px;
+  }
 }

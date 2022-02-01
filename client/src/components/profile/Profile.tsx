@@ -68,9 +68,9 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
           <AddNewAddress onClose={onAddNewAddressHandler} />{' '}
         </Modal>
       )}
-      <section className={styles['profile']}>
+      <section className={styles['profile-container']}>
         <AsideMenu />
-        <Card classes={styles['profile-container']}>
+        <Card classes={styles['profile']}>
           <h1>User Profile</h1>
           <div className={styles['profile-information']}>
             <div className={styles['profile-picture']}>
