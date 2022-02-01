@@ -6,7 +6,7 @@
 .no-products {
   text-align: center;
   width: 100%;
-  height: auto;
+  height: calc(80vh - 14rem);
 }
 .no-products img {
   height: 300px;

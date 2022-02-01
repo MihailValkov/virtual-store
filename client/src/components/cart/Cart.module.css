@@ -7,8 +7,7 @@
 .cart {
   width: 100%;
   margin-left: 320px;
-  flex: 8;
-  margin-right: 20px;
+  flex: 10;
 }
 
 .cart h1 {
