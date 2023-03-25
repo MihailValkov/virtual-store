@@ -33,8 +33,8 @@ module.exports = {
           filter === 'totalPrice'
             ? { [filter]: Number(search) }
             : filter.toLowerCase().includes('id')
-            ? { [filter]: search.trim() }
-            : { [filter]: regex };
+              ? { [filter]: search.trim() }
+              : { [filter]: regex };
       }
 
       try {
@@ -76,8 +76,8 @@ module.exports = {
           filter === 'totalPrice'
             ? { [filter]: Number(search) }
             : filter.toLowerCase().includes('id')
-            ? { [filter]: search.trim() }
-            : { [filter]: regex };
+              ? { [filter]: search.trim() }
+              : { [filter]: regex };
       }
 
       try {
@@ -96,7 +96,7 @@ module.exports = {
           email: user.email,
           role: user.role,
           phone: user.phone,
-          address: `${user.address.country}, ${user.address.city} , ${user.address.street} № ${user.address.streetNumber}`,
+          address: user?.address ? `${user?.address?.country}, ${user?.address?.city} , ${user?.address?.street} № ${user?.address?.streetNumber}` : "-",
           orders: user.orders?.length || 0,
           comments: user.comments?.length || 0,
         }));

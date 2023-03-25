@@ -14,6 +14,6 @@ export function withHighlighted<T>(Cmp: ComponentType<T>) {
       return () => clearTimeout(timer);
     }, [props.count]);
 
-    return props.count ? <Cmp {...props} isHighlighted={isHighlighted} /> : <Cmp {...props}/>;
+    return props.count ? <Cmp {...props} isHighlighted={isHighlighted} /> : <Cmp {...props} />;
   };
 }

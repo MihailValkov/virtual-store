@@ -1,4 +1,3 @@
-import { History } from 'history';
 import { http } from '../../util/http-request';
 import { AppDispatch } from '../store';
 import {

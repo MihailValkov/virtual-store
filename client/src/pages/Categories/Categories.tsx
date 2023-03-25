@@ -1,8 +1,5 @@
 import { FC } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-import { AppRootState } from '../../+store/store';
 import { AdminRoute } from '../../hocs/isAdmin';
 
 import CategoriesPage from './CategoriesPage';

@@ -6,7 +6,7 @@ module.exports = {
     async categories(req, res) {
       try {
         const categories = await categoryModel.find().sort({ category: 'asc' });
-        return res.status(200).json(categories);
+        res.status(200).json(categories);
       } catch (error) {
         errorHandler(error, res, req);
       }

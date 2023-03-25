@@ -1,6 +1,7 @@
 const productModel = require('../models/Product');
 const userModel = require('../models/User');
 const { errorHandler } = require('../utils/errorHandler');
+
 const mapToStatus = {
   1: 'Poor',
   2: 'Fair',
