@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IAdminOrder } from '../../interfaces/order';
-import { IAdminUser, IUser } from '../../interfaces/user';
+import { IAdminUser } from '../../interfaces/user';
 
 export interface IAdminState {
   order: IAdminOrder | null;
